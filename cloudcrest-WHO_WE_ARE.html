@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Who We Are — CloudCrest</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0A1628;--blue:#0077C8;--blue2:#005FA3;--sky:#38BDF8;--white:#fff;--gray-100:#f5f7fa;--gray-200:#e2e8f0;--gray-500:#64748b;--gray-800:#1e293b;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans','Helvetica Neue',sans-serif;background:var(--white);color:var(--navy);overflow-x:hidden;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:300;background:var(--navy);border-bottom:1px solid rgba(255,255,255,0.08);}
+.nav-top{display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-icon{width:56px;height:56px;display:flex;align-items:center;justify-content:center;}
+.nav-logo-text{color:#fff;font-size:16px;font-weight:600;letter-spacing:-0.01em;}
+.nav-tabs{display:flex;list-style:none;border-top:1px solid rgba(255,255,255,0.07);padding:0 32px;}
+.nav-tab{position:relative;}
+.nav-tab>a{display:flex;align-items:center;gap:5px;height:40px;padding:0 18px;color:rgba(255,255,255,0.65);text-decoration:none;font-size:12px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;transition:color .2s,background .2s;white-space:nowrap;position:relative;}
+.nav-tab>a svg{width:9px;height:9px;transition:transform .2s;flex-shrink:0;}
+.nav-tab:hover>a,.nav-tab.active>a{color:#fff;}
+.nav-tab:hover>a{background:rgba(255,255,255,0.05);}
+.nav-tab:hover>a svg{transform:rotate(180deg);}
+.nav-tab>a::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--blue);transform:scaleX(0);transition:transform .2s;}
+.nav-tab:hover>a::after,.nav-tab.active>a::after{transform:scaleX(1);}
+.nav-dropdown{position:absolute;top:100%;left:0;background:var(--navy);border:1px solid rgba(255,255,255,0.1);border-top:2px solid var(--blue);min-width:250px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .2s,transform .2s,visibility .2s;z-index:400;}
+.nav-tab:hover .nav-dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+.nav-dropdown a{display:block;padding:13px 22px;color:rgba(255,255,255,0.6);text-decoration:none;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.05);transition:color .15s,padding-left .15s,background .15s;}
+.nav-dropdown a:last-child{border-bottom:none;}
+.nav-dropdown a:hover{color:#fff;padding-left:30px;background:rgba(255,255,255,0.04);}
+.nav-cta{background:var(--blue);color:#fff;padding:10px 22px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:background .2s;white-space:nowrap;}
+.nav-cta:hover{background:var(--blue2);}
+
+.page-hero{background:var(--navy);padding:160px 80px 80px;position:relative;overflow:hidden;}
+.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(0,119,200,0.12) 0%,transparent 70%);}
+.page-hero-label{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--sky);margin-bottom:20px;}
+.page-hero-label::before{content:'';display:block;width:28px;height:1px;background:var(--sky);}
+.page-hero h1{font-family:'DM Serif Display',serif;font-size:clamp(40px,6vw,72px);font-weight:400;line-height:1.05;color:#fff;letter-spacing:-0.02em;max-width:700px;margin-bottom:24px;}
+.page-hero h1 em{font-style:italic;color:var(--sky);}
+.page-hero p{font-size:18px;font-weight:300;line-height:1.7;color:rgba(255,255,255,0.6);max-width:560px;}
+
+.story-section{padding:110px 80px;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center;}
+.story-label{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;}
+.story-title{font-family:'DM Serif Display',serif;font-size:clamp(28px,3.5vw,44px);font-weight:400;line-height:1.1;letter-spacing:-0.02em;color:var(--navy);margin-bottom:24px;}
+.story-title em{font-style:italic;color:var(--blue);}
+.story-body p{font-size:16px;line-height:1.8;color:var(--gray-500);font-weight:300;margin-bottom:20px;}
+.story-body p:last-child{margin-bottom:0;}
+.story-stat-stack{display:flex;flex-direction:column;gap:2px;background:var(--gray-200);}
+.story-stat{background:var(--gray-100);padding:40px 48px;border-left:4px solid var(--blue);}
+.story-stat-num{font-family:'DM Serif Display',serif;font-size:52px;font-weight:400;color:var(--navy);line-height:1;letter-spacing:-0.03em;margin-bottom:8px;}
+.story-stat-label{font-size:11px;font-weight:600;color:var(--gray-500);letter-spacing:0.07em;text-transform:uppercase;}
+
+.values-section{background:var(--navy);padding:110px 80px;}
+.section-header{text-align:center;max-width:680px;margin:0 auto 72px;}
+.section-label{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;}
+.section-title{font-family:'DM Serif Display',serif;font-size:clamp(28px,3.5vw,48px);font-weight:400;line-height:1.1;letter-spacing:-0.02em;color:#fff;}
+.section-title em{font-style:italic;color:var(--sky);}
+.section-desc{font-size:16px;line-height:1.75;color:rgba(255,255,255,0.45);font-weight:300;margin-top:16px;}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(255,255,255,0.06);}
+.value-card{background:var(--navy);padding:48px 40px;position:relative;overflow:hidden;transition:background .3s;}
+.value-card:hover{background:#0d1e35;}
+.value-card::after{content:'';position:absolute;bottom:0;left:0;height:3px;width:0;background:var(--blue);transition:width .4s ease;}
+.value-card:hover::after{width:100%;}
+.value-icon{width:48px;height:48px;background:rgba(0,119,200,0.15);border:1px solid rgba(0,119,200,0.3);display:flex;align-items:center;justify-content:center;margin-bottom:28px;}
+.value-icon svg{width:22px;height:22px;fill:none;stroke:var(--sky);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+.value-title{font-family:'DM Serif Display',serif;font-size:20px;font-weight:400;color:#fff;margin-bottom:12px;}
+.value-desc{font-size:14px;line-height:1.8;color:rgba(255,255,255,0.5);font-weight:300;}
+
+.testimonials-section{padding:110px 80px;background:var(--gray-100);}
+.testimonials-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--gray-200);}
+.testimonial-card{background:#fff;padding:48px 44px;display:flex;flex-direction:column;gap:20px;}
+.testimonial-quote{font-family:'DM Serif Display',serif;font-size:clamp(16px,1.8vw,22px);font-weight:400;line-height:1.6;color:var(--navy);font-style:italic;}
+.testimonial-quote strong{color:var(--blue);font-style:normal;}
+.testimonial-author{display:flex;align-items:center;gap:16px;padding-top:20px;border-top:1px solid var(--gray-200);}
+.testimonial-avatar{width:44px;height:44px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:16px;color:var(--sky);flex-shrink:0;}
+.testimonial-name{font-size:14px;font-weight:600;color:var(--navy);}
+.testimonial-role{font-size:12px;color:var(--gray-500);font-weight:300;}
+
+.contact-strip{background:var(--gray-800);padding:80px;}
+.contact-strip-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;max-width:960px;margin:0 auto;}
+.contact-strip h2{font-family:'DM Serif Display',serif;font-size:clamp(24px,3vw,38px);font-weight:400;color:#fff;line-height:1.2;margin-bottom:16px;}
+.contact-strip h2 em{font-style:italic;color:var(--sky);}
+.contact-strip p{font-size:15px;color:rgba(255,255,255,0.5);font-weight:300;line-height:1.75;}
+.contact-details{display:flex;flex-direction:column;gap:18px;}
+.contact-item{display:flex;align-items:flex-start;gap:14px;font-size:15px;color:rgba(255,255,255,0.7);}
+.contact-item svg{width:18px;height:18px;color:var(--sky);flex-shrink:0;margin-top:3px;fill:none;stroke:currentColor;stroke-width:1.5;}
+.btn-primary{background:var(--blue);color:#fff;padding:14px 32px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:background .2s,transform .15s;margin-top:28px;}
+.btn-primary:hover{background:var(--blue2);transform:translateY(-2px);}
+
+footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,0.07);}
+.footer-logo{display:flex;align-items:center;gap:12px;}
+.footer-logo-text{color:rgba(255,255,255,0.45);font-size:13px;}
+.footer-links{display:flex;gap:28px;list-style:none;}
+.footer-links a{color:rgba(255,255,255,0.3);text-decoration:none;font-size:11px;letter-spacing:0.07em;text-transform:uppercase;transition:color .2s;}
+.footer-links a:hover{color:#fff;}
+.footer-copy{color:rgba(255,255,255,0.2);font-size:11px;}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:none;}
+.reveal-delay-1{transition-delay:.12s;}
+.reveal-delay-2{transition-delay:.24s;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-top">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon"><svg viewBox="0 0 40 36" fill="none"><path d="M30 28H10a7 7 0 01-.9-13.94A8.5 8.5 0 0126 20a7 7 0 014 8z" fill="white"/><path d="M30 28a7 7 0 000-14 7 7 0 01.9.06A8.5 8.5 0 0116 8a8.5 8.5 0 0114 7.94A7 7 0 0130 28z" fill="white"/><path d="M33 4a7 7 0 010 10A7 7 0 0033 4z" fill="#38BDF8"/><circle cx="30" cy="9" r="5" fill="#38BDF8"/><circle cx="33.5" cy="7.5" r="4" fill="#0077C8"/></svg></div>
+      <span class="nav-logo-text">CloudCrest</span>
+    </a>
+    <a href="contact.html" class="nav-cta">Get In Touch</a>
+  </div>
+  <ul class="nav-tabs">
+    <li class="nav-tab"><a href="services.html">What We Do<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+      <div class="nav-dropdown"><a href="services.html#implementation">Implementation</a><a href="services.html#managed-services">Managed Services</a><a href="services.html#integrations">Integrations</a><a href="services.html#custom-development">Custom Development</a><a href="services.html#training">Training</a><a href="services.html#on-site-visits">On-Site Visits</a></div>
+    </li>
+    <li class="nav-tab"><a href="think.html">What We Think<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+      <div class="nav-dropdown"><a href="think.html">Transportation Tech</a><a href="think.html">Salesforce</a><a href="think.html">Operations</a></div>
+    </li>
+    <li class="nav-tab active"><a href="about.html">Who We Are<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+      <div class="nav-dropdown"><a href="#story">Our Story</a><a href="#values">Our Values</a><a href="#testimonials">Client Testimonials</a><a href="#contact">Contact Us</a></div>
+    </li>
+    <li class="nav-tab"><a href="careers.html">Careers<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+      <div class="nav-dropdown"><a href="careers.html#openings">Open Positions</a><a href="careers.html#culture">Life at CloudCrest</a></div>
+    </li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-label">Who We Are</div>
+  <h1>Built for <em>transportation</em>, not just Salesforce</h1>
+  <p>CloudCrest was founded with a singular focus — helping transportation companies get the most out of Salesforce. Not as a side practice. As our entire reason for existing.</p>
+</div>
+
+<div class="story-section" id="story">
+  <div class="story-body reveal">
+    <div class="story-label">Our Story</div>
+    <h2 class="story-title">We saw the gap — <em>and filled it</em></h2>
+    <p>Transportation companies were being sold generic Salesforce implementations by consultants who didn't understand the industry. The result was systems that technically worked but didn't reflect how freight actually moves — how brokers manage carriers, how fleets track assets, how dispatch and sales need to talk to each other.</p>
+    <p>CloudCrest was founded to fix that. We brought together people with deep roots in both Salesforce and transportation — and made a deliberate choice to stay focused. We don't serve every industry. We serve yours.</p>
+    <p>That focus makes us faster, more accurate, and more useful than a generalist consultant trying to learn your business on your dime.</p>
+  </div>
+  <div class="story-stat-stack reveal reveal-delay-1">
+    <div class="story-stat"><div class="story-stat-num">100%</div><div class="story-stat-label">Transportation Industry Focus</div></div>
+    <div class="story-stat"><div class="story-stat-num">5★</div><div class="story-stat-label">Client Satisfaction</div></div>
+    <div class="story-stat"><div class="story-stat-num">6</div><div class="story-stat-label">Core Service Pillars</div></div>
+  </div>
+</div>
+
+<div class="values-section" id="values">
+  <div class="section-header reveal">
+    <div class="section-label">Our Values</div>
+    <h2 class="section-title">How we <em>work</em></h2>
+    <p class="section-desc">These aren't wall posters. They're the principles that show up in every client engagement, every delivery, and every conversation.</p>
+  </div>
+  <div class="values-grid">
+    <div class="value-card reveal">
+      <div class="value-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+      <h3 class="value-title">Industry Focus</h3>
+      <p class="value-desc">We only serve transportation. That means no learning curve, no generic playbooks, and no time wasted figuring out how your business works. We already know.</p>
+    </div>
+    <div class="value-card reveal reveal-delay-1">
+      <div class="value-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <h3 class="value-title">Partnership Over Projects</h3>
+      <p class="value-desc">We don't disappear after go-live. Our best client relationships are the long ones — where we're embedded in your growth, not just a line item on a past invoice.</p>
+    </div>
+    <div class="value-card reveal reveal-delay-2">
+      <div class="value-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/></svg></div>
+      <h3 class="value-title">Honest Expertise</h3>
+      <p class="value-desc">We tell you what you need to hear, not what you want to hear. If something won't work, we say so. If there's a better path, we'll find it — even if it's more work for us.</p>
+    </div>
+    <div class="value-card reveal">
+      <div class="value-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+      <h3 class="value-title">Respect for Your Time</h3>
+      <p class="value-desc">Transportation doesn't stop. We work around your operation, not the other way around. Fast responses, clear timelines, and no project theater.</p>
+    </div>
+    <div class="value-card reveal reveal-delay-1">
+      <div class="value-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+      <h3 class="value-title">Built to Last</h3>
+      <p class="value-desc">We build systems designed to grow with you — not ones that require a full rebuild every two years. Sustainable architecture, clean code, and documentation that actually helps.</p>
+    </div>
+    <div class="value-card reveal reveal-delay-2">
+      <div class="value-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg></div>
+      <h3 class="value-title">Show Up</h3>
+      <p class="value-desc">We believe in being present — literally. On-site when it matters, available when you need us, and genuinely invested in your outcomes. Not just available on a ticket system.</p>
+    </div>
+  </div>
+</div>
+
+<div class="testimonials-section" id="testimonials">
+  <div class="section-header reveal" style="margin-bottom:48px;">
+    <div class="section-label" style="color:var(--blue);">Client Testimonials</div>
+    <h2 class="section-title" style="color:var(--navy);">What our clients <em>say</em></h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <p class="testimonial-quote">"Describing our situation as <strong>lost</strong> might even be putting it mildly. Enter CloudCrest — a true <strong>blessing</strong> in disguise. Their knack for <strong>understanding</strong> a client's requirements is exceptional, and their commitment to customer service has <strong>exceeded our highest expectations.</strong>"</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">T</div>
+        <div><div class="testimonial-name">Transportation Client</div><div class="testimonial-role">Freight Brokerage</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-1">
+      <p class="testimonial-quote">"CloudCrest didn't just implement Salesforce — they <strong>understood our operation</strong> from day one. The difference between them and the last consultant we worked with was night and day. They speak our language."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">F</div>
+        <div><div class="testimonial-name">Fleet Operations Client</div><div class="testimonial-role">Regional Carrier</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="contact-strip" id="contact">
+  <div class="contact-strip-inner">
+    <div class="reveal">
+      <h2>Ready to work with a team that <em>knows your industry</em>?</h2>
+      <p>Whether you're starting fresh or need help with an existing org, we'd love to learn about your operation.</p>
+      <a href="contact.html" class="btn-primary">Get In Touch</a>
+    </div>
+    <div class="contact-details reveal reveal-delay-1">
+      <div class="contact-item"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>503-828-7761</div>
+      <div class="contact-item"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>info@cloudcrestc.com</div>
+      <div class="contact-item"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>P.O. Box 1103, Tualatin, OR 97062</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">
+    <div><svg width="44" height="40" viewBox="0 0 44 40" fill="none"><path d="M8 32a8 8 0 010-16c.3 0 .6 0 .9.03A10 10 0 0128 22a8 8 0 010 16H8z" fill="white"/><circle cx="33" cy="11" r="7" fill="#38BDF8"/><circle cx="37" cy="8.5" r="6" fill="#0A1628"/></svg></div>
+    <span class="footer-logo-text">CloudCrest, LLC</span>
+  </div>
+  <ul class="footer-links">
+    <li><a href="services.html">What We Do</a></li><li><a href="think.html">What We Think</a></li>
+    <li><a href="about.html">Who We Are</a></li><li><a href="careers.html">Careers</a></li><li><a href="contact.html">Contact</a></li>
+  </ul>
+  <span class="footer-copy">© 2026 CloudCrest, LLC. All Rights Reserved.</span>
+</footer>
+
+<script>
+const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>

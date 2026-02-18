@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Careers — CloudCrest</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0A1628;--blue:#0077C8;--blue2:#005FA3;--sky:#38BDF8;--white:#fff;--gray-100:#f5f7fa;--gray-200:#e2e8f0;--gray-500:#64748b;--gray-800:#1e293b;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans','Helvetica Neue',sans-serif;background:var(--white);color:var(--navy);overflow-x:hidden;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:300;background:var(--navy);border-bottom:1px solid rgba(255,255,255,0.08);}
+.nav-top{display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-icon{width:56px;height:56px;display:flex;align-items:center;justify-content:center;}
+.nav-logo-text{color:#fff;font-size:16px;font-weight:600;letter-spacing:-0.01em;}
+.nav-tabs{display:flex;list-style:none;border-top:1px solid rgba(255,255,255,0.07);padding:0 32px;}
+.nav-tab{position:relative;}
+.nav-tab>a{display:flex;align-items:center;gap:5px;height:40px;padding:0 18px;color:rgba(255,255,255,0.65);text-decoration:none;font-size:12px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;transition:color .2s,background .2s;white-space:nowrap;position:relative;}
+.nav-tab>a svg{width:9px;height:9px;transition:transform .2s;flex-shrink:0;}
+.nav-tab:hover>a,.nav-tab.active>a{color:#fff;}
+.nav-tab:hover>a{background:rgba(255,255,255,0.05);}
+.nav-tab:hover>a svg{transform:rotate(180deg);}
+.nav-tab>a::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--blue);transform:scaleX(0);transition:transform .2s;}
+.nav-tab:hover>a::after,.nav-tab.active>a::after{transform:scaleX(1);}
+.nav-dropdown{position:absolute;top:100%;left:0;background:var(--navy);border:1px solid rgba(255,255,255,0.1);border-top:2px solid var(--blue);min-width:250px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .2s,transform .2s,visibility .2s;z-index:400;}
+.nav-tab:hover .nav-dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+.nav-dropdown a{display:block;padding:13px 22px;color:rgba(255,255,255,0.6);text-decoration:none;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.05);transition:color .15s,padding-left .15s,background .15s;}
+.nav-dropdown a:last-child{border-bottom:none;}
+.nav-dropdown a:hover{color:#fff;padding-left:30px;background:rgba(255,255,255,0.04);}
+.nav-cta{background:var(--blue);color:#fff;padding:10px 22px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:background .2s;white-space:nowrap;}
+.nav-cta:hover{background:var(--blue2);}
+
+.page-hero{background:var(--navy);padding:160px 80px 80px;position:relative;overflow:hidden;}
+.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(0,119,200,0.12) 0%,transparent 70%);}
+.page-hero-label{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--sky);margin-bottom:20px;}
+.page-hero-label::before{content:'';display:block;width:28px;height:1px;background:var(--sky);}
+.page-hero h1{font-family:'DM Serif Display',serif;font-size:clamp(40px,6vw,72px);font-weight:400;line-height:1.05;color:#fff;letter-spacing:-0.02em;max-width:700px;margin-bottom:24px;}
+.page-hero h1 em{font-style:italic;color:var(--sky);}
+.page-hero p{font-size:18px;font-weight:300;line-height:1.7;color:rgba(255,255,255,0.6);max-width:560px;}
+
+/* CULTURE */
+.culture-section{padding:110px 80px;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center;}
+.culture-label{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;}
+.culture-title{font-family:'DM Serif Display',serif;font-size:clamp(28px,3.5vw,44px);font-weight:400;line-height:1.1;letter-spacing:-0.02em;color:var(--navy);margin-bottom:24px;}
+.culture-title em{font-style:italic;color:var(--blue);}
+.culture-body p{font-size:16px;line-height:1.8;color:var(--gray-500);font-weight:300;margin-bottom:20px;}
+.culture-perks{display:flex;flex-direction:column;gap:16px;margin-top:8px;}
+.culture-perk{display:flex;gap:14px;align-items:flex-start;}
+.culture-perk-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:7px;}
+.culture-perk strong{display:block;font-size:14px;font-weight:600;color:var(--navy);margin-bottom:3px;}
+.culture-perk p{font-size:14px;line-height:1.7;color:var(--gray-500);font-weight:300;margin:0;}
+.culture-visual{background:var(--navy);padding:56px;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:24px;}
+.culture-visual::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,rgba(0,119,200,0.2),transparent 65%);}
+.culture-visual-title{font-family:'DM Serif Display',serif;font-size:22px;color:#fff;font-weight:400;position:relative;z-index:1;}
+.culture-visual-title em{font-style:italic;color:var(--sky);}
+.culture-fact{display:flex;gap:16px;align-items:flex-start;position:relative;z-index:1;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.06);}
+.culture-fact:last-child{border-bottom:none;}
+.culture-fact-icon{width:36px;height:36px;background:rgba(0,119,200,0.2);border:1px solid rgba(0,119,200,0.35);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.culture-fact-icon svg{width:16px;height:16px;fill:none;stroke:var(--sky);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+.culture-fact strong{display:block;font-size:13px;font-weight:600;color:#fff;margin-bottom:3px;}
+.culture-fact p{font-size:12px;color:rgba(255,255,255,0.45);line-height:1.6;font-weight:300;}
+
+/* OPENINGS */
+.openings-section{background:var(--gray-100);padding:110px 80px;}
+.section-header{text-align:center;max-width:680px;margin:0 auto 56px;}
+.section-label{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;}
+.section-title{font-family:'DM Serif Display',serif;font-size:clamp(28px,3.5vw,48px);font-weight:400;line-height:1.1;letter-spacing:-0.02em;color:var(--navy);}
+.section-title em{font-style:italic;color:var(--blue);}
+.section-desc{font-size:16px;line-height:1.75;color:var(--gray-500);font-weight:300;margin-top:16px;}
+
+.openings-list{display:flex;flex-direction:column;gap:2px;background:var(--gray-200);}
+.opening-card{background:#fff;padding:36px 44px;display:flex;justify-content:space-between;align-items:center;gap:40px;transition:background .2s;}
+.opening-card:hover{background:#EFF6FF;}
+.opening-left{}
+.opening-title{font-family:'DM Serif Display',serif;font-size:20px;font-weight:400;color:var(--navy);margin-bottom:8px;}
+.opening-meta{display:flex;gap:16px;align-items:center;}
+.opening-tag{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);background:rgba(0,119,200,0.08);padding:4px 10px;}
+.opening-location{font-size:12px;color:var(--gray-500);font-weight:400;}
+.opening-desc{font-size:14px;line-height:1.7;color:var(--gray-500);font-weight:300;margin-top:10px;max-width:560px;}
+.btn-outline{border:1.5px solid var(--navy);color:var(--navy);padding:12px 28px;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:background .2s,color .2s;white-space:nowrap;flex-shrink:0;}
+.btn-outline:hover{background:var(--navy);color:#fff;}
+
+.open-cta{background:#fff;padding:56px;border-left:4px solid var(--blue);margin-top:2px;display:grid;grid-template-columns:1fr auto;gap:60px;align-items:center;}
+.open-cta h3{font-family:'DM Serif Display',serif;font-size:22px;font-weight:400;color:var(--navy);margin-bottom:12px;line-height:1.3;}
+.open-cta p{font-size:15px;line-height:1.75;color:var(--gray-500);font-weight:300;max-width:540px;}
+.btn-primary{background:var(--blue);color:#fff;padding:14px 32px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:background .2s,transform .15s;white-space:nowrap;}
+.btn-primary:hover{background:var(--blue2);transform:translateY(-2px);}
+
+footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,0.07);}
+.footer-logo{display:flex;align-items:center;gap:12px;}
+.footer-logo-text{color:rgba(255,255,255,0.45);font-size:13px;}
+.footer-links{display:flex;gap:28px;list-style:none;}
+.footer-links a{color:rgba(255,255,255,0.3);text-decoration:none;font-size:11px;letter-spacing:0.07em;text-transform:uppercase;transition:color .2s;}
+.footer-links a:hover{color:#fff;}
+.footer-copy{color:rgba(255,255,255,0.2);font-size:11px;}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:none;}
+.reveal-delay-1{transition-delay:.12s;}
+.reveal-delay-2{transition-delay:.24s;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-top">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon"><svg viewBox="0 0 40 36" fill="none"><path d="M30 28H10a7 7 0 01-.9-13.94A8.5 8.5 0 0126 20a7 7 0 014 8z" fill="white"/><path d="M30 28a7 7 0 000-14 7 7 0 01.9.06A8.5 8.5 0 0116 8a8.5 8.5 0 0114 7.94A7 7 0 0130 28z" fill="white"/><path d="M33 4a7 7 0 010 10A7 7 0 0033 4z" fill="#38BDF8"/><circle cx="30" cy="9" r="5" fill="#38BDF8"/><circle cx="33.5" cy="7.5" r="4" fill="#0077C8"/></svg></div>
+      <span class="nav-logo-text">CloudCrest</span>
+    </a>
+    <a href="contact.html" class="nav-cta">Get In Touch</a>
+  </div>
+  <ul class="nav-tabs">
+    <li class="nav-tab"><a href="services.html">What We Do<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+      <div class="nav-dropdown"><a href="services.html#implementation">Implementation</a><a href="services.html#managed-services">Managed Services</a><a href="services.html#integrations">Integrations</a><a href="services.html#custom-development">Custom Development</a><a href="services.html#training">Training</a><a href="services.html#on-site-visits">On-Site Visits</a></div>
+    </li>
+    <li class="nav-tab"><a href="think.html">What We Think<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+      <div class="nav-dropdown"><a href="think.html">Transportation Tech</a><a href="think.html">Salesforce</a><a href="think.html">Operations</a></div>
+    </li>
+    <li class="nav-tab"><a href="about.html">Who We Are<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+      <div class="nav-dropdown"><a href="about.html#story">Our Story</a><a href="about.html#values">Our Values</a><a href="about.html#testimonials">Client Testimonials</a><a href="about.html#contact">Contact Us</a></div>
+    </li>
+    <li class="nav-tab active"><a href="careers.html">Careers<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+      <div class="nav-dropdown"><a href="careers.html#openings">Open Positions</a><a href="careers.html#culture">Life at CloudCrest</a></div>
+    </li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-label">Careers</div>
+  <h1>Do the best work of your <em>career</em></h1>
+  <p>CloudCrest is a small, focused team that punches above its weight. If you're passionate about Salesforce, transportation, and building real things for real clients — we should talk.</p>
+</div>
+
+<!-- CULTURE -->
+<div class="culture-section" id="culture">
+  <div class="culture-body reveal">
+    <div class="culture-label">Life at CloudCrest</div>
+    <h2 class="culture-title">Small team. <em>Big impact.</em></h2>
+    <p>Working at CloudCrest means you're not a cog in a machine. You own your engagements, you talk directly to clients, and the work you do shows up immediately in how a business operates. There's no hiding behind layers of project managers.</p>
+    <p>We stay small on purpose. It keeps us focused, keeps quality high, and keeps the work meaningful.</p>
+    <div class="culture-perks">
+      <div class="culture-perk"><div class="culture-perk-dot"></div><div><strong>Ownership from day one</strong><p>You lead engagements, not support them. Real responsibility, real learning.</p></div></div>
+      <div class="culture-perk"><div class="culture-perk-dot"></div><div><strong>Deep industry focus</strong><p>Become a genuine expert in transportation Salesforce — not a generalist.</p></div></div>
+      <div class="culture-perk"><div class="culture-perk-dot"></div><div><strong>Flexible, remote-first</strong><p>Work from anywhere, with occasional on-site client visits that break up the routine.</p></div></div>
+      <div class="culture-perk"><div class="culture-perk-dot"></div><div><strong>No bureaucracy</strong><p>Good ideas get implemented. Decisions get made. Things actually happen.</p></div></div>
+    </div>
+  </div>
+  <div class="reveal reveal-delay-1">
+    <div class="culture-visual">
+      <div class="culture-visual-title">What makes this place <em>different</em></div>
+      <div class="culture-fact">
+        <div class="culture-fact-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+        <div><strong>Direct client access</strong><p>You'll be in the room — or on the floor — with clients from the start</p></div>
+      </div>
+      <div class="culture-fact">
+        <div class="culture-fact-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5"/></svg></div>
+        <div><strong>Niche expertise</strong><p>Go deep on transportation Salesforce — a rare and valuable specialization</p></div>
+      </div>
+      <div class="culture-fact">
+        <div class="culture-fact-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+        <div><strong>Real flexibility</strong><p>Remote-first with a culture that respects your time and life outside work</p></div>
+      </div>
+      <div class="culture-fact">
+        <div class="culture-fact-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <div><strong>Fast decisions</strong><p>No layers. When something needs to happen, it happens</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OPENINGS -->
+<div class="openings-section" id="openings">
+  <div class="section-header reveal">
+    <div class="section-label">Open Positions</div>
+    <h2 class="section-title">Current <em>openings</em></h2>
+    <p class="section-desc">We hire for talent, curiosity, and character — not just credentials. If you're a strong fit for our culture, we'll always make room for the right person.</p>
+  </div>
+
+  <div class="openings-list">
+    <div class="opening-card reveal">
+      <div class="opening-left">
+        <div class="opening-title">Salesforce Consultant — Transportation</div>
+        <div class="opening-meta">
+          <span class="opening-tag">Full-Time</span>
+          <span class="opening-location">Remote (U.S.) · Occasional Travel</span>
+        </div>
+        <p class="opening-desc">Lead end-to-end Salesforce implementations for transportation clients. You'll manage discovery, configuration, and go-live — owning the client relationship throughout.</p>
+      </div>
+      <a href="contact.html" class="btn-outline">Apply Now</a>
+    </div>
+    <div class="opening-card reveal">
+      <div class="opening-left">
+        <div class="opening-title">Salesforce Developer</div>
+        <div class="opening-meta">
+          <span class="opening-tag">Full-Time</span>
+          <span class="opening-location">Remote (U.S.) · Occasional Travel</span>
+        </div>
+        <p class="opening-desc">Build custom Apex, LWC, and Flow solutions for transportation clients. Strong Salesforce development skills required; transportation experience a plus.</p>
+      </div>
+      <a href="contact.html" class="btn-outline">Apply Now</a>
+    </div>
+    <div class="opening-card reveal">
+      <div class="opening-left">
+        <div class="opening-title">Integration Specialist — EDI & APIs</div>
+        <div class="opening-meta">
+          <span class="opening-tag">Full-Time</span>
+          <span class="opening-location">Remote (U.S.) · Occasional Travel</span>
+        </div>
+        <p class="opening-desc">Design and implement integrations between Salesforce and transportation platforms — EDI, TMS systems, load boards, and third-party APIs.</p>
+      </div>
+      <a href="contact.html" class="btn-outline">Apply Now</a>
+    </div>
+  </div>
+
+  <div class="open-cta reveal">
+    <div>
+      <h3>Don't see your role? We're always interested in great people.</h3>
+      <p>If you think you'd be a fit for CloudCrest — even if we don't have an active opening — send us a note. We'd rather hear from you now than miss out later.</p>
+    </div>
+    <a href="contact.html" class="btn-primary">Get In Touch</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">
+    <div><svg width="44" height="40" viewBox="0 0 44 40" fill="none"><path d="M8 32a8 8 0 010-16c.3 0 .6 0 .9.03A10 10 0 0128 22a8 8 0 010 16H8z" fill="white"/><circle cx="33" cy="11" r="7" fill="#38BDF8"/><circle cx="37" cy="8.5" r="6" fill="#0A1628"/></svg></div>
+    <span class="footer-logo-text">CloudCrest, LLC</span>
+  </div>
+  <ul class="footer-links">
+    <li><a href="services.html">What We Do</a></li><li><a href="think.html">What We Think</a></li>
+    <li><a href="about.html">Who We Are</a></li><li><a href="careers.html">Careers</a></li><li><a href="contact.html">Contact</a></li>
+  </ul>
+  <span class="footer-copy">© 2026 CloudCrest, LLC. All Rights Reserved.</span>
+</footer>
+
+<script>
+const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>

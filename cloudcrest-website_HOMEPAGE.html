@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CloudCrest</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0A1628;--blue:#0077C8;--blue2:#005FA3;--sky:#38BDF8;
+  --white:#fff;--gray-100:#f5f7fa;--gray-200:#e2e8f0;--gray-500:#64748b;--gray-800:#1e293b;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans','Helvetica Neue',sans-serif;background:var(--white);color:var(--navy);overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;background:transparent;transition:background .4s,border-color .4s;border-bottom:1px solid transparent;}
+nav.scrolled{background:var(--navy);border-bottom-color:rgba(255,255,255,0.08);}
+.nav-top{display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-icon{width:56px;height:56px;display:flex;align-items:center;justify-content:center;}
+.nav-logo-icon svg{width:22px;height:22px;}
+.nav-logo-text{color:#fff;font-size:16px;font-weight:600;letter-spacing:-0.01em;}
+.nav-tabs{display:flex;list-style:none;border-top:1px solid rgba(255,255,255,0.07);padding:0 32px;}
+.nav-tab{position:relative;}
+.nav-tab>a{display:flex;align-items:center;gap:5px;height:40px;padding:0 18px;color:rgba(255,255,255,0.65);text-decoration:none;font-size:12px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;transition:color .2s,background .2s;white-space:nowrap;position:relative;}
+.nav-tab>a svg{width:9px;height:9px;transition:transform .2s;flex-shrink:0;}
+.nav-tab:hover>a{color:#fff;background:rgba(255,255,255,0.05);}
+.nav-tab:hover>a svg{transform:rotate(180deg);}
+.nav-tab>a::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--blue);transform:scaleX(0);transition:transform .2s;}
+.nav-tab:hover>a::after{transform:scaleX(1);}
+.nav-dropdown{position:absolute;top:100%;left:0;background:var(--navy);border:1px solid rgba(255,255,255,0.1);border-top:2px solid var(--blue);min-width:250px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .2s,transform .2s,visibility .2s;z-index:400;}
+.nav-tab:hover .nav-dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+.nav-dropdown a{display:block;padding:13px 22px;color:rgba(255,255,255,0.6);text-decoration:none;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.05);transition:color .15s,padding-left .15s,background .15s;}
+.nav-dropdown a:last-child{border-bottom:none;}
+.nav-dropdown a:hover{color:#fff;padding-left:30px;background:rgba(255,255,255,0.04);}
+.nav-cta{background:var(--blue);color:#fff;padding:10px 22px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:background .2s;white-space:nowrap;}
+.nav-cta:hover{background:var(--blue2);}
+
+/* HERO */
+.hero{position:relative;height:100vh;overflow:hidden;background:var(--navy);}
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;}
+.hero-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 40%,rgba(6,13,26,0.75) 100%);pointer-events:none;z-index:2;}
+.hero-fade{position:absolute;bottom:0;left:0;right:0;height:40px;background:linear-gradient(to bottom,transparent,var(--navy));pointer-events:none;z-index:2;}
+.hero-content{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 32px;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--sky);margin-bottom:28px;}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';display:block;width:28px;height:1px;background:var(--sky);}
+.hero-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(44px,7vw,88px);font-weight:400;line-height:1.04;color:#fff;margin-bottom:24px;letter-spacing:-0.02em;text-shadow:0 2px 60px rgba(0,0,0,0.5);max-width:820px;}
+.hero-title em{font-style:italic;color:var(--sky);}
+.hero-desc{font-size:18px;font-weight:300;line-height:1.7;color:rgba(255,255,255,0.65);max-width:520px;margin-bottom:48px;}
+.hero-actions{display:flex;gap:18px;align-items:center;justify-content:center;}
+.btn-primary{background:var(--blue);color:#fff;padding:16px 38px;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:background .2s,transform .15s;}
+.btn-primary:hover{background:var(--blue2);transform:translateY(-2px);}
+.btn-ghost{color:#fff;font-size:13px;font-weight:500;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,0.35);padding-bottom:2px;transition:border-color .2s;}
+.btn-ghost:hover{border-color:#fff;}
+.scroll-indicator{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;color:rgba(255,255,255,0.35);font-size:10px;font-weight:600;letter-spacing:0.13em;text-transform:uppercase;z-index:6;}
+.scroll-mouse{width:22px;height:34px;border:1.5px solid rgba(255,255,255,0.25);border-radius:11px;position:relative;}
+.scroll-mouse::after{content:'';position:absolute;top:6px;left:50%;transform:translateX(-50%);width:3px;height:7px;background:rgba(255,255,255,0.45);border-radius:2px;animation:scrollDot 2s ease-in-out infinite;}
+@keyframes scrollDot{0%{opacity:1;top:6px;}80%{opacity:0;top:18px;}100%{opacity:0;top:6px;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:none;}}
+.hero-eyebrow{opacity:0;animation:fadeUp .9s ease .3s forwards;}
+.hero-title{opacity:0;animation:fadeUp .9s ease .5s forwards;}
+.hero-desc{opacity:0;animation:fadeUp .9s ease .72s forwards;}
+.hero-actions{opacity:0;animation:fadeUp .9s ease .92s forwards;}
+
+/* CINEMATIC SCROLL */
+#cinematic-wrap{position:relative;height:220vh;}
+#cinematic-sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--navy);}
+#cinematic-canvas{position:absolute;inset:0;width:100%;height:100%;}
+#cinematic-sticky::after{content:'';position:absolute;bottom:0;left:0;right:0;height:160px;background:linear-gradient(to bottom,transparent,var(--navy));pointer-events:none;z-index:5;}
+
+/* Story text — large, bottom of panel */
+.act-story{position:absolute;top:0;left:0;right:0;z-index:10;padding:120px 80px 0;pointer-events:none;}
+.act-story-label{font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--sky);margin-bottom:14px;opacity:0;transform:translateY(10px);transition:opacity .45s,transform .45s;}
+.act-story-label.visible{opacity:1;transform:none;}
+.act-story-title{font-family:'DM Serif Display',serif;font-size:clamp(28px,4vw,54px);font-weight:400;line-height:1.1;letter-spacing:-0.02em;color:#fff;max-width:660px;opacity:0;transform:translateY(14px);transition:opacity .5s .07s,transform .5s .07s;}
+.act-story-title.visible{opacity:1;transform:none;}
+.act-story-title em{font-style:italic;color:var(--sky);}
+
+/* TICKER */
+.ticker{background:var(--blue);padding:13px 0;overflow:hidden;white-space:nowrap;}
+.ticker-track{display:inline-flex;animation:ticker 30s linear infinite;}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.ticker-item{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.9);padding:0 36px;}
+.ticker-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.45);flex-shrink:0;}
+
+/* STATS */
+.stats-band{background:var(--gray-100);padding:56px 80px;display:grid;grid-template-columns:repeat(3,1fr);gap:40px;border-bottom:1px solid var(--gray-200);}
+.stat{padding-left:28px;border-left:3px solid var(--blue);}
+.stat-number{font-family:'DM Serif Display',serif;font-size:52px;font-weight:400;color:var(--navy);line-height:1;letter-spacing:-0.03em;margin-bottom:8px;}
+.stat-label{font-size:11px;font-weight:600;color:var(--gray-500);letter-spacing:0.07em;text-transform:uppercase;}
+
+/* SECTION SHARED */
+.section-header{text-align:center;max-width:680px;margin:0 auto 72px auto;}
+.section-label{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;}
+.section-title{font-family:'DM Serif Display',serif;font-size:clamp(28px,3.5vw,48px);font-weight:400;line-height:1.1;letter-spacing:-0.02em;color:var(--navy);}
+.section-title em{font-style:italic;color:var(--blue);}
+.section-desc{font-size:16px;line-height:1.75;color:var(--gray-500);font-weight:300;margin-top:16px;}
+
+/* SERVICES */
+.services{padding:110px 80px;background:#fff;}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--gray-200);}
+.service-card{background:#fff;padding:48px 40px;position:relative;overflow:hidden;transition:background .3s;}
+.service-card::after{content:'';position:absolute;bottom:0;left:0;height:3px;width:0;background:var(--blue);transition:width .4s ease;}
+.service-card:hover::after{width:100%;}
+.service-card:hover{background:var(--gray-100);}
+.service-icon-wrap{width:52px;height:52px;background:var(--blue);display:flex;align-items:center;justify-content:center;margin-bottom:28px;}
+.service-icon-wrap svg{width:26px;height:26px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.service-num{font-size:10px;font-weight:700;letter-spacing:0.14em;color:var(--gray-500);margin-bottom:14px;display:block;text-transform:uppercase;}
+.service-title{font-family:'DM Serif Display',serif;font-size:22px;font-weight:400;color:var(--navy);margin-bottom:12px;line-height:1.25;}
+.service-desc{font-size:14px;line-height:1.8;color:var(--gray-500);font-weight:300;}
+
+/* ROUTE BAND */
+.route-band{background:var(--navy);padding:64px 80px;}
+.route-band-title{font-family:'DM Serif Display',serif;font-size:clamp(20px,2.5vw,34px);color:#fff;font-weight:400;margin-bottom:48px;text-align:center;}
+.route-band-title em{font-style:italic;color:var(--sky);}
+#route-canvas{display:block;width:100%;height:220px;}
+
+/* TESTIMONIAL */
+.testimonial-section{background:var(--gray-800);padding:110px 80px;position:relative;overflow:hidden;}
+.testimonial-section::before{content:'\201C';position:absolute;top:-80px;left:60px;font-size:400px;color:var(--blue);opacity:0.05;font-family:Georgia,serif;line-height:1;}
+.testimonial-inner{max-width:800px;margin:0 auto;position:relative;z-index:1;}
+.testimonial-text{font-family:'DM Serif Display',serif;font-size:clamp(20px,2.5vw,32px);font-weight:400;line-height:1.55;color:#fff;margin-bottom:40px;font-style:italic;}
+.testimonial-text strong{color:var(--sky);font-style:normal;}
+.testimonial-cta{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--sky);text-decoration:none;border-bottom:1px solid var(--sky);padding-bottom:2px;transition:opacity .2s;}
+.testimonial-cta:hover{opacity:.7;}
+
+/* INSIGHTS */
+.insights-section{padding:110px 80px;background:var(--gray-100);}
+.insights-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--gray-200);}
+.insight-card{background:#fff;padding:40px 34px;display:flex;flex-direction:column;gap:14px;transition:background .2s;}
+.insight-card:hover{background:#EFF6FF;}
+.insight-tag{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--blue);}
+.insight-title{font-family:'DM Serif Display',serif;font-size:18px;font-weight:400;line-height:1.35;color:var(--navy);}
+.insight-excerpt{font-size:14px;line-height:1.7;color:var(--gray-500);font-weight:300;flex:1;}
+.insight-link{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--blue);text-decoration:none;transition:opacity .2s;}
+.insight-link:hover{opacity:.7;}
+
+/* ABOUT */
+.about-section{background:var(--navy);padding:110px 80px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.about-left .section-label{justify-content:flex-start;}
+.about-left .section-title{color:#fff;text-align:left;}
+.about-left .section-title em{color:var(--sky);}
+.about-desc{font-size:16px;line-height:1.75;color:rgba(255,255,255,0.55);font-weight:300;max-width:440px;margin-top:20px;}
+.about-values{display:flex;flex-direction:column;gap:24px;margin-top:44px;}
+.about-value{display:flex;gap:16px;align-items:flex-start;}
+.about-value-dot{width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:5px;}
+.about-value strong{display:block;color:#fff;font-size:14px;font-weight:600;margin-bottom:4px;}
+.about-value p{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.65;font-weight:300;}
+.network-wrap{position:relative;height:420px;}
+#network-canvas{position:absolute;inset:0;width:100%;height:100%;}
+
+/* CONTACT */
+.contact-section{padding:110px 80px;background:#fff;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:start;}
+.contact-info h2{font-family:'DM Serif Display',serif;font-size:clamp(26px,3vw,42px);font-weight:400;line-height:1.12;letter-spacing:-0.02em;margin-bottom:28px;}
+.contact-info h2 em{font-style:italic;color:var(--blue);}
+.contact-info>p{font-size:16px;line-height:1.75;color:var(--gray-500);font-weight:300;margin-bottom:40px;}
+.contact-details{display:flex;flex-direction:column;gap:18px;}
+.contact-item{display:flex;align-items:flex-start;gap:14px;font-size:15px;color:var(--navy);}
+.contact-item svg{width:18px;height:18px;color:var(--blue);flex-shrink:0;margin-top:3px;}
+.contact-form{display:flex;flex-direction:column;gap:22px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-group{display:flex;flex-direction:column;gap:7px;}
+.form-group label{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-500);}
+.form-group input,.form-group textarea{border:none;border-bottom:1px solid var(--gray-200);padding:11px 0;font-size:15px;font-family:inherit;color:var(--navy);background:transparent;outline:none;transition:border-color .2s;resize:vertical;}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--blue);}
+.form-group input::placeholder,.form-group textarea::placeholder{color:var(--gray-200);}
+.form-submit{background:var(--navy);color:#fff;border:none;padding:17px 40px;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;align-self:flex-start;transition:background .2s,transform .15s;font-family:inherit;}
+.form-submit:hover{background:var(--blue);transform:translateY(-2px);}
+
+/* CAREERS */
+.careers-section{padding:110px 80px;background:var(--gray-100);}
+.careers-cta-block{display:grid;grid-template-columns:1fr auto;gap:60px;align-items:center;background:#fff;padding:56px;border-left:4px solid var(--blue);}
+.careers-text h3{font-family:'DM Serif Display',serif;font-size:22px;font-weight:400;color:var(--navy);margin-bottom:14px;line-height:1.3;}
+.careers-text p{font-size:15px;line-height:1.75;color:var(--gray-500);font-weight:300;max-width:540px;}
+
+/* FOOTER */
+footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,0.07);}
+.footer-logo{display:flex;align-items:center;gap:12px;}
+.footer-logo-icon{width:36px;height:36px;display:flex;align-items:center;justify-content:center;}
+.footer-logo-icon svg{width:15px;height:15px;}
+.footer-logo-text{color:rgba(255,255,255,0.45);font-size:13px;}
+.footer-links{display:flex;gap:28px;list-style:none;}
+.footer-links a{color:rgba(255,255,255,0.3);text-decoration:none;font-size:11px;letter-spacing:0.07em;text-transform:uppercase;transition:color .2s;}
+.footer-links a:hover{color:#fff;}
+.footer-copy{color:rgba(255,255,255,0.2);font-size:11px;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:none;}
+.reveal-delay-1{transition-delay:.12s;}
+.reveal-delay-2{transition-delay:.24s;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-top">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon"><svg viewBox="0 0 40 36" fill="none" xmlns="http://www.w3.org/2000/svg"><!-- cloud --><path d="M30 28H10a7 7 0 01-.9-13.94A8.5 8.5 0 0126 20a7 7 0 014 8z" fill="white"/><path d="M30 28a7 7 0 000-14 7 7 0 01.9.06A8.5 8.5 0 0116 8a8.5 8.5 0 0114 7.94A7 7 0 0130 28z" fill="white"/><!-- crescent moon --><path d="M33 4a7 7 0 010 10A7 7 0 0033 4z" fill="#38BDF8"/><circle cx="30" cy="9" r="5" fill="#38BDF8"/><circle cx="33.5" cy="7.5" r="4" fill="#0077C8"/></svg></div>
+      <span class="nav-logo-text">CloudCrest</span>
+    </a>
+    <a href="#contact" class="nav-cta">Get In Touch</a>
+  </div>
+  <ul class="nav-tabs">
+    <li class="nav-tab"><a href="services.html" onclick="window.location='services.html'">What We Do<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+      <div class="nav-dropdown"><a href="services.html#implementation">Implementation</a><a href="services.html#managed-services">Managed Services</a><a href="services.html#integrations">Integrations</a><a href="services.html#custom-development">Custom Development</a><a href="services.html#training">Training</a><a href="services.html#on-site-visits">On-Site Visits</a></div>
+    </li>
+    <li class="nav-tab"><a href="think.html" onclick="window.location='think.html'">What We Think<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+      <div class="nav-dropdown"><a href="think.html">Transportation Tech</a><a href="think.html">Salesforce</a><a href="think.html">Operations</a></div>
+    </li>
+    <li class="nav-tab"><a href="about.html" onclick="window.location='about.html'">Who We Are<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+      <div class="nav-dropdown"><a href="about.html#story">Our Story</a><a href="about.html#values">Our Values</a><a href="about.html#testimonials">Client Testimonials</a><a href="about.html#contact">Contact Us</a></div>
+    </li>
+    <li class="nav-tab"><a href="careers.html" onclick="window.location='careers.html'">Careers<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+      <div class="nav-dropdown"><a href="careers.html#openings">Open Positions</a><a href="careers.html#culture">Life at CloudCrest</a></div>
+    </li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-vignette"></div>
+  <div class="hero-fade"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Salesforce for Transportation</div>
+    <h1 class="hero-title">Moving the industry<br>forward, <em>mile by mile</em></h1>
+    <p class="hero-desc">CloudCrest empowers transportation companies with specialized Salesforce consulting — optimizing operations, boosting profitability, and driving sustainable growth.</p>
+    <div class="hero-actions">
+      <a href="#services" class="btn-primary">Explore Services</a>
+      <a href="#contact" class="btn-ghost">Contact Us →</a>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <div class="scroll-mouse"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- CINEMATIC SCROLL -->
+<div id="cinematic-wrap">
+  <div id="cinematic-sticky">
+    <canvas id="cinematic-canvas"></canvas>
+    <div class="act-story">
+      <div class="act-story-label" id="act-story-label"></div>
+      <h2 class="act-story-title" id="act-story-title"></h2>
+    </div>
+    <div class="act-close" id="act-close">
+      <div class="act-close-text">Transportation never stops.<br><em>Neither do we.</em></div>
+      <div class="act-close-sub">Scroll to see how we help</div>
+      <div class="act-close-arrow">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3v14M4 11l6 6 6-6" stroke="rgba(56,189,248,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item"><span class="ticker-dot"></span>Salesforce for Transportation</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>TMS &amp; CRM Integration</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Fleet Operations Optimization</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Route &amp; Dispatch Automation</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Carrier &amp; Broker Solutions</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Managed Salesforce Support</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Salesforce for Transportation</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>TMS &amp; CRM Integration</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Fleet Operations Optimization</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Route &amp; Dispatch Automation</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Carrier &amp; Broker Solutions</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Managed Salesforce Support</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-band">
+  <div class="stat reveal"><div class="stat-number" data-target="100">0</div><div class="stat-label">% Transportation Industry Focus</div></div>
+  <div class="stat reveal reveal-delay-1"><div class="stat-number">6</div><div class="stat-label">Core Service Pillars</div></div>
+  <div class="stat reveal reveal-delay-2"><div class="stat-number">5★</div><div class="stat-label">Client Satisfaction</div></div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-header reveal">
+    <div class="section-label">What We Do</div>
+    <h2 class="section-title">Every mile of your <em>Salesforce journey</em></h2>
+    <p class="section-desc">From ground-up builds to ongoing partnership, we cover the full spectrum of what transportation companies actually need from a Salesforce consultancy.</p>
+  </div>
+  <div class="services-grid" style="grid-template-columns:repeat(3,1fr);">
+    <div class="service-card reveal"><div class="service-icon-wrap"><svg viewBox="0 0 28 28"><rect x="3" y="4" width="22" height="16" rx="1.5"/><path d="M3 11h22M11 11v9"/></svg></div><span class="service-num">01</span><h3 class="service-title">Implementation</h3><p class="service-desc">Net-new Salesforce builds designed from the ground up for transportation — done right the first time, with no shortcuts.</p></div>
+    <div class="service-card reveal reveal-delay-1"><div class="service-icon-wrap"><svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="10"/><path d="M14 6v4M14 18v4M6 14h4M18 14h4M8.9 8.9l2.8 2.8M16.3 16.3l2.8 2.8M19.1 8.9l-2.8 2.8M11.7 16.3l-2.8 2.8"/></svg></div><span class="service-num">02</span><h3 class="service-title">Managed Services</h3><p class="service-desc">Already on Salesforce? We keep your org healthy, add features as you grow, and handle the day-to-day so your team doesn't have to.</p></div>
+    <div class="service-card reveal reveal-delay-2"><div class="service-icon-wrap"><svg viewBox="0 0 28 28"><path d="M6 14h16M14 6l8 8-8 8M3 6v16"/></svg></div><span class="service-num">03</span><h3 class="service-title">Integrations</h3><p class="service-desc">EDI, APIs, TMS, and beyond — we connect Salesforce to the systems your operation already runs on, eliminating silos for good.</p></div>
+    <div class="service-card reveal"><div class="service-icon-wrap"><svg viewBox="0 0 28 28"><polyline points="4,20 10,14 14,18 20,10 24,14"/><path d="M20 6h4v4"/></svg></div><span class="service-num">04</span><h3 class="service-title">Custom Development</h3><p class="service-desc">When the out-of-the-box product doesn't cut it, we build what your business actually needs — custom features, flows, and solutions built for transportation.</p></div>
+    <div class="service-card reveal reveal-delay-1"><div class="service-icon-wrap"><svg viewBox="0 0 28 28"><path d="M14 3L24 8v12L14 25 4 20V8L14 3z"/><path d="M14 3v22M4 8l10 6 10-6"/></svg></div><span class="service-num">05</span><h3 class="service-title">Training</h3><p class="service-desc">Most firms skip this. We don't. Hands-on training that ensures your team actually knows how to use what we build — driving real adoption, not just licenses.</p></div>
+    <div class="service-card reveal reveal-delay-2"><div class="service-icon-wrap"><svg viewBox="0 0 28 28"><path d="M14 4a7 7 0 100 14A7 7 0 0014 4z"/><path d="M14 11v3l2 2"/><path d="M5 22c0-3.3 4-6 9-6s9 2.7 9 6"/></svg></div><span class="service-num">06</span><h3 class="service-title">On-Site Visits</h3><p class="service-desc">We show up in person. Whether it's a go-live, a training session, or a strategic review, we come to you — because some problems are best solved face to face.</p></div>
+  </div>
+</section>
+
+<!-- ROUTE BAND -->
+<div class="route-band">
+  <p class="route-band-title reveal">Connecting your operations, <em>end to end</em></p>
+  <canvas id="route-canvas"></canvas>
+</div>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial-section" id="testimonials">
+  <div class="testimonial-inner reveal">
+    <div class="section-label" style="justify-content:flex-start;margin-bottom:40px;">What Our Clients Say</div>
+    <p class="testimonial-text">"Describing our situation as <strong>lost</strong> might even be putting it mildly. Enter CloudCrest — a true <strong>blessing</strong> in disguise. Their knack for <strong>understanding</strong> a client's requirements is exceptional, and their commitment to customer service has <strong>exceeded our highest expectations.</strong>"</p>
+    <a href="#contact" class="testimonial-cta">Read More Testimonials →</a>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section class="insights-section" id="insights">
+  <div class="section-header reveal">
+    <div class="section-label">What We Think</div>
+    <h2 class="section-title">Insights for the <em>modern</em> carrier</h2>
+    <p class="section-desc">Perspectives on Salesforce, transportation technology, and the strategies that separate high-performing brokers, fleets, and hybrid operations from the rest.</p>
+  </div>
+  <div class="insights-grid">
+    <div class="insight-card reveal"><div class="insight-tag">Transportation Tech</div><h3 class="insight-title">Why TMS + CRM Integration Is the Competitive Edge You're Missing</h3><p class="insight-excerpt">Most carriers manage customer relationships and operations in silos. Here's how a unified Salesforce stack changes everything.</p><a href="#contact" class="insight-link">Read More →</a></div>
+    <div class="insight-card reveal reveal-delay-1"><div class="insight-tag">Salesforce</div><h3 class="insight-title">The Top 5 Salesforce Mistakes Transportation Companies Make</h3><p class="insight-excerpt">A poor implementation costs more than it saves. We break down the most common pitfalls and the path forward.</p><a href="#contact" class="insight-link">Read More →</a></div>
+    <div class="insight-card reveal reveal-delay-2"><div class="insight-tag">Operations</div><h3 class="insight-title">From Bottleneck to Breakthrough: Your Sales Pipeline in Salesforce</h3><p class="insight-excerpt">Visibility into your pipeline shouldn't be a luxury. We explore the reports and dashboards that drive real decisions.</p><a href="#contact" class="insight-link">Read More →</a></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-left reveal">
+    <div class="section-label" style="justify-content:flex-start;">Who We Are</div>
+    <h2 class="section-title" style="color:#fff;text-align:left;">Built for the <em>transportation</em> industry</h2>
+    <p class="about-desc">CloudCrest was founded with a singular focus: helping transportation companies unlock the full power of Salesforce. We bring deep industry knowledge and hands-on expertise — delivering solutions that work from day one.</p>
+    <div class="about-values">
+      <div class="about-value"><div class="about-value-dot"></div><div><strong>Industry Focus</strong><p>We only serve transportation — faster implementations, better outcomes.</p></div></div>
+      <div class="about-value"><div class="about-value-dot"></div><div><strong>Partnership Over Projects</strong><p>Long-term relationships, not one-off engagements. Your success is our success.</p></div></div>
+      <div class="about-value"><div class="about-value-dot"></div><div><strong>Honest Expertise</strong><p>We tell you what you need to hear — then we get it done.</p></div></div>
+    </div>
+  </div>
+  <div class="about-right reveal reveal-delay-1"><div class="network-wrap"><canvas id="network-canvas"></canvas></div></div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-info reveal">
+    <div class="section-label" style="justify-content:flex-start;margin-bottom:16px;">Get In Touch</div>
+    <h2>Let's start your <em>Salesforce</em> journey</h2>
+    <p>Ready to optimize your transportation operations? Reach out and we'll connect you with the right solution.</p>
+    <div class="contact-details">
+      <div class="contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>503-828-7761</div>
+      <div class="contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>info@cloudcrestc.com</div>
+      <div class="contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>P.O. Box 1103, Tualatin, OR 97062</div>
+      <div class="contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg><a href="https://www.linkedin.com/company/cloudcrest-consulting/" target="_blank" style="color:inherit;text-decoration:none;">LinkedIn — CloudCrest</a></div>
+    </div>
+  </div>
+  <form class="contact-form reveal reveal-delay-1" onsubmit="return false;">
+    <div class="form-row">
+      <div class="form-group"><label>First Name</label><input type="text" placeholder="Jane"></div>
+      <div class="form-group"><label>Last Name</label><input type="text" placeholder="Doe"></div>
+    </div>
+    <div class="form-group"><label>Company</label><input type="text" placeholder="Your Company"></div>
+    <div class="form-group"><label>Email</label><input type="email" placeholder="jane@company.com"></div>
+    <div class="form-group"><label>Message</label><textarea rows="4" placeholder="Tell us about your Salesforce needs..."></textarea></div>
+    <button type="submit" class="form-submit">Send Message</button>
+  </form>
+</section>
+
+<!-- CAREERS -->
+<section class="careers-section" id="careers">
+  <div class="section-header reveal">
+    <div class="section-label">Careers</div>
+    <h2 class="section-title">Grow with <em>CloudCrest</em></h2>
+    <p class="section-desc">We're always looking for talented people passionate about Salesforce, transportation, and making a real impact for clients.</p>
+  </div>
+  <div class="careers-cta-block reveal">
+    <div class="careers-text"><h3>We're a small, specialized team — and we like it that way.</h3><p>Working at CloudCrest means owning your projects, learning constantly, and building meaningful relationships with clients in an industry that moves the world. No bureaucracy. Just great work.</p></div>
+    <a href="#contact" class="btn-primary">Explore Opportunities</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <div class="footer-logo-icon"><svg width="44" height="40" viewBox="0 0 44 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 32a8 8 0 010-16c.3 0 .6 0 .9.03A10 10 0 0128 22a8 8 0 010 16H8z" fill="white"/><circle cx="33" cy="11" r="7" fill="#38BDF8"/><circle cx="37" cy="8.5" r="6" fill="#0A1628"/></svg></div>
+    <span class="footer-logo-text">CloudCrest, LLC</span>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#services">What We Do</a></li><li><a href="#insights">What We Think</a></li>
+    <li><a href="#about">Who We Are</a></li><li><a href="#careers">Careers</a></li><li><a href="#contact">Contact</a></li>
+  </ul>
+  <span class="footer-copy">© 2026 CloudCrest, LLC. All Rights Reserved.</span>
+</footer>
+
+<script>
+function safeGrad(ctx, x, y, r0, r1){
+  if(!isFinite(x)||!isFinite(y)||!isFinite(r0)||!isFinite(r1)) return null;
+  return ctx.createRadialGradient(x,y,r0,x,y,r1);
+}
+
+/* ══ HERO CANVAS ══ */
+(function(){
+  const canvas=document.getElementById('hero-canvas');
+  const ctx=canvas.getContext('2d');
+  let W=0,H=0;
+  function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;}
+  resize(); window.addEventListener('resize',resize);
+
+  const cityNodes=[
+    {xr:.08,yr:.55},{xr:.20,yr:.28},{xr:.32,yr:.68},{xr:.44,yr:.22},
+    {xr:.50,yr:.50},{xr:.58,yr:.78},{xr:.67,yr:.32},{xr:.78,yr:.60},
+    {xr:.88,yr:.25},{xr:.94,yr:.72},{xr:.15,yr:.82},{xr:.70,yr:.85},
+  ];
+  const edges=[[0,1],[0,2],[1,3],[1,4],[2,4],[2,5],[3,4],[3,6],[4,5],[4,6],[4,7],[5,7],[5,11],[6,7],[6,8],[7,8],[7,9],[8,9],[9,11],[0,10],[2,10],[10,5]];
+  const packets=edges.map(([a,b])=>({a,b,t:Math.random(),speed:.0018+Math.random()*.0025,dir:Math.random()>.5?1:-1}));
+  const stars=Array.from({length:160},()=>({x:Math.random(),y:Math.random(),r:Math.random()*.9+.2,tw:Math.random()*Math.PI*2}));
+
+  function draw(ts){
+    if(!W||!H){requestAnimationFrame(draw);return;}
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#060d1a';ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle='rgba(0,119,200,0.05)';ctx.lineWidth=1;
+    for(let x=0;x<W;x+=70){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(let y=0;y<H;y+=70){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+    stars.forEach(s=>{
+      const tw=Math.sin(ts*.0005+s.tw)*.3+.7;
+      ctx.globalAlpha=tw*.55;ctx.fillStyle='#fff';
+      ctx.beginPath();ctx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2);ctx.fill();
+    });
+    ctx.globalAlpha=1;
+    const ns=cityNodes.map(n=>({x:n.xr*W,y:n.yr*H}));
+    edges.forEach(([a,b])=>{
+      ctx.beginPath();ctx.moveTo(ns[a].x,ns[a].y);ctx.lineTo(ns[b].x,ns[b].y);
+      ctx.strokeStyle='rgba(0,119,200,0.22)';ctx.lineWidth=1;ctx.stroke();
+    });
+    packets.forEach(p=>{
+      p.t+=p.speed*p.dir;if(p.t>1)p.t=0;if(p.t<0)p.t=1;
+      const na=ns[p.a],nb=ns[p.b];
+      const px=na.x+(nb.x-na.x)*p.t,py=na.y+(nb.y-na.y)*p.t;
+      const g=safeGrad(ctx,px,py,0,11);if(!g)return;
+      g.addColorStop(0,'rgba(56,189,248,0.75)');g.addColorStop(1,'rgba(56,189,248,0)');
+      ctx.beginPath();ctx.arc(px,py,11,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+      ctx.beginPath();ctx.arc(px,py,2.5,0,Math.PI*2);ctx.fillStyle='#38BDF8';ctx.fill();
+    });
+    ns.forEach((n,i)=>{
+      const pulse=Math.sin(ts*.0016+i*1.1)*.5+.5;
+      const g=safeGrad(ctx,n.x,n.y,0,9+pulse*4);if(g){g.addColorStop(0,`rgba(56,189,248,${.06+pulse*.1})`);g.addColorStop(1,'rgba(56,189,248,0)');ctx.beginPath();ctx.arc(n.x,n.y,9+pulse*4,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();}
+      ctx.beginPath();ctx.arc(n.x,n.y,5,0,Math.PI*2);ctx.fillStyle=`rgba(0,119,200,${.6+pulse*.35})`;ctx.fill();
+      ctx.beginPath();ctx.arc(n.x,n.y,2.5,0,Math.PI*2);ctx.fillStyle=`rgba(56,189,248,${.7+pulse*.3})`;ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+
+/* ══ CINEMATIC SCROLL ══ */
+(function(){
+  const wrap=document.getElementById('cinematic-wrap');
+  const canvas=document.getElementById('cinematic-canvas');
+  const ctx=canvas.getContext('2d');
+  const storyLabel=document.getElementById('act-story-label');
+  const storyTitle=document.getElementById('act-story-title');
+
+  let W=0,H=0;
+  function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;}
+  resize(); window.addEventListener('resize',resize);
+
+  const stars=Array.from({length:220},()=>({x:Math.random(),y:Math.random(),r:Math.random()*1.3+.3,tw:Math.random()*Math.PI*2}));
+  let dashOffset=0;
+
+  const cityNodes=[
+    {xr:.08,yr:.33,label:'Seattle'},
+    {xr:.10,yr:.40,label:'Portland'},
+    {xr:.08,yr:.57,label:'San Francisco'},
+    {xr:.11,yr:.72,label:'Los Angeles'},
+    {xr:.13,yr:.85,label:'San Diego'},
+    {xr:.28,yr:.68,label:'Phoenix'},
+    {xr:.30,yr:.47,label:'Salt Lake'},
+    {xr:.38,yr:.42,label:'Denver'},
+    {xr:.44,yr:.75,label:'El Paso'},
+    {xr:.55,yr:.33,label:'Minneapolis'},
+    {xr:.58,yr:.47,label:'Kansas City'},
+    {xr:.58,yr:.68,label:'Dallas'},
+    {xr:.68,yr:.44,label:'Chicago'},
+    {xr:.72,yr:.62,label:'Memphis'},
+    {xr:.78,yr:.72,label:'Atlanta'},
+    {xr:.84,yr:.38,label:'New York'},
+    {xr:.83,yr:.46,label:'Philadelphia'},
+    {xr:.88,yr:.78,label:'Miami'},
+  ];
+  const cityEdges=[
+    [0,1],[1,2],[2,3],[3,4],[3,6],[4,5],[5,8],
+    [6,7],[7,8],[7,10],[7,9],[9,10],[9,12],
+    [10,11],[10,12],[11,13],[11,8],[12,13],
+    [12,15],[13,14],[14,17],[14,16],[15,16],[16,17],
+  ];
+  const packets=cityEdges.map(([a,b],i)=>({a,b,t:i/cityEdges.length,speed:.004+Math.random()*.005,dir:1}));
+
+  const roadTrucks=[
+    {lane:-.13,speed:.00048,t:.08},{lane:.13,speed:.00035,t:.42},
+    {lane:-.06,speed:.00060,t:.65},{lane:.06,speed:.00042,t:.22},
+    {lane:-.09,speed:.00055,t:.80},
+  ];
+
+  const dataLabels=[
+    {xr:.22,yr:.42,txt:'TMS Sync'},
+    {xr:.44,yr:.32,txt:'Fleet Status'},
+    {xr:.60,yr:.55,txt:'Dispatch Queue'},
+    {xr:.76,yr:.44,txt:'Route Opt.'},
+    {xr:.28,yr:.55,txt:'Load Tracking'},
+    {xr:.52,yr:.62,txt:'ELD Compliance'},
+    {xr:.68,yr:.34,txt:'Carrier Portal'},
+    {xr:.82,yr:.58,txt:'Freight Audit'},
+    {xr:.40,yr:.48,txt:'Live ETAs'},
+    {xr:.86,yr:.32,txt:'CRM Active'},
+  ];
+
+  function lerp(a,b,t){return a+(b-a)*t;}
+  function clamp(v,lo,hi){return Math.max(lo,Math.min(hi,v));}
+  function easeIO(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
+
+  function drawStars(alpha,ts){
+    stars.forEach(s=>{
+      const tw=Math.sin(ts*.0006+s.tw)*.3+.7;
+      ctx.globalAlpha=alpha*tw*.7;ctx.fillStyle='#fff';
+      ctx.beginPath();ctx.arc(s.x*W,s.y*H*.65,s.r,0,Math.PI*2);ctx.fill();
+    });ctx.globalAlpha=1;
+  }
+
+  function drawTruck(cx,cy,sc,alpha){
+    if(alpha<=0||!isFinite(cx)||!isFinite(cy)) return;
+    ctx.save();ctx.globalAlpha=Math.min(1,alpha);
+    ctx.translate(cx,cy);ctx.scale(sc,sc);
+    ctx.fillStyle='#1a3a5c';ctx.fillRect(-54,-9,34,15);
+    ctx.fillStyle='#0077C8';ctx.fillRect(-20,-11,24,17);
+    ctx.fillStyle='#005FA3';ctx.fillRect(-18,-19,18,8);
+    ctx.fillStyle='#05101f';
+    [-44,-14].forEach(wx=>{ctx.beginPath();ctx.arc(wx,6,4.5,0,Math.PI*2);ctx.fill();});
+    ctx.fillStyle='rgba(255,240,120,.9)';ctx.fillRect(4,-4,3,5);
+    const hg=safeGrad(ctx,14,-2,0,22);
+    if(hg){hg.addColorStop(0,'rgba(255,240,120,.25)');hg.addColorStop(1,'rgba(255,240,120,0)');ctx.fillStyle=hg;ctx.beginPath();ctx.arc(14,-2,22,0,Math.PI*2);ctx.fill();}
+    ctx.restore();
+  }
+
+  function drawCityLine(vpy,ts){
+    const buildings=[
+      {x:.22,w:.04,h:.10},{x:.27,w:.025,h:.07},{x:.31,w:.045,h:.13},
+      {x:.36,w:.02,h:.09},{x:.39,w:.035,h:.08},{x:.43,w:.04,h:.15},
+      {x:.48,w:.02,h:.10},{x:.51,w:.038,h:.11},{x:.56,w:.045,h:.13},
+      {x:.61,w:.028,h:.08},{x:.64,w:.036,h:.10},{x:.68,w:.022,h:.07},
+      {x:.71,w:.04,h:.09},{x:.75,w:.03,h:.12},
+    ];
+    buildings.forEach(b=>{
+      const bx=b.x*W,bw=b.w*W,bh=b.h*H;
+      ctx.fillStyle='rgba(4,16,36,.96)';ctx.fillRect(bx-bw/2,vpy-bh,bw,bh);
+      ctx.strokeStyle='rgba(0,119,200,.18)';ctx.lineWidth=1;ctx.strokeRect(bx-bw/2,vpy-bh,bw,bh);
+      const cols=Math.floor(bw/9),rows=Math.floor(bh/12);
+      for(let r=0;r<rows;r++) for(let c=0;c<cols;c++){
+        if(Math.sin(b.x*100+r*7+c*13+ts*.0003)>.15){
+          ctx.fillStyle=`rgba(56,189,248,${.4+Math.sin(b.x*50+r+c)*.3})`;
+          ctx.fillRect(bx-bw/2+4+c*9,vpy-bh+5+r*12,5,4);
+        }
+      }
+    });
+  }
+
+  function drawRoad(ts){
+    const skyG=ctx.createLinearGradient(0,0,0,H*.55);
+    skyG.addColorStop(0,'#030b18');skyG.addColorStop(1,'#091c34');
+    ctx.fillStyle=skyG;ctx.fillRect(0,0,W,H);
+    drawStars(1,ts);
+    const vpx=W/2,vpy=H*.50,roadW=W*1.2;
+    const hg=safeGrad(ctx,vpx,vpy,0,W*.36);
+    if(hg){hg.addColorStop(0,'rgba(0,119,200,.16)');hg.addColorStop(1,'rgba(0,119,200,0)');ctx.fillStyle=hg;ctx.fillRect(0,0,W,H);}
+    ctx.fillStyle='#050e1c';
+    ctx.beginPath();ctx.moveTo(vpx-10,vpy);ctx.lineTo(vpx+10,vpy);ctx.lineTo(W/2+roadW/2,H);ctx.lineTo(W/2-roadW/2,H);ctx.closePath();ctx.fill();
+    ctx.strokeStyle='rgba(0,119,200,.55)';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.moveTo(vpx-8,vpy);ctx.lineTo(W/2-roadW/2+10,H);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(vpx+8,vpy);ctx.lineTo(W/2+roadW/2-10,H);ctx.stroke();
+    dashOffset=(dashOffset+3)%80;
+    ctx.save();ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=2;
+    ctx.setLineDash([36,44]);ctx.lineDashOffset=-dashOffset;
+    ctx.beginPath();ctx.moveTo(vpx,vpy);ctx.lineTo(W/2,H+50);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(vpx-28,vpy+4);ctx.lineTo(W/2-roadW*.2,H+50);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(vpx+28,vpy+4);ctx.lineTo(W/2+roadW*.2,H+50);ctx.stroke();
+    ctx.setLineDash([]);ctx.restore();
+    ctx.strokeStyle='rgba(56,189,248,.45)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(W*.08,vpy);ctx.lineTo(W*.92,vpy);ctx.stroke();
+    drawCityLine(vpy,ts);
+    roadTrucks.forEach(tr=>{
+      tr.t=(tr.t+tr.speed)%1;
+      const t=tr.t,x=vpx+tr.lane*W*t*2.2,y=vpy+(H-vpy)*t;
+      drawTruck(x,y,.10+t*.90,Math.min(1,t*4)*(t>.86?(1-t)/.14:1));
+    });
+    const fg=ctx.createLinearGradient(0,H*.7,0,H);
+    fg.addColorStop(0,'rgba(5,14,28,0)');fg.addColorStop(1,'rgba(5,14,28,.5)');
+    ctx.fillStyle=fg;ctx.fillRect(0,0,W,H);
+  }
+
+  function drawMapTransition(t,ts){
+    if(t<1){ctx.save();ctx.globalAlpha=1-easeIO(t);drawRoad(ts);ctx.restore();}
+    ctx.save();ctx.globalAlpha=easeIO(t);
+    ctx.fillStyle='#060d1a';ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle='rgba(0,119,200,.06)';ctx.lineWidth=1;
+    for(let x=0;x<W;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(let y=0;y<H;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+    drawStars(.5,ts);
+    const ns=cityNodes.map(n=>({x:n.xr*W,y:n.yr*H,label:n.label}));
+    cityEdges.forEach(([a,b],i)=>{
+      const et=clamp((t*cityEdges.length-i)*1.3,0,1);if(!et)return;
+      const na=ns[a],nb=ns[b];
+      ctx.beginPath();ctx.moveTo(na.x,na.y);ctx.lineTo(lerp(na.x,nb.x,et),lerp(na.y,nb.y,et));
+      ctx.strokeStyle='rgba(0,119,200,.5)';ctx.lineWidth=1.5;ctx.shadowColor='#38BDF8';ctx.shadowBlur=6;ctx.stroke();ctx.shadowBlur=0;
+    });
+    ns.forEach((n,i)=>{
+      const nt=clamp((t*cityNodes.length-i)*1.6,0,1);if(!nt)return;
+      ctx.beginPath();ctx.arc(n.x,n.y,5,0,Math.PI*2);ctx.fillStyle=`rgba(0,119,200,${nt*.8})`;ctx.fill();
+      ctx.beginPath();ctx.arc(n.x,n.y,3,0,Math.PI*2);ctx.fillStyle=`rgba(56,189,248,${nt})`;ctx.fill();
+      if(nt>.5){ctx.fillStyle=`rgba(255,255,255,${nt*.7})`;ctx.font='11px DM Sans,sans-serif';ctx.textAlign='center';ctx.fillText(n.label,n.x,n.y-12);}
+    });
+    ctx.restore();
+  }
+
+  function drawDataWorld(t,ts){
+    ctx.fillStyle='#060d1a';ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle=`rgba(0,119,200,${.05+Math.sin(ts*.0005)*.02})`;ctx.lineWidth=1;
+    for(let x=0;x<W;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(let y=0;y<H;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+    drawStars(.4,ts);
+    const ns=cityNodes.map(n=>({x:n.xr*W,y:n.yr*H,label:n.label}));
+    cityEdges.forEach(([a,b])=>{
+      ctx.beginPath();ctx.moveTo(ns[a].x,ns[a].y);ctx.lineTo(ns[b].x,ns[b].y);
+      ctx.strokeStyle='rgba(0,119,200,.28)';ctx.lineWidth=1.5;ctx.shadowColor='#38BDF8';ctx.shadowBlur=4;ctx.stroke();ctx.shadowBlur=0;
+    });
+    packets.forEach(p=>{
+      p.t+=p.speed*p.dir*Math.max(t,.1);if(p.t>1)p.t=0;if(p.t<0)p.t=1;
+      const na=ns[p.a],nb=ns[p.b];
+      const px=lerp(na.x,nb.x,p.t),py=lerp(na.y,nb.y,p.t);
+      const g=safeGrad(ctx,px,py,0,10);if(!g)return;
+      g.addColorStop(0,`rgba(56,189,248,${.9*t})`);g.addColorStop(1,'rgba(56,189,248,0)');
+      ctx.beginPath();ctx.arc(px,py,10,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+      ctx.beginPath();ctx.arc(px,py,2.5,0,Math.PI*2);ctx.fillStyle=`rgba(56,189,248,${t})`;ctx.fill();
+    });
+    ns.forEach((n,i)=>{
+      const pulse=Math.sin(ts*.0018+i*.8)*.5+.5;
+      ctx.beginPath();ctx.arc(n.x,n.y,12+pulse*5,0,Math.PI*2);ctx.strokeStyle=`rgba(56,189,248,${(.08+pulse*.12)*t})`;ctx.lineWidth=1.5;ctx.stroke();
+      ctx.beginPath();ctx.arc(n.x,n.y,7,0,Math.PI*2);ctx.fillStyle=`rgba(0,119,200,${.7*t})`;ctx.fill();
+      ctx.beginPath();ctx.arc(n.x,n.y,4,0,Math.PI*2);ctx.fillStyle=`rgba(56,189,248,${t})`;ctx.fill();
+      ctx.fillStyle=`rgba(255,255,255,${.75*t})`;ctx.font='11px DM Sans,sans-serif';ctx.textAlign='center';ctx.fillText(n.label,n.x,n.y-14);
+    });
+    dataLabels.forEach((d,i)=>{
+      const drift=Math.sin(ts*.0007+i*1.4)*4;
+      const lt=clamp(t*2-i*.12,0,1);if(!lt)return;
+      ctx.globalAlpha=lt*.65;
+      const lx=d.xr*W,ly=d.yr*H+drift;
+      ctx.fillStyle='rgba(0,20,50,0.88)';
+      ctx.fillRect(lx-46,ly-13,92,24);
+      ctx.strokeStyle=`rgba(56,189,248,0.9)`;
+      ctx.lineWidth=1.5;ctx.strokeRect(lx-46,ly-13,92,24);
+      ctx.fillStyle='#ffffff';
+      ctx.font=`700 11px DM Sans,sans-serif`;
+      ctx.textAlign='center';ctx.fillText(d.txt,lx,ly+5);
+      ctx.globalAlpha=1;
+    });
+  }
+
+  const chapters=[
+    {label:'Act I',title:'Every shipment starts with\na driver and a destination.'},
+    {label:'Act II',title:'Thousands of routes connecting\nevery corner of the country.'},
+    {label:'Act III',title:'CloudCrest turns complexity\ninto <em>clarity</em>, mile by mile.'},
+  ];
+  let lastIdx=-1;
+
+  function setChapter(idx){
+    if(idx===lastIdx)return;
+    lastIdx=idx;
+    storyLabel.classList.remove('visible');
+    storyTitle.classList.remove('visible');
+    setTimeout(()=>{
+      storyLabel.textContent=chapters[idx].label;
+      storyTitle.innerHTML=chapters[idx].title.replace(/\n/g,'<br>');
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        storyLabel.classList.add('visible');
+        storyTitle.classList.add('visible');
+      }));
+    },200);
+  }
+
+  function render(ts){
+    if(!W||!H){requestAnimationFrame(render);return;}
+    const rect=wrap.getBoundingClientRect();
+    const totalH=wrap.offsetHeight-window.innerHeight;
+    const scrolled=clamp(-rect.top,0,totalH);
+    const p=totalH>0?scrolled/totalH:0;
+    ctx.clearRect(0,0,W,H);
+    if(p<.32){drawRoad(ts);setChapter(0);}
+    else if(p<.65){drawMapTransition((p-.32)/(.65-.32),ts);setChapter(1);}
+    else{drawDataWorld(clamp((p-.65)/.35,0,1),ts);setChapter(2);}
+    requestAnimationFrame(render);
+  }
+  requestAnimationFrame(render);
+})();
+
+/* ══ NAV ══ */
+window.addEventListener('scroll',()=>{
+  document.getElementById('main-nav').classList.toggle('scrolled',window.scrollY>window.innerHeight*.8);
+});
+
+/* ══ LOGISTICS CANVAS ══ */
+(function(){
+  const canvas=document.getElementById('route-canvas');
+  const ctx=canvas.getContext('2d');
+  let W=0,H=0;
+  function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;}
+  resize();window.addEventListener('resize',resize);
+
+  const hubs=[
+    {id:'warehouse', xr:.50,yr:.50,label:'Warehouse',color:'#0077C8'},
+    {id:'truck',     xr:.18,yr:.30,label:'Trucking',  color:'#38BDF8'},
+    {id:'air',       xr:.50,yr:.12,label:'Air Freight',color:'#38BDF8'},
+    {id:'rail',      xr:.82,yr:.30,label:'Rail',       color:'#38BDF8'},
+    {id:'ship',      xr:.82,yr:.72,label:'Shipping',   color:'#38BDF8'},
+    {id:'truck2',    xr:.18,yr:.72,label:'Last Mile',  color:'#38BDF8'},
+  ];
+  const edges=[[0,1],[0,2],[0,3],[0,4],[0,5],[1,2],[2,3],[3,4],[4,5],[5,1]];
+  const packets=edges.map(([a,b],i)=>({a,b,t:i/edges.length,speed:.006+Math.random()*.004,dir:1}));
+
+  function lerp(a,b,t){return a+(b-a)*t;}
+
+  function drawIcon(id,cx,cy,r,alpha){
+    ctx.save();ctx.globalAlpha=alpha;ctx.translate(cx,cy);
+    const s=r*.7;
+    ctx.strokeStyle='#fff';ctx.fillStyle='#fff';ctx.lineWidth=1.5;
+    ctx.lineCap='round';ctx.lineJoin='round';
+    if(id==='warehouse'){
+      ctx.beginPath();ctx.moveTo(-s,s);ctx.lineTo(-s,-s*.4);ctx.lineTo(0,-s);ctx.lineTo(s,-s*.4);ctx.lineTo(s,s);ctx.closePath();ctx.stroke();
+      ctx.fillRect(-s*.22,s*.1,s*.44,s*.9);
+      ctx.fillStyle='#0077C8';ctx.fillRect(-s*.18,s*.14,s*.36,s*.86);
+    } else if(id==='truck'||id==='truck2'){
+      ctx.beginPath();ctx.rect(-s,-.4*s,s*.6,.8*s);ctx.stroke();
+      ctx.beginPath();ctx.rect(-s*.35,-.5*s,s*.9*1,s);ctx.stroke();
+      ctx.beginPath();ctx.arc(-s*.6,s*.4,s*.18,0,Math.PI*2);ctx.stroke();
+      ctx.beginPath();ctx.arc(s*.35,s*.4,s*.18,0,Math.PI*2);ctx.stroke();
+    } else if(id==='air'){
+      ctx.beginPath();ctx.moveTo(0,-s);ctx.lineTo(s*.3,s*.2);ctx.lineTo(0,0);ctx.lineTo(-s*.3,s*.2);ctx.closePath();ctx.stroke();
+      ctx.beginPath();ctx.moveTo(-s*.1,-.1*s);ctx.lineTo(-s,s*.3);ctx.lineTo(-s*.05,s*.1);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(s*.1,-.1*s);ctx.lineTo(s,s*.3);ctx.lineTo(s*.05,s*.1);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(-s*.2,s*.6);ctx.lineTo(0,s*.2);ctx.lineTo(s*.2,s*.6);ctx.stroke();
+    } else if(id==='rail'){
+      ctx.beginPath();ctx.moveTo(-s*.3,-s);ctx.lineTo(-s*.3,s);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(s*.3,-s);ctx.lineTo(s*.3,s);ctx.stroke();
+      [-s*.6,-s*.2,s*.2,s*.6].forEach(y=>{ctx.beginPath();ctx.moveTo(-s*.55,y);ctx.lineTo(s*.55,y);ctx.stroke();});
+      ctx.beginPath();ctx.rect(-s*.55,-s*.55,s*1.1,s*.7);ctx.stroke();
+      ctx.beginPath();ctx.arc(-s*.25,s*.15,s*.2,0,Math.PI*2);ctx.stroke();
+      ctx.beginPath();ctx.arc(s*.25,s*.15,s*.2,0,Math.PI*2);ctx.stroke();
+    } else if(id==='ship'){
+      ctx.beginPath();ctx.moveTo(-s,0);ctx.quadraticCurveTo(-s,s*.6,0,s*.7);ctx.quadraticCurveTo(s,s*.6,s,0);ctx.closePath();ctx.stroke();
+      ctx.beginPath();ctx.rect(-s*.5,-s*.5,s,s*.5);ctx.stroke();
+      ctx.beginPath();ctx.rect(-s*.1,-s*.9,s*.2,s*.4);ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function draw(ts){
+    if(!W||!H){requestAnimationFrame(draw);return;}
+    ctx.clearRect(0,0,W,H);
+    const ns=hubs.map(h=>({...h,x:h.xr*W,y:h.yr*H}));
+    edges.forEach(([a,b])=>{
+      ctx.beginPath();ctx.moveTo(ns[a].x,ns[a].y);ctx.lineTo(ns[b].x,ns[b].y);
+      ctx.strokeStyle='rgba(0,119,200,0.25)';ctx.lineWidth=1.5;ctx.setLineDash([6,8]);ctx.stroke();ctx.setLineDash([]);
+    });
+    packets.forEach(p=>{
+      p.t=(p.t+p.speed)%1;
+      const na=ns[p.a],nb=ns[p.b];
+      const px=lerp(na.x,nb.x,p.t),py=lerp(na.y,nb.y,p.t);
+      if(!isFinite(px)||!isFinite(py))return;
+      const g=safeGrad(ctx,px,py,0,7);if(!g)return;
+      g.addColorStop(0,'rgba(56,189,248,1)');g.addColorStop(1,'rgba(56,189,248,0)');
+      ctx.beginPath();ctx.arc(px,py,7,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+      ctx.beginPath();ctx.arc(px,py,2.5,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+    });
+    ns.forEach((n,i)=>{
+      const isCenter=n.id==='warehouse';
+      const r=isCenter?28:22;
+      const pulse=Math.sin(ts*.0018+i*.9)*.5+.5;
+      ctx.beginPath();ctx.arc(n.x,n.y,r+4+pulse*6,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(56,189,248,${isCenter?.18+pulse*.14:.1+pulse*.1})`;ctx.lineWidth=1.5;ctx.stroke();
+      ctx.beginPath();ctx.arc(n.x,n.y,r,0,Math.PI*2);
+      ctx.fillStyle=isCenter?'#0077C8':'rgba(0,30,64,0.9)';ctx.fill();
+      ctx.strokeStyle=isCenter?'#38BDF8':'rgba(0,119,200,0.7)';ctx.lineWidth=1.5;ctx.stroke();
+      drawIcon(n.id,n.x,n.y,r*.75,1);
+      ctx.fillStyle='rgba(255,255,255,0.85)';
+      ctx.font=`600 11px DM Sans,sans-serif`;ctx.textAlign='center';
+      ctx.fillText(n.label,n.x,n.y+r+14);
+    });
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+
+/* ══ NETWORK CANVAS ══ */
+(function(){
+  const canvas=document.getElementById('network-canvas');
+  const ctx=canvas.getContext('2d');
+  let W=0,H=0;
+  function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;}
+  resize();window.addEventListener('resize',resize);
+  const nodeData=[{xr:.50,yr:.50,hub:true},{xr:.50,yr:.08},{xr:.85,yr:.26},{xr:.85,yr:.74},{xr:.50,yr:.92},{xr:.15,yr:.74},{xr:.15,yr:.26},{xr:.50,yr:.01},{xr:.96,yr:.50},{xr:.50,yr:.99},{xr:.04,yr:.50}];
+  const edges=[[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[1,2],[2,3],[3,4],[4,5],[5,6],[6,1],[1,7],[2,8],[3,8],[4,9],[5,10],[6,10]];
+  const packets=edges.map(([a,b])=>({a,b,t:Math.random(),speed:.003+Math.random()*.004,dir:Math.random()>.5?1:-1}));
+  function draw(ts){
+    if(!W||!H){requestAnimationFrame(draw);return;}
+    ctx.clearRect(0,0,W,H);
+    const ns=nodeData.map(n=>({x:n.xr*W,y:n.yr*H,hub:!!n.hub}));
+    edges.forEach(([a,b])=>{ctx.beginPath();ctx.moveTo(ns[a].x,ns[a].y);ctx.lineTo(ns[b].x,ns[b].y);ctx.strokeStyle='rgba(0,119,200,.18)';ctx.lineWidth=1;ctx.stroke();});
+    packets.forEach(p=>{
+      p.t+=p.speed*p.dir;if(p.t>1)p.t=0;if(p.t<0)p.t=1;
+      const na=ns[p.a],nb=ns[p.b];
+      const px=na.x+(nb.x-na.x)*p.t,py=na.y+(nb.y-na.y)*p.t;
+      const g=safeGrad(ctx,px,py,0,9);if(!g)return;
+      g.addColorStop(0,'rgba(56,189,248,.8)');g.addColorStop(1,'rgba(56,189,248,0)');
+      ctx.beginPath();ctx.arc(px,py,9,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+      ctx.beginPath();ctx.arc(px,py,2.5,0,Math.PI*2);ctx.fillStyle='#38BDF8';ctx.fill();
+    });
+    ns.forEach((n,i)=>{
+      const pulse=Math.sin(ts*.0018+i*.9)*.5+.5;
+      if(n.hub){
+        ctx.beginPath();ctx.arc(n.x,n.y,16+pulse*4,0,Math.PI*2);ctx.strokeStyle=`rgba(56,189,248,${.12+pulse*.14})`;ctx.lineWidth=1.5;ctx.stroke();
+        ctx.beginPath();ctx.arc(n.x,n.y,10,0,Math.PI*2);ctx.fillStyle='#0077C8';ctx.fill();
+        ctx.beginPath();ctx.arc(n.x,n.y,6,0,Math.PI*2);ctx.fillStyle='#38BDF8';ctx.fill();
+      }else{
+        ctx.beginPath();ctx.arc(n.x,n.y,5+pulse*2,0,Math.PI*2);ctx.fillStyle=`rgba(0,119,200,${.3+pulse*.4})`;ctx.fill();
+        ctx.beginPath();ctx.arc(n.x,n.y,3,0,Math.PI*2);ctx.fillStyle=`rgba(56,189,248,${.5+pulse*.5})`;ctx.fill();
+      }
+    });
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+
+/* ══ SCROLL REVEAL ══ */
+const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+/* ══ STAT COUNTER ══ */
+document.querySelectorAll('[data-target]').forEach(el=>{
+  const ob=new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting){
+      const target=+el.dataset.target;let v=0;const step=target/55;
+      const iv=setInterval(()=>{v=Math.min(v+step,target);el.textContent=Math.round(v);if(v>=target){clearInterval(iv);el.textContent=target;}},16);
+      ob.disconnect();
+    }
+  },{threshold:.5});
+  ob.observe(el);
+});
+</script>
+</body>
+</html>

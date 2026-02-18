@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What We Think — CloudCrest</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0A1628;--blue:#0077C8;--blue2:#005FA3;--sky:#38BDF8;--white:#fff;--gray-100:#f5f7fa;--gray-200:#e2e8f0;--gray-500:#64748b;--gray-800:#1e293b;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans','Helvetica Neue',sans-serif;background:var(--white);color:var(--navy);overflow-x:hidden;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:300;background:var(--navy);border-bottom:1px solid rgba(255,255,255,0.08);}
+.nav-top{display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-icon{width:56px;height:56px;display:flex;align-items:center;justify-content:center;}
+.nav-logo-text{color:#fff;font-size:16px;font-weight:600;letter-spacing:-0.01em;}
+.nav-tabs{display:flex;list-style:none;border-top:1px solid rgba(255,255,255,0.07);padding:0 32px;}
+.nav-tab{position:relative;}
+.nav-tab>a{display:flex;align-items:center;gap:5px;height:40px;padding:0 18px;color:rgba(255,255,255,0.65);text-decoration:none;font-size:12px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;transition:color .2s,background .2s;white-space:nowrap;position:relative;}
+.nav-tab>a svg{width:9px;height:9px;transition:transform .2s;flex-shrink:0;}
+.nav-tab:hover>a,.nav-tab.active>a{color:#fff;}
+.nav-tab:hover>a{background:rgba(255,255,255,0.05);}
+.nav-tab:hover>a svg{transform:rotate(180deg);}
+.nav-tab>a::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--blue);transform:scaleX(0);transition:transform .2s;}
+.nav-tab:hover>a::after,.nav-tab.active>a::after{transform:scaleX(1);}
+.nav-dropdown{position:absolute;top:100%;left:0;background:var(--navy);border:1px solid rgba(255,255,255,0.1);border-top:2px solid var(--blue);min-width:250px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .2s,transform .2s,visibility .2s;z-index:400;}
+.nav-tab:hover .nav-dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+.nav-dropdown a{display:block;padding:13px 22px;color:rgba(255,255,255,0.6);text-decoration:none;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.05);transition:color .15s,padding-left .15s,background .15s;}
+.nav-dropdown a:last-child{border-bottom:none;}
+.nav-dropdown a:hover{color:#fff;padding-left:30px;background:rgba(255,255,255,0.04);}
+.nav-cta{background:var(--blue);color:#fff;padding:10px 22px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:background .2s;white-space:nowrap;}
+.nav-cta:hover{background:var(--blue2);}
+
+.page-hero{background:var(--navy);padding:160px 80px 80px;position:relative;overflow:hidden;}
+.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(0,119,200,0.12) 0%,transparent 70%);}
+.page-hero-label{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--sky);margin-bottom:20px;}
+.page-hero-label::before{content:'';display:block;width:28px;height:1px;background:var(--sky);}
+.page-hero h1{font-family:'DM Serif Display',serif;font-size:clamp(40px,6vw,72px);font-weight:400;line-height:1.05;color:#fff;letter-spacing:-0.02em;max-width:700px;margin-bottom:24px;}
+.page-hero h1 em{font-style:italic;color:var(--sky);}
+.page-hero p{font-size:18px;font-weight:300;line-height:1.7;color:rgba(255,255,255,0.6);max-width:560px;}
+
+.filter-bar{background:var(--gray-100);border-bottom:1px solid var(--gray-200);padding:0 80px;display:flex;gap:0;}
+.filter-btn{padding:16px 24px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-500);cursor:pointer;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;background:none;border-top:none;border-left:none;border-right:none;font-family:inherit;}
+.filter-btn:hover{color:var(--navy);}
+.filter-btn.active{color:var(--blue);border-bottom-color:var(--blue);}
+
+.articles-section{padding:80px 80px 120px;background:var(--gray-100);}
+.articles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--gray-200);}
+
+.article-card{background:#fff;padding:40px 34px;display:flex;flex-direction:column;gap:14px;transition:background .2s;cursor:pointer;}
+.article-card:hover{background:#EFF6FF;}
+.article-card.featured{grid-column:span 2;flex-direction:row;gap:48px;align-items:flex-start;padding:48px;}
+.article-card.featured .article-visual{width:220px;flex-shrink:0;background:var(--navy);display:flex;align-items:center;justify-content:center;min-height:180px;position:relative;overflow:hidden;}
+.article-card.featured .article-visual::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,119,200,0.3),transparent 70%);}
+.article-card.featured .article-visual svg{width:48px;height:48px;stroke:rgba(56,189,248,0.7);fill:none;stroke-width:1.2;position:relative;z-index:1;}
+.article-card.featured .article-body{flex:1;display:flex;flex-direction:column;gap:14px;}
+.article-tag{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--blue);}
+.article-title{font-family:'DM Serif Display',serif;font-size:18px;font-weight:400;line-height:1.35;color:var(--navy);}
+.article-card.featured .article-title{font-size:24px;}
+.article-excerpt{font-size:14px;line-height:1.7;color:var(--gray-500);font-weight:300;flex:1;}
+.article-meta{display:flex;align-items:center;gap:16px;font-size:11px;color:var(--gray-500);margin-top:auto;}
+.article-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--gray-200);}
+.article-link{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--blue);text-decoration:none;margin-top:auto;}
+.article-link:hover{opacity:.7;}
+
+.cta-band{background:var(--navy);padding:80px;display:grid;grid-template-columns:1fr auto;gap:60px;align-items:center;}
+.cta-band h2{font-family:'DM Serif Display',serif;font-size:clamp(24px,3vw,38px);font-weight:400;color:#fff;line-height:1.2;}
+.cta-band h2 em{font-style:italic;color:var(--sky);}
+.cta-band p{font-size:15px;color:rgba(255,255,255,0.5);font-weight:300;margin-top:12px;max-width:480px;}
+.btn-primary{background:var(--blue);color:#fff;padding:14px 32px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:background .2s,transform .15s;white-space:nowrap;}
+.btn-primary:hover{background:var(--blue2);transform:translateY(-2px);}
+
+footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,0.07);}
+.footer-logo{display:flex;align-items:center;gap:12px;}
+.footer-logo-text{color:rgba(255,255,255,0.45);font-size:13px;}
+.footer-links{display:flex;gap:28px;list-style:none;}
+.footer-links a{color:rgba(255,255,255,0.3);text-decoration:none;font-size:11px;letter-spacing:0.07em;text-transform:uppercase;transition:color .2s;}
+.footer-links a:hover{color:#fff;}
+.footer-copy{color:rgba(255,255,255,0.2);font-size:11px;}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:none;}
+.reveal-delay-1{transition-delay:.1s;}
+.reveal-delay-2{transition-delay:.2s;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-top">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon"><svg viewBox="0 0 40 36" fill="none"><path d="M30 28H10a7 7 0 01-.9-13.94A8.5 8.5 0 0126 20a7 7 0 014 8z" fill="white"/><path d="M30 28a7 7 0 000-14 7 7 0 01.9.06A8.5 8.5 0 0116 8a8.5 8.5 0 0114 7.94A7 7 0 0130 28z" fill="white"/><path d="M33 4a7 7 0 010 10A7 7 0 0033 4z" fill="#38BDF8"/><circle cx="30" cy="9" r="5" fill="#38BDF8"/><circle cx="33.5" cy="7.5" r="4" fill="#0077C8"/></svg></div>
+      <span class="nav-logo-text">CloudCrest</span>
+    </a>
+    <a href="contact.html" class="nav-cta">Get In Touch</a>
+  </div>
+  <ul class="nav-tabs">
+    <li class="nav-tab"><a href="services.html">What We Do<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+      <div class="nav-dropdown"><a href="services.html#implementation">Implementation</a><a href="services.html#managed-services">Managed Services</a><a href="services.html#integrations">Integrations</a><a href="services.html#custom-development">Custom Development</a><a href="services.html#training">Training</a><a href="services.html#on-site-visits">On-Site Visits</a></div>
+    </li>
+    <li class="nav-tab active"><a href="think.html">What We Think<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+      <div class="nav-dropdown"><a href="think.html#transportation-tech">Transportation Tech</a><a href="think.html#salesforce">Salesforce</a><a href="think.html#operations">Operations</a></div>
+    </li>
+    <li class="nav-tab"><a href="about.html">Who We Are<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+      <div class="nav-dropdown"><a href="about.html#story">Our Story</a><a href="about.html#values">Our Values</a><a href="about.html#testimonials">Client Testimonials</a><a href="about.html#contact">Contact Us</a></div>
+    </li>
+    <li class="nav-tab"><a href="careers.html">Careers<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+      <div class="nav-dropdown"><a href="careers.html#openings">Open Positions</a><a href="careers.html#culture">Life at CloudCrest</a></div>
+    </li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-label">What We Think</div>
+  <h1>Perspectives from the <em>front lines</em> of transportation tech</h1>
+  <p>Insights on Salesforce, operations, and the strategies that separate high-performing brokers, fleets, and hybrid operations from the rest.</p>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="filterArticles('all')">All</button>
+  <button class="filter-btn" onclick="filterArticles('Transportation Tech')">Transportation Tech</button>
+  <button class="filter-btn" onclick="filterArticles('Salesforce')">Salesforce</button>
+  <button class="filter-btn" onclick="filterArticles('Operations')">Operations</button>
+</div>
+
+<div class="articles-section">
+  <div class="articles-grid" id="articles-grid">
+
+    <div class="article-card featured reveal" data-tag="Transportation Tech">
+      <div class="article-visual">
+        <svg viewBox="0 0 48 48"><path d="M6 24h36M24 6l18 18-18 18M3 12v24"/></svg>
+      </div>
+      <div class="article-body">
+        <div class="article-tag">Transportation Tech</div>
+        <h2 class="article-title">Why TMS + CRM Integration Is the Competitive Edge You're Missing</h2>
+        <p class="article-excerpt">Most carriers manage customer relationships and operations in silos. Sales doesn't know what ops is doing, and ops doesn't know what sales promised. Here's how a unified Salesforce stack changes everything — and why the brokers and fleets moving fastest are already doing it.</p>
+        <div class="article-meta"><span>CloudCrest</span><span class="article-meta-dot"></span><span>5 min read</span></div>
+        <a href="#" class="article-link">Read More →</a>
+      </div>
+    </div>
+
+    <div class="article-card reveal" data-tag="Operations">
+      <div class="article-tag">Operations</div>
+      <h3 class="article-title">From Bottleneck to Breakthrough: Your Sales Pipeline in Salesforce</h3>
+      <p class="article-excerpt">Visibility into your pipeline shouldn't be a luxury. We explore the reports and dashboards that drive real decisions for brokers and fleet operators.</p>
+      <div class="article-meta"><span>CloudCrest</span><span class="article-meta-dot"></span><span>4 min read</span></div>
+      <a href="#" class="article-link">Read More →</a>
+    </div>
+
+    <div class="article-card reveal" data-tag="Salesforce">
+      <div class="article-tag">Salesforce</div>
+      <h3 class="article-title">The Top 5 Salesforce Mistakes Transportation Companies Make</h3>
+      <p class="article-excerpt">A poor implementation costs more than it saves. We break down the most common pitfalls — and the path forward for companies that have already made them.</p>
+      <div class="article-meta"><span>CloudCrest</span><span class="article-meta-dot"></span><span>6 min read</span></div>
+      <a href="#" class="article-link">Read More →</a>
+    </div>
+
+    <div class="article-card reveal reveal-delay-1" data-tag="Transportation Tech">
+      <div class="article-tag">Transportation Tech</div>
+      <h3 class="article-title">EDI in 2026: What Every Broker Needs to Know About Salesforce Integration</h3>
+      <p class="article-excerpt">EDI isn't going away — but how you connect it to your CRM is evolving fast. Here's what modern EDI-to-Salesforce integration looks like and why it matters for your margin.</p>
+      <div class="article-meta"><span>CloudCrest</span><span class="article-meta-dot"></span><span>5 min read</span></div>
+      <a href="#" class="article-link">Read More →</a>
+    </div>
+
+    <div class="article-card reveal reveal-delay-1" data-tag="Salesforce">
+      <div class="article-tag">Salesforce</div>
+      <h3 class="article-title">Why Salesforce Adoption Fails — and How to Fix It Before It Starts</h3>
+      <p class="article-excerpt">You can build a perfect Salesforce org and still have nobody use it. Adoption is a people problem, not a technology problem. Here's how we approach it differently.</p>
+      <div class="article-meta"><span>CloudCrest</span><span class="article-meta-dot"></span><span>4 min read</span></div>
+      <a href="#" class="article-link">Read More →</a>
+    </div>
+
+    <div class="article-card reveal reveal-delay-2" data-tag="Operations">
+      <div class="article-tag">Operations</div>
+      <h3 class="article-title">The Broker-Fleet Hybrid: How to Build a Salesforce Org That Serves Both Sides</h3>
+      <p class="article-excerpt">Running both a brokerage and an asset operation creates unique CRM challenges. Here's how we think about architecting Salesforce for companies doing both.</p>
+      <div class="article-meta"><span>CloudCrest</span><span class="article-meta-dot"></span><span>7 min read</span></div>
+      <a href="#" class="article-link">Read More →</a>
+    </div>
+
+  </div>
+</div>
+
+<div class="cta-band reveal">
+  <div>
+    <h2>Have a topic you'd like us to <em>cover</em>?</h2>
+    <p>We write about what we see in the field. If there's a challenge you're facing, chances are others are too — let us know.</p>
+  </div>
+  <a href="contact.html" class="btn-primary">Get In Touch</a>
+</div>
+
+<footer>
+  <div class="footer-logo">
+    <div><svg width="44" height="40" viewBox="0 0 44 40" fill="none"><path d="M8 32a8 8 0 010-16c.3 0 .6 0 .9.03A10 10 0 0128 22a8 8 0 010 16H8z" fill="white"/><circle cx="33" cy="11" r="7" fill="#38BDF8"/><circle cx="37" cy="8.5" r="6" fill="#0A1628"/></svg></div>
+    <span class="footer-logo-text">CloudCrest, LLC</span>
+  </div>
+  <ul class="footer-links">
+    <li><a href="services.html">What We Do</a></li><li><a href="think.html">What We Think</a></li>
+    <li><a href="about.html">Who We Are</a></li><li><a href="careers.html">Careers</a></li><li><a href="contact.html">Contact</a></li>
+  </ul>
+  <span class="footer-copy">© 2026 CloudCrest, LLC. All Rights Reserved.</span>
+</footer>
+
+<script>
+function filterArticles(tag){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.toggle('active',b.textContent===tag||(tag==='all'&&b.textContent==='All')));
+  document.querySelectorAll('.article-card').forEach(c=>{
+    c.style.display=(tag==='all'||c.dataset.tag===tag)?'':'none';
+  });
+}
+const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>

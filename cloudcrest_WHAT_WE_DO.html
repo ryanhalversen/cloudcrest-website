@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What We Do — CloudCrest</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0A1628;--blue:#0077C8;--blue2:#005FA3;--sky:#38BDF8;
+  --white:#fff;--gray-100:#f5f7fa;--gray-200:#e2e8f0;--gray-500:#64748b;--gray-800:#1e293b;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans','Helvetica Neue',sans-serif;background:var(--white);color:var(--navy);overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;background:var(--navy);border-bottom:1px solid rgba(255,255,255,0.08);}
+.nav-top{display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-icon{width:56px;height:56px;display:flex;align-items:center;justify-content:center;}
+.nav-logo-icon svg{width:22px;height:22px;}
+.nav-logo-text{color:#fff;font-size:16px;font-weight:600;letter-spacing:-0.01em;}
+.nav-tabs{display:flex;list-style:none;border-top:1px solid rgba(255,255,255,0.07);padding:0 32px;}
+.nav-tab{position:relative;}
+.nav-tab>a{display:flex;align-items:center;gap:5px;height:40px;padding:0 18px;color:rgba(255,255,255,0.65);text-decoration:none;font-size:12px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;transition:color .2s,background .2s;white-space:nowrap;position:relative;}
+.nav-tab>a svg{width:9px;height:9px;transition:transform .2s;flex-shrink:0;}
+.nav-tab:hover>a,.nav-tab.active>a{color:#fff;}
+.nav-tab:hover>a{background:rgba(255,255,255,0.05);}
+.nav-tab:hover>a svg{transform:rotate(180deg);}
+.nav-tab>a::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--blue);transform:scaleX(0);transition:transform .2s;}
+.nav-tab:hover>a::after,.nav-tab.active>a::after{transform:scaleX(1);}
+.nav-dropdown{position:absolute;top:100%;left:0;background:var(--navy);border:1px solid rgba(255,255,255,0.1);border-top:2px solid var(--blue);min-width:250px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .2s,transform .2s,visibility .2s;z-index:400;}
+.nav-tab:hover .nav-dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+.nav-dropdown a{display:block;padding:13px 22px;color:rgba(255,255,255,0.6);text-decoration:none;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.05);transition:color .15s,padding-left .15s,background .15s;}
+.nav-dropdown a:last-child{border-bottom:none;}
+.nav-dropdown a.active{color:#fff;background:rgba(0,119,200,0.15);border-left:2px solid var(--blue);padding-left:20px;}
+.nav-dropdown a:hover{color:#fff;padding-left:30px;background:rgba(255,255,255,0.04);}
+.nav-cta{background:var(--blue);color:#fff;padding:10px 22px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:background .2s;white-space:nowrap;}
+.nav-cta:hover{background:var(--blue2);}
+
+/* PAGE HERO */
+.page-hero{background:var(--navy);padding:160px 80px 80px;position:relative;overflow:hidden;}
+.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(0,119,200,0.12) 0%,transparent 70%);}
+.page-hero-label{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--sky);margin-bottom:20px;}
+.page-hero-label::before{content:'';display:block;width:28px;height:1px;background:var(--sky);}
+.page-hero h1{font-family:'DM Serif Display',serif;font-size:clamp(40px,6vw,72px);font-weight:400;line-height:1.05;color:#fff;letter-spacing:-0.02em;max-width:700px;margin-bottom:24px;}
+.page-hero h1 em{font-style:italic;color:var(--sky);}
+.page-hero p{font-size:18px;font-weight:300;line-height:1.7;color:rgba(255,255,255,0.6);max-width:560px;}
+
+/* SERVICE NAV STRIP */
+.service-nav{background:var(--gray-800);border-bottom:1px solid rgba(255,255,255,0.06);position:sticky;top:104px;z-index:200;}
+.service-nav-inner{display:flex;justify-content:center;padding:0 80px;}
+.service-nav-item{display:flex;align-items:center;gap:8px;padding:0 20px;height:48px;color:rgba(255,255,255,0.45);font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;cursor:pointer;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;flex-shrink:0;}
+.service-nav-item:hover{color:rgba(255,255,255,0.8);}
+.service-nav-item.active{color:#fff;border-bottom-color:var(--blue);}
+.service-nav-num{font-size:10px;color:var(--blue);font-weight:700;}
+
+/* SERVICES */
+.services-wrap{padding:0 80px 120px;}
+
+.service-section{padding:96px 0 80px;border-bottom:1px solid var(--gray-200);}
+.service-section:last-child{border-bottom:none;}
+
+.service-inner{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:start;}
+.service-inner.flip{direction:rtl;}
+.service-inner.flip>*{direction:ltr;}
+
+.service-left{}
+.service-tag{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;}
+.service-num-badge{font-size:10px;color:rgba(0,119,200,0.5);}
+.service-title{font-family:'DM Serif Display',serif;font-size:clamp(28px,3.5vw,44px);font-weight:400;line-height:1.1;letter-spacing:-0.02em;color:var(--navy);margin-bottom:20px;}
+.service-title em{font-style:italic;color:var(--blue);}
+.service-lead{font-size:17px;line-height:1.75;color:var(--gray-500);font-weight:300;margin-bottom:36px;}
+
+.service-details{display:flex;flex-direction:column;gap:20px;}
+.service-detail{display:flex;gap:16px;align-items:flex-start;}
+.service-detail-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:7px;}
+.service-detail strong{display:block;font-size:14px;font-weight:600;color:var(--navy);margin-bottom:4px;}
+.service-detail p{font-size:14px;line-height:1.7;color:var(--gray-500);font-weight:300;}
+
+.service-cta{margin-top:44px;}
+.btn-primary{background:var(--blue);color:#fff;padding:14px 32px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:background .2s,transform .15s;}
+.btn-primary:hover{background:var(--blue2);transform:translateY(-2px);}
+
+/* SERVICE VISUAL */
+.service-right{}
+.service-visual{background:var(--navy);padding:48px;position:relative;overflow:hidden;}
+.service-visual::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,rgba(0,119,200,0.18) 0%,transparent 65%);}
+.service-visual-icon{width:64px;height:64px;background:var(--blue);display:flex;align-items:center;justify-content:center;margin-bottom:32px;position:relative;z-index:1;}
+.service-visual-icon svg{width:32px;height:32px;fill:none;stroke:#fff;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+.service-visual-title{font-family:'DM Serif Display',serif;font-size:22px;font-weight:400;color:#fff;margin-bottom:24px;position:relative;z-index:1;line-height:1.3;}
+.service-visual-title em{font-style:italic;color:var(--sky);}
+
+.process-steps{display:flex;flex-direction:column;gap:0;position:relative;z-index:1;}
+.process-step{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.06);}
+.process-step:last-child{border-bottom:none;}
+.process-step-num{width:28px;height:28px;background:rgba(0,119,200,0.2);border:1px solid rgba(0,119,200,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--sky);flex-shrink:0;}
+.process-step-text strong{display:block;font-size:13px;font-weight:600;color:#fff;margin-bottom:3px;}
+.process-step-text p{font-size:12px;color:rgba(255,255,255,0.45);line-height:1.6;font-weight:300;}
+
+/* TAGS */
+.service-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:32px;position:relative;z-index:1;}
+.service-tag-pill{background:rgba(0,119,200,0.12);border:1px solid rgba(0,119,200,0.3);color:rgba(255,255,255,0.7);font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:5px 12px;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:none;}
+.reveal-delay-1{transition-delay:.1s;}
+
+/* FOOTER */
+footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,0.07);}
+.footer-logo{display:flex;align-items:center;gap:12px;}
+.footer-logo-text{color:rgba(255,255,255,0.45);font-size:13px;}
+.footer-links{display:flex;gap:28px;list-style:none;}
+.footer-links a{color:rgba(255,255,255,0.3);text-decoration:none;font-size:11px;letter-spacing:0.07em;text-transform:uppercase;transition:color .2s;}
+.footer-links a:hover{color:#fff;}
+.footer-copy{color:rgba(255,255,255,0.2);font-size:11px;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-top">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon"><svg viewBox="0 0 40 36" fill="none"><path d="M30 28H10a7 7 0 01-.9-13.94A8.5 8.5 0 0126 20a7 7 0 014 8z" fill="white"/><path d="M30 28a7 7 0 000-14 7 7 0 01.9.06A8.5 8.5 0 0116 8a8.5 8.5 0 0114 7.94A7 7 0 0130 28z" fill="white"/><path d="M33 4a7 7 0 010 10A7 7 0 0033 4z" fill="#38BDF8"/><circle cx="30" cy="9" r="5" fill="#38BDF8"/><circle cx="33.5" cy="7.5" r="4" fill="#0077C8"/></svg></div>
+      <span class="nav-logo-text">CloudCrest</span>
+    </a>
+    <a href="#contact" class="nav-cta">Get In Touch</a>
+  </div>
+  <ul class="nav-tabs">
+    <li class="nav-tab active"><a href="#">What We Do<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+      <div class="nav-dropdown">
+        <a href="#implementation" onclick="scrollTo('implementation');return false;" class="active">Implementation</a>
+        <a href="#managed-services" onclick="scrollTo('managed-services');return false;">Managed Services</a>
+        <a href="#integrations" onclick="scrollTo('integrations');return false;">Integrations</a>
+        <a href="#custom-development" onclick="scrollTo('custom-development');return false;">Custom Development</a>
+        <a href="#training" onclick="scrollTo('training');return false;">Training</a>
+        <a href="#on-site-visits" onclick="scrollTo('on-site-visits');return false;">On-Site Visits</a>
+      </div>
+    </li>
+    <li class="nav-tab"><a href="#">What We Think<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+      <div class="nav-dropdown"><a href="#">Industry Insights</a><a href="#">Transportation Tech Trends</a><a href="#">Salesforce Best Practices</a><a href="#">Case Studies</a></div>
+    </li>
+    <li class="nav-tab"><a href="#">Who We Are<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+      <div class="nav-dropdown"><a href="#">Our Story</a><a href="#">Our Values</a><a href="#">Client Testimonials</a><a href="#">Contact Us</a></div>
+    </li>
+    <li class="nav-tab"><a href="#">Careers<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+      <div class="nav-dropdown"><a href="#">Open Positions</a><a href="#">Life at CloudCrest</a><a href="#">Our Culture</a></div>
+    </li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-label">What We Do</div>
+  <h1>The full picture of what <em>great</em> Salesforce work looks like</h1>
+  <p>From the first line of configuration to the training session that makes it stick — here's how we work with brokers, fleets, and hybrid operations across the transportation industry.</p>
+</div>
+
+<!-- SERVICE NAV STRIP -->
+<div class="service-nav">
+  <div class="service-nav-inner">
+    <div class="service-nav-item active" onclick="scrollToSection('implementation')"><span class="service-nav-num">01</span>Implementation</div>
+    <div class="service-nav-item" onclick="scrollToSection('managed-services')"><span class="service-nav-num">02</span>Managed Services</div>
+    <div class="service-nav-item" onclick="scrollToSection('integrations')"><span class="service-nav-num">03</span>Integrations</div>
+    <div class="service-nav-item" onclick="scrollToSection('custom-development')"><span class="service-nav-num">04</span>Custom Development</div>
+    <div class="service-nav-item" onclick="scrollToSection('training')"><span class="service-nav-num">05</span>Training</div>
+    <div class="service-nav-item" onclick="scrollToSection('on-site-visits')"><span class="service-nav-num">06</span>On-Site Visits</div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div class="services-wrap">
+
+  <!-- 01 IMPLEMENTATION -->
+  <div class="service-section" id="implementation">
+    <div class="service-inner reveal">
+      <div class="service-left">
+        <div class="service-tag"><span class="service-num-badge">01 /</span> Implementation</div>
+        <h2 class="service-title">Built right <em>from day one</em></h2>
+        <p class="service-lead">A poor implementation costs more to fix than it did to build. We've seen it too many times — rushed deployments, generic configurations, and systems that don't match how transportation businesses actually operate. We do it differently.</p>
+        <div class="service-details">
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>Transportation-First Configuration</strong><p>Every field, workflow, and dashboard is built around how brokers and fleets actually run — not a generic Salesforce template.</p></div></div>
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>Discovery Before Deployment</strong><p>We spend real time understanding your operation before we touch a single setting. The result is a system your team will actually use.</p></div></div>
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>Data Migration</strong><p>Clean, validated data migration from your existing systems — so you're not starting from scratch or carrying over years of bad records.</p></div></div>
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>Go-Live Support</strong><p>We don't hand you the keys and walk away. We're there at go-live and in the weeks that follow to make sure everything sticks.</p></div></div>
+        </div>
+        <div class="service-cta"><a href="#contact" class="btn-primary">Talk to Us About Implementation</a></div>
+      </div>
+      <div class="service-right">
+        <div class="service-visual">
+          <div class="service-visual-icon"><svg viewBox="0 0 28 28"><rect x="3" y="4" width="22" height="16" rx="1.5"/><path d="M3 11h22M11 11v9"/></svg></div>
+          <div class="service-visual-title">Our implementation <em>process</em></div>
+          <div class="process-steps">
+            <div class="process-step"><div class="process-step-num">1</div><div class="process-step-text"><strong>Discovery & Scoping</strong><p>Deep-dive into your operation, team, and goals</p></div></div>
+            <div class="process-step"><div class="process-step-num">2</div><div class="process-step-text"><strong>Architecture & Design</strong><p>System design tailored to your workflows</p></div></div>
+            <div class="process-step"><div class="process-step-num">3</div><div class="process-step-text"><strong>Build & Configure</strong><p>Iterative builds with regular checkpoints</p></div></div>
+            <div class="process-step"><div class="process-step-num">4</div><div class="process-step-text"><strong>Data Migration</strong><p>Validated migration from legacy systems</p></div></div>
+            <div class="process-step"><div class="process-step-num">5</div><div class="process-step-text"><strong>Training & Go-Live</strong><p>Your team is ready before day one</p></div></div>
+          </div>
+          <div class="service-tags">
+            <span class="service-tag-pill">Sales Cloud</span>
+            <span class="service-tag-pill">Service Cloud</span>
+            <span class="service-tag-pill">TMS</span>
+            <span class="service-tag-pill">Broker &amp; Fleet</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 MANAGED SERVICES -->
+  <div class="service-section" id="managed-services">
+    <div class="service-inner flip reveal">
+      <div class="service-left">
+        <div class="service-tag"><span class="service-num-badge">02 /</span> Managed Services</div>
+        <h2 class="service-title">Your Salesforce org, <em>always evolving</em></h2>
+        <p class="service-lead">Already live on Salesforce? The work doesn't stop at go-live — it's just getting started. We act as your dedicated Salesforce team, keeping your org healthy, performant, and growing alongside your business.</p>
+        <div class="service-details">
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>Ongoing Optimization</strong><p>Regular audits and improvements to keep your org running at peak performance as your business evolves.</p></div></div>
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>Feature Development</strong><p>New capabilities added on your timeline — whether it's a new dashboard, a new workflow, or a new product line.</p></div></div>
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>HelpDesk Support</strong><p>A real team answering real questions. When your users hit a wall, we're there to get them moving again — fast.</p></div></div>
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>User & License Management</strong><p>Onboarding new reps, managing permissions, and keeping your org clean as your team changes.</p></div></div>
+        </div>
+        <div class="service-cta"><a href="#contact" class="btn-primary">Ask About Managed Services</a></div>
+      </div>
+      <div class="service-right">
+        <div class="service-visual">
+          <div class="service-visual-icon"><svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="10"/><path d="M14 6v4M14 18v4M6 14h4M18 14h4M8.9 8.9l2.8 2.8M16.3 16.3l2.8 2.8M19.1 8.9l-2.8 2.8M11.7 16.3l-2.8 2.8"/></svg></div>
+          <div class="service-visual-title">What's <em>included</em></div>
+          <div class="process-steps">
+            <div class="process-step"><div class="process-step-num">✓</div><div class="process-step-text"><strong>Monthly Health Checks</strong><p>Proactive org audits to catch issues before users do</p></div></div>
+            <div class="process-step"><div class="process-step-num">✓</div><div class="process-step-text"><strong>Prioritized Support Queue</strong><p>Dedicated response SLAs for your team's requests</p></div></div>
+            <div class="process-step"><div class="process-step-num">✓</div><div class="process-step-text"><strong>Roadmap Planning</strong><p>Quarterly sessions to align Salesforce to business goals</p></div></div>
+            <div class="process-step"><div class="process-step-num">✓</div><div class="process-step-text"><strong>Release Management</strong><p>Salesforce updates reviewed and tested before they hit your org</p></div></div>
+          </div>
+          <div class="service-tags">
+            <span class="service-tag-pill">Ongoing</span>
+            <span class="service-tag-pill">HelpDesk</span>
+            <span class="service-tag-pill">Optimization</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 INTEGRATIONS -->
+  <div class="service-section" id="integrations">
+    <div class="service-inner reveal">
+      <div class="service-left">
+        <div class="service-tag"><span class="service-num-badge">03 /</span> Integrations</div>
+        <h2 class="service-title">Connected systems, <em>no more silos</em></h2>
+        <p class="service-lead">Transportation runs on data from a dozen different systems. When those systems don't talk to each other, your team pays the price. We specialize in connecting Salesforce to the tools your operation depends on — EDI, APIs, TMS platforms, and beyond.</p>
+        <div class="service-details">
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>EDI Integration</strong><p>Connect EDI transactions directly to Salesforce — load tenders, shipment statuses, invoices, and more, without manual entry.</p></div></div>
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>TMS Connectivity</strong><p>Bi-directional sync between your TMS and Salesforce CRM so your ops and sales teams are always working from the same data.</p></div></div>
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>API Development</strong><p>Custom REST and SOAP API integrations built to your specs — connecting carriers, partners, and third-party platforms.</p></div></div>
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>Real-Time Data Flows</strong><p>Live shipment tracking, load status, and carrier data surfaced directly inside Salesforce where your team needs it.</p></div></div>
+        </div>
+        <div class="service-cta"><a href="#contact" class="btn-primary">Discuss Your Integration Needs</a></div>
+      </div>
+      <div class="service-right">
+        <div class="service-visual">
+          <div class="service-visual-icon"><svg viewBox="0 0 28 28"><path d="M6 14h16M14 6l8 8-8 8M3 6v16"/></svg></div>
+          <div class="service-visual-title">Platforms we <em>connect</em></div>
+          <div class="process-steps">
+            <div class="process-step"><div class="process-step-num">→</div><div class="process-step-text"><strong>TMS Platforms</strong><p>McLeod, TMW, MercuryGate, Samsara, and others</p></div></div>
+            <div class="process-step"><div class="process-step-num">→</div><div class="process-step-text"><strong>EDI Standards</strong><p>X12 204, 214, 210, 990 and custom transaction sets</p></div></div>
+            <div class="process-step"><div class="process-step-num">→</div><div class="process-step-text"><strong>Load Boards & Portals</strong><p>DAT, Truckstop, and carrier portal integrations</p></div></div>
+            <div class="process-step"><div class="process-step-num">→</div><div class="process-step-text"><strong>ERP & Accounting</strong><p>QuickBooks, NetSuite, and financial system sync</p></div></div>
+          </div>
+          <div class="service-tags">
+            <span class="service-tag-pill">EDI</span>
+            <span class="service-tag-pill">REST API</span>
+            <span class="service-tag-pill">TMS</span>
+            <span class="service-tag-pill">Real-Time</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 CUSTOM DEVELOPMENT -->
+  <div class="service-section" id="custom-development">
+    <div class="service-inner flip reveal">
+      <div class="service-left">
+        <div class="service-tag"><span class="service-num-badge">04 /</span> Custom Development</div>
+        <h2 class="service-title">When off-the-shelf <em>isn't enough</em></h2>
+        <p class="service-lead">Salesforce is powerful — but transportation is complex. When the standard product doesn't cover what your business needs, we build it. Custom apps, Apex logic, Lightning components, and flows purpose-built for how you operate.</p>
+        <div class="service-details">
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>Custom Apps & Objects</strong><p>Purpose-built Salesforce apps that extend the platform to cover your unique operational requirements.</p></div></div>
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>Apex & Automation</strong><p>Complex business logic, automated workflows, and triggers that handle the heavy lifting behind the scenes.</p></div></div>
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>Lightning Components</strong><p>Custom UI components that put exactly the right information in front of your team — built for your workflows, not generic ones.</p></div></div>
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>Reporting & Dashboards</strong><p>Executive and operational reporting built to surface the KPIs that matter in transportation — margins, load counts, carrier performance, and more.</p></div></div>
+        </div>
+        <div class="service-cta"><a href="#contact" class="btn-primary">Tell Us What You Need Built</a></div>
+      </div>
+      <div class="service-right">
+        <div class="service-visual">
+          <div class="service-visual-icon"><svg viewBox="0 0 28 28"><polyline points="4,20 10,14 14,18 20,10 24,14"/><path d="M20 6h4v4"/></svg></div>
+          <div class="service-visual-title">What we <em>build</em></div>
+          <div class="process-steps">
+            <div class="process-step"><div class="process-step-num">⬡</div><div class="process-step-text"><strong>Custom Rate & Quoting Tools</strong><p>Spot rate calculators and quote-to-order flows built in Salesforce</p></div></div>
+            <div class="process-step"><div class="process-step-num">⬡</div><div class="process-step-text"><strong>Carrier Scorecards</strong><p>Automated performance tracking and relationship management</p></div></div>
+            <div class="process-step"><div class="process-step-num">⬡</div><div class="process-step-text"><strong>Load & Shipment Tracking</strong><p>Custom objects and views that mirror your operational reality</p></div></div>
+            <div class="process-step"><div class="process-step-num">⬡</div><div class="process-step-text"><strong>Commission & Billing Logic</strong><p>Complex rep comp and billing rules automated end-to-end</p></div></div>
+          </div>
+          <div class="service-tags">
+            <span class="service-tag-pill">Apex</span>
+            <span class="service-tag-pill">LWC</span>
+            <span class="service-tag-pill">Flow</span>
+            <span class="service-tag-pill">Custom Objects</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 TRAINING -->
+  <div class="service-section" id="training">
+    <div class="service-inner reveal">
+      <div class="service-left">
+        <div class="service-tag"><span class="service-num-badge">05 /</span> Training</div>
+        <h2 class="service-title">Most firms skip this. <em>We don't.</em></h2>
+        <p class="service-lead">A Salesforce system is only as good as the people using it. Adoption is where most implementations quietly fail — not because the build was wrong, but because nobody showed the team how to use it. We fix that.</p>
+        <div class="service-details">
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>Role-Based Training</strong><p>Separate sessions for reps, ops, managers, and admins — each learning what's relevant to their job, not a one-size-fits-all overview.</p></div></div>
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>Hands-On Learning</strong><p>We train in your actual org, with your real data and workflows — not a demo environment that looks nothing like what your team uses daily.</p></div></div>
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>Admin Enablement</strong><p>We build internal capability so your team isn't dependent on outside help for every small change.</p></div></div>
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>Refresher & Onboarding Programs</strong><p>Ongoing training for new hires and refreshers when new features roll out — keeping adoption high as your team grows.</p></div></div>
+        </div>
+        <div class="service-cta"><a href="#contact" class="btn-primary">Learn About Our Training Programs</a></div>
+      </div>
+      <div class="service-right">
+        <div class="service-visual">
+          <div class="service-visual-icon"><svg viewBox="0 0 28 28"><path d="M14 3L24 8v12L14 25 4 20V8L14 3z"/><path d="M14 3v22M4 8l10 6 10-6"/></svg></div>
+          <div class="service-visual-title">Training that <em>actually sticks</em></div>
+          <div class="process-steps">
+            <div class="process-step"><div class="process-step-num">1</div><div class="process-step-text"><strong>Needs Assessment</strong><p>Identify gaps, roles, and how your team actually works</p></div></div>
+            <div class="process-step"><div class="process-step-num">2</div><div class="process-step-text"><strong>Custom Curriculum</strong><p>Training built around your org, not a generic syllabus</p></div></div>
+            <div class="process-step"><div class="process-step-num">3</div><div class="process-step-text"><strong>Live Sessions</strong><p>In-person or remote, hands-on in your real environment</p></div></div>
+            <div class="process-step"><div class="process-step-num">4</div><div class="process-step-text"><strong>Documentation & Follow-Up</strong><p>Reference materials and check-ins to reinforce adoption</p></div></div>
+          </div>
+          <div class="service-tags">
+            <span class="service-tag-pill">End Users</span>
+            <span class="service-tag-pill">Admins</span>
+            <span class="service-tag-pill">Managers</span>
+            <span class="service-tag-pill">New Hires</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 06 ON-SITE VISITS -->
+  <div class="service-section" id="on-site-visits">
+    <div class="service-inner flip reveal">
+      <div class="service-left">
+        <div class="service-tag"><span class="service-num-badge">06 /</span> On-Site Visits</div>
+        <h2 class="service-title">We show up <em>in person</em></h2>
+        <p class="service-lead">Remote consulting has its place — but some problems are best solved face to face. We travel to your office, your terminal, or your dispatch floor because seeing how your operation actually runs makes us better at our job, and better partners for you.</p>
+        <div class="service-details">
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>Discovery Visits</strong><p>Before a major project, we come to you. Walking your floor and talking to your team tells us things no requirements document ever could.</p></div></div>
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>Go-Live Support</strong><p>We're on-site for critical go-lives — available in real time when your team has questions, concerns, or just needs a hand.</p></div></div>
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>In-Person Training</strong><p>High-stakes training sessions delivered in your environment, with your team, using your data — no conference room demo theater.</p></div></div>
+          <div class="service-detail"><div class="service-detail-dot"></div><div><strong>Strategic Reviews</strong><p>Quarterly or annual on-site business reviews to align your Salesforce roadmap with where your operation is headed.</p></div></div>
+        </div>
+        <div class="service-cta"><a href="#contact" class="btn-primary">Schedule a Visit</a></div>
+      </div>
+      <div class="service-right">
+        <div class="service-visual">
+          <div class="service-visual-icon"><svg viewBox="0 0 28 28"><path d="M14 4a7 7 0 100 14A7 7 0 0014 4z"/><path d="M14 11v3l2 2"/><path d="M5 22c0-3.3 4-6 9-6s9 2.7 9 6"/></svg></div>
+          <div class="service-visual-title">When we <em>come to you</em></div>
+          <div class="process-steps">
+            <div class="process-step"><div class="process-step-num">→</div><div class="process-step-text"><strong>Pre-Project Discovery</strong><p>Before major builds or integrations to understand your real workflow</p></div></div>
+            <div class="process-step"><div class="process-step-num">→</div><div class="process-step-text"><strong>Go-Live Days</strong><p>On the floor when you flip the switch to a new system</p></div></div>
+            <div class="process-step"><div class="process-step-num">→</div><div class="process-step-text"><strong>Training Engagements</strong><p>When in-person instruction makes the difference in adoption</p></div></div>
+            <div class="process-step"><div class="process-step-num">→</div><div class="process-step-text"><strong>Annual Business Reviews</strong><p>Strategic planning sessions to align Salesforce to your roadmap</p></div></div>
+          </div>
+          <div class="service-tags">
+            <span class="service-tag-pill">Discovery</span>
+            <span class="service-tag-pill">Go-Live</span>
+            <span class="service-tag-pill">Training</span>
+            <span class="service-tag-pill">Strategy</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <div class="footer-logo-icon"><svg width="44" height="40" viewBox="0 0 44 40" fill="none"><path d="M8 32a8 8 0 010-16c.3 0 .6 0 .9.03A10 10 0 0128 22a8 8 0 010 16H8z" fill="white"/><circle cx="33" cy="11" r="7" fill="#38BDF8"/><circle cx="37" cy="8.5" r="6" fill="#0A1628"/></svg></div>
+    <span class="footer-logo-text">CloudCrest, LLC</span>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#">What We Do</a></li><li><a href="#">What We Think</a></li>
+    <li><a href="#">Who We Are</a></li><li><a href="#">Careers</a></li><li><a href="#">Contact</a></li>
+  </ul>
+  <span class="footer-copy">© 2026 CloudCrest, LLC. All Rights Reserved.</span>
+</footer>
+
+<script>
+function scrollToSection(id){
+  const el=document.getElementById(id);
+  if(!el)return;
+  const offset=104+48;
+  const top=el.getBoundingClientRect().top+window.scrollY-offset;
+  window.scrollTo({top,behavior:'smooth'});
+}
+
+// Sticky service nav active state
+const sections=['implementation','managed-services','integrations','custom-development','training','on-site-visits'];
+const navItems=document.querySelectorAll('.service-nav-item');
+window.addEventListener('scroll',()=>{
+  const offset=200;
+  let current='';
+  sections.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&el.getBoundingClientRect().top<offset) current=id;
+  });
+  navItems.forEach((item,i)=>{
+    item.classList.toggle('active',sections[i]===current||(current===''&&i===0));
+  });
+});
+
+// Scroll reveal
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>
