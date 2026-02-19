@@ -36,6 +36,13 @@ nav.scrolled{background:var(--navy);border-bottom-color:rgba(255,255,255,0.08);}
 .nav-dropdown a:hover{color:#fff;padding-left:30px;background:rgba(255,255,255,0.04);}
 .nav-cta{background:var(--blue);color:#fff;padding:10px 22px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:background .2s;white-space:nowrap;}
 .nav-cta:hover{background:var(--blue2);}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;}
+.nav-hamburger span{display:block;width:24px;height:2px;background:#fff;transition:all .3s;}
+.nav-mobile{display:none;flex-direction:column;background:var(--navy);border-top:1px solid rgba(255,255,255,0.08);padding:16px 0 24px;}
+.nav-mobile.open{display:flex;}
+.nav-mobile a{padding:13px 24px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:14px;font-weight:500;border-bottom:1px solid rgba(255,255,255,0.05);transition:color .2s,background .2s;}
+.nav-mobile a:hover{color:#fff;background:rgba(255,255,255,0.04);}
+.nav-mobile .nav-mobile-cta{margin:16px 24px 0;background:var(--blue);color:#fff !important;text-align:center;font-weight:600 !important;letter-spacing:0.06em;text-transform:uppercase;font-size:12px !important;padding:14px 24px !important;border-bottom:none !important;}
 
 /* HERO */
 .hero{position:relative;height:100vh;overflow:hidden;background:var(--navy);}
@@ -68,8 +75,6 @@ nav.scrolled{background:var(--navy);border-bottom-color:rgba(255,255,255,0.08);}
 #cinematic-sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--navy);}
 #cinematic-canvas{position:absolute;inset:0;width:100%;height:100%;}
 #cinematic-sticky::after{content:'';position:absolute;bottom:0;left:0;right:0;height:160px;background:linear-gradient(to bottom,transparent,var(--navy));pointer-events:none;z-index:5;}
-
-/* Story text — large, bottom of panel */
 .act-story{position:absolute;top:0;left:0;right:0;z-index:10;padding:120px 80px 0;pointer-events:none;}
 .act-story-label{font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--sky);margin-bottom:14px;opacity:0;transform:translateY(10px);transition:opacity .45s,transform .45s;}
 .act-story-label.visible{opacity:1;transform:none;}
@@ -190,6 +195,81 @@ footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:spa
 .reveal.visible{opacity:1;transform:none;}
 .reveal-delay-1{transition-delay:.12s;}
 .reveal-delay-2{transition-delay:.24s;}
+
+/* =============================================
+   MOBILE RESPONSIVE STYLES
+   ============================================= */
+@media (max-width: 768px) {
+
+  /* NAV */
+  .nav-tabs{display:none;}
+  .nav-cta{display:none;}
+  .nav-top{padding:0 20px;}
+  .nav-hamburger{display:flex;}
+
+  /* HERO */
+  .hero-content{padding:0 24px;}
+  .hero-title{font-size:36px;}
+  .hero-desc{font-size:15px;}
+  .hero-actions{flex-direction:column;gap:12px;align-items:stretch;width:100%;max-width:320px;}
+  .btn-primary{text-align:center;padding:16px 24px;}
+  .btn-ghost{justify-content:center;}
+
+  /* CINEMATIC */
+  .act-story{padding:100px 24px 0;}
+  .act-story-title{font-size:26px;}
+
+  /* STATS */
+  .stats-band{grid-template-columns:1fr;padding:48px 24px;gap:28px;}
+
+  /* SERVICES */
+  .services{padding:72px 0;}
+  .services .section-header{padding:0 24px;margin-bottom:48px;}
+  .services-grid{grid-template-columns:1fr !important;}
+  .service-card{padding:36px 24px;}
+
+  /* ROUTE BAND */
+  .route-band{padding:48px 24px;}
+  #route-canvas{height:160px;}
+
+  /* TESTIMONIAL */
+  .testimonial-section{padding:72px 24px;}
+  .testimonial-text{font-size:20px;}
+
+  /* INSIGHTS */
+  .insights-section{padding:72px 0;}
+  .insights-section .section-header{padding:0 24px;margin-bottom:48px;}
+  .insights-grid{grid-template-columns:1fr;}
+  .insight-card{padding:32px 24px;}
+
+  /* ABOUT */
+  .about-section{grid-template-columns:1fr;padding:72px 24px;gap:40px;}
+  .about-right{display:none;}
+
+  /* CONTACT */
+  .contact-section{grid-template-columns:1fr;padding:72px 24px;gap:48px;}
+  .form-row{grid-template-columns:1fr;}
+  .form-submit{width:100%;text-align:center;}
+
+  /* CAREERS */
+  .careers-section{padding:72px 24px;}
+  .careers-cta-block{grid-template-columns:1fr;gap:28px;padding:36px 24px;}
+  .careers-cta-block .btn-primary{width:100%;text-align:center;}
+
+  /* FOOTER */
+  footer{flex-direction:column;gap:24px;padding:40px 24px;text-align:center;}
+  .footer-links{flex-wrap:wrap;justify-content:center;gap:16px;}
+
+  /* SECTION HEADERS */
+  .section-header{padding:0 24px;}
+}
+
+@media (max-width: 480px) {
+  .hero-title{font-size:30px;}
+  .hero-eyebrow{font-size:10px;}
+  .stat-number{font-size:40px;}
+  .testimonial-text{font-size:18px;}
+}
 </style>
 </head>
 <body>
@@ -198,25 +278,41 @@ footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:spa
 <nav id="main-nav">
   <div class="nav-top">
     <a href="#" class="nav-logo">
-      <div class="nav-logo-icon"><svg viewBox="0 0 40 36" fill="none" xmlns="http://www.w3.org/2000/svg"><!-- cloud --><path d="M30 28H10a7 7 0 01-.9-13.94A8.5 8.5 0 0126 20a7 7 0 014 8z" fill="white"/><path d="M30 28a7 7 0 000-14 7 7 0 01.9.06A8.5 8.5 0 0116 8a8.5 8.5 0 0114 7.94A7 7 0 0130 28z" fill="white"/><!-- crescent moon --><path d="M33 4a7 7 0 010 10A7 7 0 0033 4z" fill="#38BDF8"/><circle cx="30" cy="9" r="5" fill="#38BDF8"/><circle cx="33.5" cy="7.5" r="4" fill="#0077C8"/></svg></div>
+      <div class="nav-logo-icon"><svg viewBox="0 0 40 36" fill="none"><path d="M30 28H10a7 7 0 01-.9-13.94A8.5 8.5 0 0126 20a7 7 0 014 8z" fill="white"/><path d="M30 28a7 7 0 000-14 7 7 0 01.9.06A8.5 8.5 0 0116 8a8.5 8.5 0 0114 7.94A7 7 0 0130 28z" fill="white"/><path d="M33 4a7 7 0 010 10A7 7 0 0033 4z" fill="#38BDF8"/><circle cx="30" cy="9" r="5" fill="#38BDF8"/><circle cx="33.5" cy="7.5" r="4" fill="#0077C8"/></svg></div>
       <span class="nav-logo-text">CloudCrest</span>
     </a>
     <a href="#contact" class="nav-cta">Get In Touch</a>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
   <ul class="nav-tabs">
-    <li class="nav-tab"><a href="services.html" onclick="window.location='services.html'">What We Do<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+    <li class="nav-tab"><a href="services.html">What We Do<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
       <div class="nav-dropdown"><a href="services.html#implementation">Implementation</a><a href="services.html#managed-services">Managed Services</a><a href="services.html#integrations">Integrations</a><a href="services.html#custom-development">Custom Development</a><a href="services.html#training">Training</a><a href="services.html#on-site-visits">On-Site Visits</a></div>
     </li>
-    <li class="nav-tab"><a href="think.html" onclick="window.location='think.html'">What We Think<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+    <li class="nav-tab"><a href="think.html">What We Think<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
       <div class="nav-dropdown"><a href="think.html">Transportation Tech</a><a href="think.html">Salesforce</a><a href="think.html">Operations</a></div>
     </li>
-    <li class="nav-tab"><a href="about.html" onclick="window.location='about.html'">Who We Are<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+    <li class="nav-tab"><a href="about.html">Who We Are<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
       <div class="nav-dropdown"><a href="about.html#story">Our Story</a><a href="about.html#values">Our Values</a><a href="about.html#testimonials">Client Testimonials</a><a href="about.html#contact">Contact Us</a></div>
     </li>
-    <li class="nav-tab"><a href="careers.html" onclick="window.location='careers.html'">Careers<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+    <li class="nav-tab"><a href="careers.html">Careers<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
       <div class="nav-dropdown"><a href="careers.html#openings">Open Positions</a><a href="careers.html#culture">Life at CloudCrest</a></div>
     </li>
   </ul>
+  <!-- Mobile nav drawer -->
+  <nav class="nav-mobile" id="nav-mobile">
+    <a href="services.html">What We Do</a>
+    <a href="services.html#implementation">— Implementation</a>
+    <a href="services.html#managed-services">— Managed Services</a>
+    <a href="services.html#integrations">— Integrations</a>
+    <a href="think.html">What We Think</a>
+    <a href="about.html">Who We Are</a>
+    <a href="about.html#testimonials">— Client Testimonials</a>
+    <a href="careers.html">Careers</a>
+    <a href="careers.html#openings">— Open Positions</a>
+    <a href="#contact" class="nav-mobile-cta">Get In Touch</a>
+  </nav>
 </nav>
 
 <!-- HERO -->
@@ -246,13 +342,6 @@ footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:spa
     <div class="act-story">
       <div class="act-story-label" id="act-story-label"></div>
       <h2 class="act-story-title" id="act-story-title"></h2>
-    </div>
-    <div class="act-close" id="act-close">
-      <div class="act-close-text">Transportation never stops.<br><em>Neither do we.</em></div>
-      <div class="act-close-sub">Scroll to see how we help</div>
-      <div class="act-close-arrow">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3v14M4 11l6 6 6-6" stroke="rgba(56,189,248,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
     </div>
   </div>
 </div>
@@ -319,7 +408,7 @@ footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:spa
   <div class="section-header reveal">
     <div class="section-label">What We Think</div>
     <h2 class="section-title">Insights for the <em>modern</em> carrier</h2>
-    <p class="section-desc">Perspectives on Salesforce, transportation technology, and the strategies that separate high-performing brokers, fleets, and hybrid hybrid operations from the rest.</p>
+    <p class="section-desc">Perspectives on Salesforce, transportation technology, and the strategies that separate high-performing brokers, fleets, and hybrid operations from the rest.</p>
   </div>
   <div class="insights-grid">
     <div class="insight-card reveal"><div class="insight-tag">Transportation Tech</div><h3 class="insight-title">Why TMS + CRM Integration Is the Competitive Edge You're Missing</h3><p class="insight-excerpt">Most carriers manage customer relationships and operations in silos. Here's how a unified Salesforce stack changes everything.</p><a href="#contact" class="insight-link">Read More →</a></div>
@@ -358,10 +447,10 @@ footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:spa
   </div>
   <form class="contact-form reveal reveal-delay-1" action="https://formspree.io/f/xdaldylb" method="POST">
     <div class="form-row">
-      <div class="form-group"><label>First Name</label>    <input type="text" name="name" placeholder="Jane"></div>
+      <div class="form-group"><label>First Name</label><input type="text" name="name" placeholder="Jane"></div>
       <div class="form-group"><label>Last Name</label><input type="text" name="last_name" placeholder="Doe"></div>
     </div>
-    <div class="form-group"><label>Company</label>    <input type="text" name="company" placeholder="Your Company"></div>
+    <div class="form-group"><label>Company</label><input type="text" name="company" placeholder="Your Company"></div>
     <div class="form-group"><label>Email</label><input type="email" name="email" placeholder="jane@company.com"></div>
     <div class="form-group"><label>Message</label><textarea name="message" rows="4" placeholder="Tell us about your Salesforce needs..."></textarea></div>
     <button type="submit" class="form-submit">Send Message</button>
@@ -377,14 +466,14 @@ footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:spa
   </div>
   <div class="careers-cta-block reveal">
     <div class="careers-text"><h3>We're a small, specialized team — and we like it that way.</h3><p>Working at CloudCrest means owning your projects, learning constantly, and building meaningful relationships with clients in an industry that moves the world. No bureaucracy. Just great work.</p></div>
-    <a href="#contact" class="btn-primary">Explore Opportunities</a>
+    <a href="careers.html" class="btn-primary">Explore Opportunities</a>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">
-    <div class="footer-logo-icon"><svg width="44" height="40" viewBox="0 0 44 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 32a8 8 0 010-16c.3 0 .6 0 .9.03A10 10 0 0128 22a8 8 0 010 16H8z" fill="white"/><circle cx="33" cy="11" r="7" fill="#38BDF8"/><circle cx="37" cy="8.5" r="6" fill="#0A1628"/></svg></div>
+    <div class="footer-logo-icon"><svg width="44" height="40" viewBox="0 0 44 40" fill="none"><path d="M8 32a8 8 0 010-16c.3 0 .6 0 .9.03A10 10 0 0128 22a8 8 0 010 16H8z" fill="white"/><circle cx="33" cy="11" r="7" fill="#38BDF8"/><circle cx="37" cy="8.5" r="6" fill="#0A1628"/></svg></div>
     <span class="footer-logo-text">CloudCrest, LLC</span>
   </div>
   <ul class="footer-links">
@@ -395,10 +484,7 @@ footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:spa
 </footer>
 
 <script>
-function safeGrad(ctx, x, y, r0, r1){
-  if(!isFinite(x)||!isFinite(y)||!isFinite(r0)||!isFinite(r1)) return null;
-  return ctx.createRadialGradient(x,y,r0,x,y,r1);
-}
+function safeGrad(ctx,x,y,r0,r1){if(!isFinite(x)||!isFinite(y)||!isFinite(r0)||!isFinite(r1))return null;return ctx.createRadialGradient(x,y,r0,x,y,r1);}
 
 /* ══ HERO CANVAS ══ */
 (function(){
@@ -406,39 +492,24 @@ function safeGrad(ctx, x, y, r0, r1){
   const ctx=canvas.getContext('2d');
   let W=0,H=0;
   function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;}
-  resize(); window.addEventListener('resize',resize);
-
-  const cityNodes=[
-    {xr:.08,yr:.55},{xr:.20,yr:.28},{xr:.32,yr:.68},{xr:.44,yr:.22},
-    {xr:.50,yr:.50},{xr:.58,yr:.78},{xr:.67,yr:.32},{xr:.78,yr:.60},
-    {xr:.88,yr:.25},{xr:.94,yr:.72},{xr:.15,yr:.82},{xr:.70,yr:.85},
-  ];
+  resize();window.addEventListener('resize',resize);
+  const cityNodes=[{xr:.08,yr:.55},{xr:.20,yr:.28},{xr:.32,yr:.68},{xr:.44,yr:.22},{xr:.50,yr:.50},{xr:.58,yr:.78},{xr:.67,yr:.32},{xr:.78,yr:.60},{xr:.88,yr:.25},{xr:.94,yr:.72},{xr:.15,yr:.82},{xr:.70,yr:.85}];
   const edges=[[0,1],[0,2],[1,3],[1,4],[2,4],[2,5],[3,4],[3,6],[4,5],[4,6],[4,7],[5,7],[5,11],[6,7],[6,8],[7,8],[7,9],[8,9],[9,11],[0,10],[2,10],[10,5]];
   const packets=edges.map(([a,b])=>({a,b,t:Math.random(),speed:.0018+Math.random()*.0025,dir:Math.random()>.5?1:-1}));
   const stars=Array.from({length:160},()=>({x:Math.random(),y:Math.random(),r:Math.random()*.9+.2,tw:Math.random()*Math.PI*2}));
-
   function draw(ts){
     if(!W||!H){requestAnimationFrame(draw);return;}
-    ctx.clearRect(0,0,W,H);
-    ctx.fillStyle='#060d1a';ctx.fillRect(0,0,W,H);
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#060d1a';ctx.fillRect(0,0,W,H);
     ctx.strokeStyle='rgba(0,119,200,0.05)';ctx.lineWidth=1;
     for(let x=0;x<W;x+=70){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
     for(let y=0;y<H;y+=70){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
-    stars.forEach(s=>{
-      const tw=Math.sin(ts*.0005+s.tw)*.3+.7;
-      ctx.globalAlpha=tw*.55;ctx.fillStyle='#fff';
-      ctx.beginPath();ctx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2);ctx.fill();
-    });
+    stars.forEach(s=>{const tw=Math.sin(ts*.0005+s.tw)*.3+.7;ctx.globalAlpha=tw*.55;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2);ctx.fill();});
     ctx.globalAlpha=1;
     const ns=cityNodes.map(n=>({x:n.xr*W,y:n.yr*H}));
-    edges.forEach(([a,b])=>{
-      ctx.beginPath();ctx.moveTo(ns[a].x,ns[a].y);ctx.lineTo(ns[b].x,ns[b].y);
-      ctx.strokeStyle='rgba(0,119,200,0.22)';ctx.lineWidth=1;ctx.stroke();
-    });
+    edges.forEach(([a,b])=>{ctx.beginPath();ctx.moveTo(ns[a].x,ns[a].y);ctx.lineTo(ns[b].x,ns[b].y);ctx.strokeStyle='rgba(0,119,200,0.22)';ctx.lineWidth=1;ctx.stroke();});
     packets.forEach(p=>{
       p.t+=p.speed*p.dir;if(p.t>1)p.t=0;if(p.t<0)p.t=1;
-      const na=ns[p.a],nb=ns[p.b];
-      const px=na.x+(nb.x-na.x)*p.t,py=na.y+(nb.y-na.y)*p.t;
+      const na=ns[p.a],nb=ns[p.b];const px=na.x+(nb.x-na.x)*p.t,py=na.y+(nb.y-na.y)*p.t;
       const g=safeGrad(ctx,px,py,0,11);if(!g)return;
       g.addColorStop(0,'rgba(56,189,248,0.75)');g.addColorStop(1,'rgba(56,189,248,0)');
       ctx.beginPath();ctx.arc(px,py,11,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
@@ -462,167 +533,71 @@ function safeGrad(ctx, x, y, r0, r1){
   const ctx=canvas.getContext('2d');
   const storyLabel=document.getElementById('act-story-label');
   const storyTitle=document.getElementById('act-story-title');
-
   let W=0,H=0;
   function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;}
-  resize(); window.addEventListener('resize',resize);
-
+  resize();window.addEventListener('resize',resize);
   const stars=Array.from({length:220},()=>({x:Math.random(),y:Math.random(),r:Math.random()*1.3+.3,tw:Math.random()*Math.PI*2}));
   let dashOffset=0;
-
-  const cityNodes=[
-    {xr:.08,yr:.33,label:'Seattle'},
-    {xr:.10,yr:.40,label:'Portland'},
-    {xr:.08,yr:.57,label:'San Francisco'},
-    {xr:.11,yr:.72,label:'Los Angeles'},
-    {xr:.13,yr:.85,label:'San Diego'},
-    {xr:.28,yr:.68,label:'Phoenix'},
-    {xr:.30,yr:.47,label:'Salt Lake'},
-    {xr:.38,yr:.42,label:'Denver'},
-    {xr:.44,yr:.75,label:'El Paso'},
-    {xr:.55,yr:.33,label:'Minneapolis'},
-    {xr:.58,yr:.47,label:'Kansas City'},
-    {xr:.58,yr:.68,label:'Dallas'},
-    {xr:.68,yr:.44,label:'Chicago'},
-    {xr:.72,yr:.62,label:'Memphis'},
-    {xr:.78,yr:.72,label:'Atlanta'},
-    {xr:.84,yr:.38,label:'New York'},
-    {xr:.83,yr:.46,label:'Philadelphia'},
-    {xr:.88,yr:.78,label:'Miami'},
-  ];
-  const cityEdges=[
-    [0,1],[1,2],[2,3],[3,4],[3,6],[4,5],[5,8],
-    [6,7],[7,8],[7,10],[7,9],[9,10],[9,12],
-    [10,11],[10,12],[11,13],[11,8],[12,13],
-    [12,15],[13,14],[14,17],[14,16],[15,16],[16,17],
-  ];
+  const cityNodes=[{xr:.08,yr:.33,label:'Seattle'},{xr:.10,yr:.40,label:'Portland'},{xr:.08,yr:.57,label:'San Francisco'},{xr:.11,yr:.72,label:'Los Angeles'},{xr:.13,yr:.85,label:'San Diego'},{xr:.28,yr:.68,label:'Phoenix'},{xr:.30,yr:.47,label:'Salt Lake'},{xr:.38,yr:.42,label:'Denver'},{xr:.44,yr:.75,label:'El Paso'},{xr:.55,yr:.33,label:'Minneapolis'},{xr:.58,yr:.47,label:'Kansas City'},{xr:.58,yr:.68,label:'Dallas'},{xr:.68,yr:.44,label:'Chicago'},{xr:.72,yr:.62,label:'Memphis'},{xr:.78,yr:.72,label:'Atlanta'},{xr:.84,yr:.38,label:'New York'},{xr:.83,yr:.46,label:'Philadelphia'},{xr:.88,yr:.78,label:'Miami'}];
+  const cityEdges=[[0,1],[1,2],[2,3],[3,4],[3,6],[4,5],[5,8],[6,7],[7,8],[7,10],[7,9],[9,10],[9,12],[10,11],[10,12],[11,13],[11,8],[12,13],[12,15],[13,14],[14,17],[14,16],[15,16],[16,17]];
   const packets=cityEdges.map(([a,b],i)=>({a,b,t:i/cityEdges.length,speed:.004+Math.random()*.005,dir:1}));
-
-  const roadTrucks=[
-    {lane:-.13,speed:.00048,t:.08},{lane:.13,speed:.00035,t:.42},
-    {lane:-.06,speed:.00060,t:.65},{lane:.06,speed:.00042,t:.22},
-    {lane:-.09,speed:.00055,t:.80},
-  ];
-
-  const dataLabels=[
-    {xr:.22,yr:.42,txt:'TMS Sync'},
-    {xr:.44,yr:.32,txt:'Fleet Status'},
-    {xr:.60,yr:.55,txt:'Dispatch Queue'},
-    {xr:.76,yr:.44,txt:'Route Opt.'},
-    {xr:.28,yr:.55,txt:'Load Tracking'},
-    {xr:.52,yr:.62,txt:'ELD Compliance'},
-    {xr:.68,yr:.34,txt:'Carrier Portal'},
-    {xr:.82,yr:.58,txt:'Freight Audit'},
-    {xr:.40,yr:.48,txt:'Live ETAs'},
-    {xr:.86,yr:.32,txt:'CRM Active'},
-  ];
-
+  const roadTrucks=[{lane:-.13,speed:.00048,t:.08},{lane:.13,speed:.00035,t:.42},{lane:-.06,speed:.00060,t:.65},{lane:.06,speed:.00042,t:.22},{lane:-.09,speed:.00055,t:.80}];
+  const dataLabels=[{xr:.22,yr:.42,txt:'TMS Sync'},{xr:.44,yr:.32,txt:'Fleet Status'},{xr:.60,yr:.55,txt:'Dispatch Queue'},{xr:.76,yr:.44,txt:'Route Opt.'},{xr:.28,yr:.55,txt:'Load Tracking'},{xr:.52,yr:.62,txt:'ELD Compliance'},{xr:.68,yr:.34,txt:'Carrier Portal'},{xr:.82,yr:.58,txt:'Freight Audit'},{xr:.40,yr:.48,txt:'Live ETAs'},{xr:.86,yr:.32,txt:'CRM Active'}];
   function lerp(a,b,t){return a+(b-a)*t;}
   function clamp(v,lo,hi){return Math.max(lo,Math.min(hi,v));}
   function easeIO(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
-
-  function drawStars(alpha,ts){
-    stars.forEach(s=>{
-      const tw=Math.sin(ts*.0006+s.tw)*.3+.7;
-      ctx.globalAlpha=alpha*tw*.7;ctx.fillStyle='#fff';
-      ctx.beginPath();ctx.arc(s.x*W,s.y*H*.65,s.r,0,Math.PI*2);ctx.fill();
-    });ctx.globalAlpha=1;
-  }
-
+  function drawStars(alpha,ts){stars.forEach(s=>{const tw=Math.sin(ts*.0006+s.tw)*.3+.7;ctx.globalAlpha=alpha*tw*.7;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(s.x*W,s.y*H*.65,s.r,0,Math.PI*2);ctx.fill();});ctx.globalAlpha=1;}
   function drawTruck(cx,cy,sc,alpha){
-    if(alpha<=0||!isFinite(cx)||!isFinite(cy)) return;
-    ctx.save();ctx.globalAlpha=Math.min(1,alpha);
-    ctx.translate(cx,cy);ctx.scale(sc,sc);
-    ctx.fillStyle='#1a3a5c';ctx.fillRect(-54,-9,34,15);
-    ctx.fillStyle='#0077C8';ctx.fillRect(-20,-11,24,17);
-    ctx.fillStyle='#005FA3';ctx.fillRect(-18,-19,18,8);
-    ctx.fillStyle='#05101f';
-    [-44,-14].forEach(wx=>{ctx.beginPath();ctx.arc(wx,6,4.5,0,Math.PI*2);ctx.fill();});
+    if(alpha<=0||!isFinite(cx)||!isFinite(cy))return;
+    ctx.save();ctx.globalAlpha=Math.min(1,alpha);ctx.translate(cx,cy);ctx.scale(sc,sc);
+    ctx.fillStyle='#1a3a5c';ctx.fillRect(-54,-9,34,15);ctx.fillStyle='#0077C8';ctx.fillRect(-20,-11,24,17);ctx.fillStyle='#005FA3';ctx.fillRect(-18,-19,18,8);
+    ctx.fillStyle='#05101f';[-44,-14].forEach(wx=>{ctx.beginPath();ctx.arc(wx,6,4.5,0,Math.PI*2);ctx.fill();});
     ctx.fillStyle='rgba(255,240,120,.9)';ctx.fillRect(4,-4,3,5);
-    const hg=safeGrad(ctx,14,-2,0,22);
-    if(hg){hg.addColorStop(0,'rgba(255,240,120,.25)');hg.addColorStop(1,'rgba(255,240,120,0)');ctx.fillStyle=hg;ctx.beginPath();ctx.arc(14,-2,22,0,Math.PI*2);ctx.fill();}
+    const hg=safeGrad(ctx,14,-2,0,22);if(hg){hg.addColorStop(0,'rgba(255,240,120,.25)');hg.addColorStop(1,'rgba(255,240,120,0)');ctx.fillStyle=hg;ctx.beginPath();ctx.arc(14,-2,22,0,Math.PI*2);ctx.fill();}
     ctx.restore();
   }
-
   function drawCityLine(vpy,ts){
-    const buildings=[
-      {x:.22,w:.04,h:.10},{x:.27,w:.025,h:.07},{x:.31,w:.045,h:.13},
-      {x:.36,w:.02,h:.09},{x:.39,w:.035,h:.08},{x:.43,w:.04,h:.15},
-      {x:.48,w:.02,h:.10},{x:.51,w:.038,h:.11},{x:.56,w:.045,h:.13},
-      {x:.61,w:.028,h:.08},{x:.64,w:.036,h:.10},{x:.68,w:.022,h:.07},
-      {x:.71,w:.04,h:.09},{x:.75,w:.03,h:.12},
-    ];
+    const buildings=[{x:.22,w:.04,h:.10},{x:.27,w:.025,h:.07},{x:.31,w:.045,h:.13},{x:.36,w:.02,h:.09},{x:.39,w:.035,h:.08},{x:.43,w:.04,h:.15},{x:.48,w:.02,h:.10},{x:.51,w:.038,h:.11},{x:.56,w:.045,h:.13},{x:.61,w:.028,h:.08},{x:.64,w:.036,h:.10},{x:.68,w:.022,h:.07},{x:.71,w:.04,h:.09},{x:.75,w:.03,h:.12}];
     buildings.forEach(b=>{
       const bx=b.x*W,bw=b.w*W,bh=b.h*H;
       ctx.fillStyle='rgba(4,16,36,.96)';ctx.fillRect(bx-bw/2,vpy-bh,bw,bh);
       ctx.strokeStyle='rgba(0,119,200,.18)';ctx.lineWidth=1;ctx.strokeRect(bx-bw/2,vpy-bh,bw,bh);
       const cols=Math.floor(bw/9),rows=Math.floor(bh/12);
-      for(let r=0;r<rows;r++) for(let c=0;c<cols;c++){
-        if(Math.sin(b.x*100+r*7+c*13+ts*.0003)>.15){
-          ctx.fillStyle=`rgba(56,189,248,${.4+Math.sin(b.x*50+r+c)*.3})`;
-          ctx.fillRect(bx-bw/2+4+c*9,vpy-bh+5+r*12,5,4);
-        }
-      }
+      for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){if(Math.sin(b.x*100+r*7+c*13+ts*.0003)>.15){ctx.fillStyle=`rgba(56,189,248,${.4+Math.sin(b.x*50+r+c)*.3})`;ctx.fillRect(bx-bw/2+4+c*9,vpy-bh+5+r*12,5,4);}}
     });
   }
-
   function drawRoad(ts){
-    const skyG=ctx.createLinearGradient(0,0,0,H*.55);
-    skyG.addColorStop(0,'#030b18');skyG.addColorStop(1,'#091c34');
-    ctx.fillStyle=skyG;ctx.fillRect(0,0,W,H);
-    drawStars(1,ts);
+    const skyG=ctx.createLinearGradient(0,0,0,H*.55);skyG.addColorStop(0,'#030b18');skyG.addColorStop(1,'#091c34');
+    ctx.fillStyle=skyG;ctx.fillRect(0,0,W,H);drawStars(1,ts);
     const vpx=W/2,vpy=H*.50,roadW=W*1.2;
-    const hg=safeGrad(ctx,vpx,vpy,0,W*.36);
-    if(hg){hg.addColorStop(0,'rgba(0,119,200,.16)');hg.addColorStop(1,'rgba(0,119,200,0)');ctx.fillStyle=hg;ctx.fillRect(0,0,W,H);}
-    ctx.fillStyle='#050e1c';
-    ctx.beginPath();ctx.moveTo(vpx-10,vpy);ctx.lineTo(vpx+10,vpy);ctx.lineTo(W/2+roadW/2,H);ctx.lineTo(W/2-roadW/2,H);ctx.closePath();ctx.fill();
+    const hg=safeGrad(ctx,vpx,vpy,0,W*.36);if(hg){hg.addColorStop(0,'rgba(0,119,200,.16)');hg.addColorStop(1,'rgba(0,119,200,0)');ctx.fillStyle=hg;ctx.fillRect(0,0,W,H);}
+    ctx.fillStyle='#050e1c';ctx.beginPath();ctx.moveTo(vpx-10,vpy);ctx.lineTo(vpx+10,vpy);ctx.lineTo(W/2+roadW/2,H);ctx.lineTo(W/2-roadW/2,H);ctx.closePath();ctx.fill();
     ctx.strokeStyle='rgba(0,119,200,.55)';ctx.lineWidth=1.5;
     ctx.beginPath();ctx.moveTo(vpx-8,vpy);ctx.lineTo(W/2-roadW/2+10,H);ctx.stroke();
     ctx.beginPath();ctx.moveTo(vpx+8,vpy);ctx.lineTo(W/2+roadW/2-10,H);ctx.stroke();
     dashOffset=(dashOffset+3)%80;
-    ctx.save();ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=2;
-    ctx.setLineDash([36,44]);ctx.lineDashOffset=-dashOffset;
+    ctx.save();ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=2;ctx.setLineDash([36,44]);ctx.lineDashOffset=-dashOffset;
     ctx.beginPath();ctx.moveTo(vpx,vpy);ctx.lineTo(W/2,H+50);ctx.stroke();
     ctx.beginPath();ctx.moveTo(vpx-28,vpy+4);ctx.lineTo(W/2-roadW*.2,H+50);ctx.stroke();
     ctx.beginPath();ctx.moveTo(vpx+28,vpy+4);ctx.lineTo(W/2+roadW*.2,H+50);ctx.stroke();
     ctx.setLineDash([]);ctx.restore();
-    ctx.strokeStyle='rgba(56,189,248,.45)';ctx.lineWidth=1;
-    ctx.beginPath();ctx.moveTo(W*.08,vpy);ctx.lineTo(W*.92,vpy);ctx.stroke();
+    ctx.strokeStyle='rgba(56,189,248,.45)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(W*.08,vpy);ctx.lineTo(W*.92,vpy);ctx.stroke();
     drawCityLine(vpy,ts);
-    roadTrucks.forEach(tr=>{
-      tr.t=(tr.t+tr.speed)%1;
-      const t=tr.t,x=vpx+tr.lane*W*t*2.2,y=vpy+(H-vpy)*t;
-      drawTruck(x,y,.10+t*.90,Math.min(1,t*4)*(t>.86?(1-t)/.14:1));
-    });
-    const fg=ctx.createLinearGradient(0,H*.7,0,H);
-    fg.addColorStop(0,'rgba(5,14,28,0)');fg.addColorStop(1,'rgba(5,14,28,.5)');
-    ctx.fillStyle=fg;ctx.fillRect(0,0,W,H);
+    roadTrucks.forEach(tr=>{tr.t=(tr.t+tr.speed)%1;const t=tr.t,x=vpx+tr.lane*W*t*2.2,y=vpy+(H-vpy)*t;drawTruck(x,y,.10+t*.90,Math.min(1,t*4)*(t>.86?(1-t)/.14:1));});
+    const fg=ctx.createLinearGradient(0,H*.7,0,H);fg.addColorStop(0,'rgba(5,14,28,0)');fg.addColorStop(1,'rgba(5,14,28,.5)');ctx.fillStyle=fg;ctx.fillRect(0,0,W,H);
   }
-
   function drawMapTransition(t,ts){
     if(t<1){ctx.save();ctx.globalAlpha=1-easeIO(t);drawRoad(ts);ctx.restore();}
-    ctx.save();ctx.globalAlpha=easeIO(t);
-    ctx.fillStyle='#060d1a';ctx.fillRect(0,0,W,H);
+    ctx.save();ctx.globalAlpha=easeIO(t);ctx.fillStyle='#060d1a';ctx.fillRect(0,0,W,H);
     ctx.strokeStyle='rgba(0,119,200,.06)';ctx.lineWidth=1;
     for(let x=0;x<W;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
     for(let y=0;y<H;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
     drawStars(.5,ts);
     const ns=cityNodes.map(n=>({x:n.xr*W,y:n.yr*H,label:n.label}));
-    cityEdges.forEach(([a,b],i)=>{
-      const et=clamp((t*cityEdges.length-i)*1.3,0,1);if(!et)return;
-      const na=ns[a],nb=ns[b];
-      ctx.beginPath();ctx.moveTo(na.x,na.y);ctx.lineTo(lerp(na.x,nb.x,et),lerp(na.y,nb.y,et));
-      ctx.strokeStyle='rgba(0,119,200,.5)';ctx.lineWidth=1.5;ctx.shadowColor='#38BDF8';ctx.shadowBlur=6;ctx.stroke();ctx.shadowBlur=0;
-    });
-    ns.forEach((n,i)=>{
-      const nt=clamp((t*cityNodes.length-i)*1.6,0,1);if(!nt)return;
-      ctx.beginPath();ctx.arc(n.x,n.y,5,0,Math.PI*2);ctx.fillStyle=`rgba(0,119,200,${nt*.8})`;ctx.fill();
-      ctx.beginPath();ctx.arc(n.x,n.y,3,0,Math.PI*2);ctx.fillStyle=`rgba(56,189,248,${nt})`;ctx.fill();
-      if(nt>.5){ctx.fillStyle=`rgba(255,255,255,${nt*.7})`;ctx.font='11px DM Sans,sans-serif';ctx.textAlign='center';ctx.fillText(n.label,n.x,n.y-12);}
-    });
+    cityEdges.forEach(([a,b],i)=>{const et=clamp((t*cityEdges.length-i)*1.3,0,1);if(!et)return;const na=ns[a],nb=ns[b];ctx.beginPath();ctx.moveTo(na.x,na.y);ctx.lineTo(lerp(na.x,nb.x,et),lerp(na.y,nb.y,et));ctx.strokeStyle='rgba(0,119,200,.5)';ctx.lineWidth=1.5;ctx.shadowColor='#38BDF8';ctx.shadowBlur=6;ctx.stroke();ctx.shadowBlur=0;});
+    ns.forEach((n,i)=>{const nt=clamp((t*cityNodes.length-i)*1.6,0,1);if(!nt)return;ctx.beginPath();ctx.arc(n.x,n.y,5,0,Math.PI*2);ctx.fillStyle=`rgba(0,119,200,${nt*.8})`;ctx.fill();ctx.beginPath();ctx.arc(n.x,n.y,3,0,Math.PI*2);ctx.fillStyle=`rgba(56,189,248,${nt})`;ctx.fill();if(nt>.5){ctx.fillStyle=`rgba(255,255,255,${nt*.7})`;ctx.font='11px DM Sans,sans-serif';ctx.textAlign='center';ctx.fillText(n.label,n.x,n.y-12);}});
     ctx.restore();
   }
-
   function drawDataWorld(t,ts){
     ctx.fillStyle='#060d1a';ctx.fillRect(0,0,W,H);
     ctx.strokeStyle=`rgba(0,119,200,${.05+Math.sin(ts*.0005)*.02})`;ctx.lineWidth=1;
@@ -630,74 +605,30 @@ function safeGrad(ctx, x, y, r0, r1){
     for(let y=0;y<H;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
     drawStars(.4,ts);
     const ns=cityNodes.map(n=>({x:n.xr*W,y:n.yr*H,label:n.label}));
-    cityEdges.forEach(([a,b])=>{
-      ctx.beginPath();ctx.moveTo(ns[a].x,ns[a].y);ctx.lineTo(ns[b].x,ns[b].y);
-      ctx.strokeStyle='rgba(0,119,200,.28)';ctx.lineWidth=1.5;ctx.shadowColor='#38BDF8';ctx.shadowBlur=4;ctx.stroke();ctx.shadowBlur=0;
-    });
+    cityEdges.forEach(([a,b])=>{ctx.beginPath();ctx.moveTo(ns[a].x,ns[a].y);ctx.lineTo(ns[b].x,ns[b].y);ctx.strokeStyle='rgba(0,119,200,.28)';ctx.lineWidth=1.5;ctx.shadowColor='#38BDF8';ctx.shadowBlur=4;ctx.stroke();ctx.shadowBlur=0;});
     packets.forEach(p=>{
       p.t+=p.speed*p.dir*Math.max(t,.1);if(p.t>1)p.t=0;if(p.t<0)p.t=1;
-      const na=ns[p.a],nb=ns[p.b];
-      const px=lerp(na.x,nb.x,p.t),py=lerp(na.y,nb.y,p.t);
+      const na=ns[p.a],nb=ns[p.b];const px=lerp(na.x,nb.x,p.t),py=lerp(na.y,nb.y,p.t);
       const g=safeGrad(ctx,px,py,0,10);if(!g)return;
       g.addColorStop(0,`rgba(56,189,248,${.9*t})`);g.addColorStop(1,'rgba(56,189,248,0)');
       ctx.beginPath();ctx.arc(px,py,10,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
       ctx.beginPath();ctx.arc(px,py,2.5,0,Math.PI*2);ctx.fillStyle=`rgba(56,189,248,${t})`;ctx.fill();
     });
-    ns.forEach((n,i)=>{
-      const pulse=Math.sin(ts*.0018+i*.8)*.5+.5;
-      ctx.beginPath();ctx.arc(n.x,n.y,12+pulse*5,0,Math.PI*2);ctx.strokeStyle=`rgba(56,189,248,${(.08+pulse*.12)*t})`;ctx.lineWidth=1.5;ctx.stroke();
-      ctx.beginPath();ctx.arc(n.x,n.y,7,0,Math.PI*2);ctx.fillStyle=`rgba(0,119,200,${.7*t})`;ctx.fill();
-      ctx.beginPath();ctx.arc(n.x,n.y,4,0,Math.PI*2);ctx.fillStyle=`rgba(56,189,248,${t})`;ctx.fill();
-      ctx.fillStyle=`rgba(255,255,255,${.75*t})`;ctx.font='11px DM Sans,sans-serif';ctx.textAlign='center';ctx.fillText(n.label,n.x,n.y-14);
-    });
-    dataLabels.forEach((d,i)=>{
-      const drift=Math.sin(ts*.0007+i*1.4)*4;
-      const lt=clamp(t*2-i*.12,0,1);if(!lt)return;
-      ctx.globalAlpha=lt*.65;
-      const lx=d.xr*W,ly=d.yr*H+drift;
-      ctx.fillStyle='rgba(0,20,50,0.88)';
-      ctx.fillRect(lx-46,ly-13,92,24);
-      ctx.strokeStyle=`rgba(56,189,248,0.9)`;
-      ctx.lineWidth=1.5;ctx.strokeRect(lx-46,ly-13,92,24);
-      ctx.fillStyle='#ffffff';
-      ctx.font=`700 11px DM Sans,sans-serif`;
-      ctx.textAlign='center';ctx.fillText(d.txt,lx,ly+5);
-      ctx.globalAlpha=1;
-    });
+    ns.forEach((n,i)=>{const pulse=Math.sin(ts*.0018+i*.8)*.5+.5;ctx.beginPath();ctx.arc(n.x,n.y,12+pulse*5,0,Math.PI*2);ctx.strokeStyle=`rgba(56,189,248,${(.08+pulse*.12)*t})`;ctx.lineWidth=1.5;ctx.stroke();ctx.beginPath();ctx.arc(n.x,n.y,7,0,Math.PI*2);ctx.fillStyle=`rgba(0,119,200,${.7*t})`;ctx.fill();ctx.beginPath();ctx.arc(n.x,n.y,4,0,Math.PI*2);ctx.fillStyle=`rgba(56,189,248,${t})`;ctx.fill();ctx.fillStyle=`rgba(255,255,255,${.75*t})`;ctx.font='11px DM Sans,sans-serif';ctx.textAlign='center';ctx.fillText(n.label,n.x,n.y-14);});
+    dataLabels.forEach((d,i)=>{const drift=Math.sin(ts*.0007+i*1.4)*4;const lt=clamp(t*2-i*.12,0,1);if(!lt)return;ctx.globalAlpha=lt*.65;const lx=d.xr*W,ly=d.yr*H+drift;ctx.fillStyle='rgba(0,20,50,0.88)';ctx.fillRect(lx-46,ly-13,92,24);ctx.strokeStyle='rgba(56,189,248,0.9)';ctx.lineWidth=1.5;ctx.strokeRect(lx-46,ly-13,92,24);ctx.fillStyle='#ffffff';ctx.font='700 11px DM Sans,sans-serif';ctx.textAlign='center';ctx.fillText(d.txt,lx,ly+5);ctx.globalAlpha=1;});
   }
-
-  const chapters=[
-    {label:'Act I',title:'Every shipment starts with\na driver and a destination.'},
-    {label:'Act II',title:'Thousands of routes connecting\nevery corner of the country.'},
-    {label:'Act III',title:'CloudCrest turns complexity\ninto <em>clarity</em>, mile by mile.'},
-  ];
+  const chapters=[{label:'Act I',title:'Every shipment starts with\na driver and a destination.'},{label:'Act II',title:'Thousands of routes connecting\nevery corner of the country.'},{label:'Act III',title:'CloudCrest turns complexity\ninto <em>clarity</em>, mile by mile.'}];
   let lastIdx=-1;
-
   function setChapter(idx){
-    if(idx===lastIdx)return;
-    lastIdx=idx;
-    storyLabel.classList.remove('visible');
-    storyTitle.classList.remove('visible');
-    setTimeout(()=>{
-      storyLabel.textContent=chapters[idx].label;
-      storyTitle.innerHTML=chapters[idx].title.replace(/\n/g,'<br>');
-      requestAnimationFrame(()=>requestAnimationFrame(()=>{
-        storyLabel.classList.add('visible');
-        storyTitle.classList.add('visible');
-      }));
-    },200);
+    if(idx===lastIdx)return;lastIdx=idx;
+    storyLabel.classList.remove('visible');storyTitle.classList.remove('visible');
+    setTimeout(()=>{storyLabel.textContent=chapters[idx].label;storyTitle.innerHTML=chapters[idx].title.replace(/\n/g,'<br>');requestAnimationFrame(()=>requestAnimationFrame(()=>{storyLabel.classList.add('visible');storyTitle.classList.add('visible');}));},200);
   }
-
   function render(ts){
     if(!W||!H){requestAnimationFrame(render);return;}
-    const rect=wrap.getBoundingClientRect();
-    const totalH=wrap.offsetHeight-window.innerHeight;
-    const scrolled=clamp(-rect.top,0,totalH);
-    const p=totalH>0?scrolled/totalH:0;
+    const rect=wrap.getBoundingClientRect();const totalH=wrap.offsetHeight-window.innerHeight;const scrolled=clamp(-rect.top,0,totalH);const p=totalH>0?scrolled/totalH:0;
     ctx.clearRect(0,0,W,H);
-    if(p<.32){drawRoad(ts);setChapter(0);}
-    else if(p<.65){drawMapTransition((p-.32)/(.65-.32),ts);setChapter(1);}
-    else{drawDataWorld(clamp((p-.65)/.35,0,1),ts);setChapter(2);}
+    if(p<.32){drawRoad(ts);setChapter(0);}else if(p<.65){drawMapTransition((p-.32)/(.65-.32),ts);setChapter(1);}else{drawDataWorld(clamp((p-.65)/.35,0,1),ts);setChapter(2);}
     requestAnimationFrame(render);
   }
   requestAnimationFrame(render);
@@ -708,6 +639,11 @@ window.addEventListener('scroll',()=>{
   document.getElementById('main-nav').classList.toggle('scrolled',window.scrollY>window.innerHeight*.8);
 });
 
+/* ══ MOBILE NAV ══ */
+document.getElementById('nav-hamburger').addEventListener('click',()=>{
+  document.getElementById('nav-mobile').classList.toggle('open');
+});
+
 /* ══ LOGISTICS CANVAS ══ */
 (function(){
   const canvas=document.getElementById('route-canvas');
@@ -715,66 +651,26 @@ window.addEventListener('scroll',()=>{
   let W=0,H=0;
   function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;}
   resize();window.addEventListener('resize',resize);
-
-  const hubs=[
-    {id:'warehouse', xr:.50,yr:.50,label:'Warehouse',color:'#0077C8'},
-    {id:'truck',     xr:.18,yr:.30,label:'Trucking',  color:'#38BDF8'},
-    {id:'air',       xr:.50,yr:.12,label:'Air Freight',color:'#38BDF8'},
-    {id:'rail',      xr:.82,yr:.30,label:'Rail',       color:'#38BDF8'},
-    {id:'ship',      xr:.82,yr:.72,label:'Shipping',   color:'#38BDF8'},
-    {id:'truck2',    xr:.18,yr:.72,label:'Last Mile',  color:'#38BDF8'},
-  ];
+  const hubs=[{id:'warehouse',xr:.50,yr:.50,label:'Warehouse',color:'#0077C8'},{id:'truck',xr:.18,yr:.30,label:'Trucking',color:'#38BDF8'},{id:'air',xr:.50,yr:.12,label:'Air Freight',color:'#38BDF8'},{id:'rail',xr:.82,yr:.30,label:'Rail',color:'#38BDF8'},{id:'ship',xr:.82,yr:.72,label:'Shipping',color:'#38BDF8'},{id:'truck2',xr:.18,yr:.72,label:'Last Mile',color:'#38BDF8'}];
   const edges=[[0,1],[0,2],[0,3],[0,4],[0,5],[1,2],[2,3],[3,4],[4,5],[5,1]];
   const packets=edges.map(([a,b],i)=>({a,b,t:i/edges.length,speed:.006+Math.random()*.004,dir:1}));
-
   function lerp(a,b,t){return a+(b-a)*t;}
-
   function drawIcon(id,cx,cy,r,alpha){
-    ctx.save();ctx.globalAlpha=alpha;ctx.translate(cx,cy);
-    const s=r*.7;
-    ctx.strokeStyle='#fff';ctx.fillStyle='#fff';ctx.lineWidth=1.5;
-    ctx.lineCap='round';ctx.lineJoin='round';
-    if(id==='warehouse'){
-      ctx.beginPath();ctx.moveTo(-s,s);ctx.lineTo(-s,-s*.4);ctx.lineTo(0,-s);ctx.lineTo(s,-s*.4);ctx.lineTo(s,s);ctx.closePath();ctx.stroke();
-      ctx.fillRect(-s*.22,s*.1,s*.44,s*.9);
-      ctx.fillStyle='#0077C8';ctx.fillRect(-s*.18,s*.14,s*.36,s*.86);
-    } else if(id==='truck'||id==='truck2'){
-      ctx.beginPath();ctx.rect(-s,-.4*s,s*.6,.8*s);ctx.stroke();
-      ctx.beginPath();ctx.rect(-s*.35,-.5*s,s*.9*1,s);ctx.stroke();
-      ctx.beginPath();ctx.arc(-s*.6,s*.4,s*.18,0,Math.PI*2);ctx.stroke();
-      ctx.beginPath();ctx.arc(s*.35,s*.4,s*.18,0,Math.PI*2);ctx.stroke();
-    } else if(id==='air'){
-      ctx.beginPath();ctx.moveTo(0,-s);ctx.lineTo(s*.3,s*.2);ctx.lineTo(0,0);ctx.lineTo(-s*.3,s*.2);ctx.closePath();ctx.stroke();
-      ctx.beginPath();ctx.moveTo(-s*.1,-.1*s);ctx.lineTo(-s,s*.3);ctx.lineTo(-s*.05,s*.1);ctx.stroke();
-      ctx.beginPath();ctx.moveTo(s*.1,-.1*s);ctx.lineTo(s,s*.3);ctx.lineTo(s*.05,s*.1);ctx.stroke();
-      ctx.beginPath();ctx.moveTo(-s*.2,s*.6);ctx.lineTo(0,s*.2);ctx.lineTo(s*.2,s*.6);ctx.stroke();
-    } else if(id==='rail'){
-      ctx.beginPath();ctx.moveTo(-s*.3,-s);ctx.lineTo(-s*.3,s);ctx.stroke();
-      ctx.beginPath();ctx.moveTo(s*.3,-s);ctx.lineTo(s*.3,s);ctx.stroke();
-      [-s*.6,-s*.2,s*.2,s*.6].forEach(y=>{ctx.beginPath();ctx.moveTo(-s*.55,y);ctx.lineTo(s*.55,y);ctx.stroke();});
-      ctx.beginPath();ctx.rect(-s*.55,-s*.55,s*1.1,s*.7);ctx.stroke();
-      ctx.beginPath();ctx.arc(-s*.25,s*.15,s*.2,0,Math.PI*2);ctx.stroke();
-      ctx.beginPath();ctx.arc(s*.25,s*.15,s*.2,0,Math.PI*2);ctx.stroke();
-    } else if(id==='ship'){
-      ctx.beginPath();ctx.moveTo(-s,0);ctx.quadraticCurveTo(-s,s*.6,0,s*.7);ctx.quadraticCurveTo(s,s*.6,s,0);ctx.closePath();ctx.stroke();
-      ctx.beginPath();ctx.rect(-s*.5,-s*.5,s,s*.5);ctx.stroke();
-      ctx.beginPath();ctx.rect(-s*.1,-s*.9,s*.2,s*.4);ctx.stroke();
-    }
+    ctx.save();ctx.globalAlpha=alpha;ctx.translate(cx,cy);const s=r*.7;ctx.strokeStyle='#fff';ctx.fillStyle='#fff';ctx.lineWidth=1.5;ctx.lineCap='round';ctx.lineJoin='round';
+    if(id==='warehouse'){ctx.beginPath();ctx.moveTo(-s,s);ctx.lineTo(-s,-s*.4);ctx.lineTo(0,-s);ctx.lineTo(s,-s*.4);ctx.lineTo(s,s);ctx.closePath();ctx.stroke();ctx.fillRect(-s*.22,s*.1,s*.44,s*.9);ctx.fillStyle='#0077C8';ctx.fillRect(-s*.18,s*.14,s*.36,s*.86);}
+    else if(id==='truck'||id==='truck2'){ctx.beginPath();ctx.rect(-s,-.4*s,s*.6,.8*s);ctx.stroke();ctx.beginPath();ctx.rect(-s*.35,-.5*s,s*.9,s);ctx.stroke();ctx.beginPath();ctx.arc(-s*.6,s*.4,s*.18,0,Math.PI*2);ctx.stroke();ctx.beginPath();ctx.arc(s*.35,s*.4,s*.18,0,Math.PI*2);ctx.stroke();}
+    else if(id==='air'){ctx.beginPath();ctx.moveTo(0,-s);ctx.lineTo(s*.3,s*.2);ctx.lineTo(0,0);ctx.lineTo(-s*.3,s*.2);ctx.closePath();ctx.stroke();ctx.beginPath();ctx.moveTo(-s*.1,-.1*s);ctx.lineTo(-s,s*.3);ctx.lineTo(-s*.05,s*.1);ctx.stroke();ctx.beginPath();ctx.moveTo(s*.1,-.1*s);ctx.lineTo(s,s*.3);ctx.lineTo(s*.05,s*.1);ctx.stroke();ctx.beginPath();ctx.moveTo(-s*.2,s*.6);ctx.lineTo(0,s*.2);ctx.lineTo(s*.2,s*.6);ctx.stroke();}
+    else if(id==='rail'){ctx.beginPath();ctx.moveTo(-s*.3,-s);ctx.lineTo(-s*.3,s);ctx.stroke();ctx.beginPath();ctx.moveTo(s*.3,-s);ctx.lineTo(s*.3,s);ctx.stroke();[-s*.6,-s*.2,s*.2,s*.6].forEach(y=>{ctx.beginPath();ctx.moveTo(-s*.55,y);ctx.lineTo(s*.55,y);ctx.stroke();});ctx.beginPath();ctx.rect(-s*.55,-s*.55,s*1.1,s*.7);ctx.stroke();ctx.beginPath();ctx.arc(-s*.25,s*.15,s*.2,0,Math.PI*2);ctx.stroke();ctx.beginPath();ctx.arc(s*.25,s*.15,s*.2,0,Math.PI*2);ctx.stroke();}
+    else if(id==='ship'){ctx.beginPath();ctx.moveTo(-s,0);ctx.quadraticCurveTo(-s,s*.6,0,s*.7);ctx.quadraticCurveTo(s,s*.6,s,0);ctx.closePath();ctx.stroke();ctx.beginPath();ctx.rect(-s*.5,-s*.5,s,s*.5);ctx.stroke();ctx.beginPath();ctx.rect(-s*.1,-s*.9,s*.2,s*.4);ctx.stroke();}
     ctx.restore();
   }
-
   function draw(ts){
     if(!W||!H){requestAnimationFrame(draw);return;}
     ctx.clearRect(0,0,W,H);
     const ns=hubs.map(h=>({...h,x:h.xr*W,y:h.yr*H}));
-    edges.forEach(([a,b])=>{
-      ctx.beginPath();ctx.moveTo(ns[a].x,ns[a].y);ctx.lineTo(ns[b].x,ns[b].y);
-      ctx.strokeStyle='rgba(0,119,200,0.25)';ctx.lineWidth=1.5;ctx.setLineDash([6,8]);ctx.stroke();ctx.setLineDash([]);
-    });
+    edges.forEach(([a,b])=>{ctx.beginPath();ctx.moveTo(ns[a].x,ns[a].y);ctx.lineTo(ns[b].x,ns[b].y);ctx.strokeStyle='rgba(0,119,200,0.25)';ctx.lineWidth=1.5;ctx.setLineDash([6,8]);ctx.stroke();ctx.setLineDash([]);});
     packets.forEach(p=>{
-      p.t=(p.t+p.speed)%1;
-      const na=ns[p.a],nb=ns[p.b];
-      const px=lerp(na.x,nb.x,p.t),py=lerp(na.y,nb.y,p.t);
+      p.t=(p.t+p.speed)%1;const na=ns[p.a],nb=ns[p.b];const px=lerp(na.x,nb.x,p.t),py=lerp(na.y,nb.y,p.t);
       if(!isFinite(px)||!isFinite(py))return;
       const g=safeGrad(ctx,px,py,0,7);if(!g)return;
       g.addColorStop(0,'rgba(56,189,248,1)');g.addColorStop(1,'rgba(56,189,248,0)');
@@ -782,18 +678,11 @@ window.addEventListener('scroll',()=>{
       ctx.beginPath();ctx.arc(px,py,2.5,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
     });
     ns.forEach((n,i)=>{
-      const isCenter=n.id==='warehouse';
-      const r=isCenter?28:22;
-      const pulse=Math.sin(ts*.0018+i*.9)*.5+.5;
-      ctx.beginPath();ctx.arc(n.x,n.y,r+4+pulse*6,0,Math.PI*2);
-      ctx.strokeStyle=`rgba(56,189,248,${isCenter?.18+pulse*.14:.1+pulse*.1})`;ctx.lineWidth=1.5;ctx.stroke();
-      ctx.beginPath();ctx.arc(n.x,n.y,r,0,Math.PI*2);
-      ctx.fillStyle=isCenter?'#0077C8':'rgba(0,30,64,0.9)';ctx.fill();
-      ctx.strokeStyle=isCenter?'#38BDF8':'rgba(0,119,200,0.7)';ctx.lineWidth=1.5;ctx.stroke();
+      const isCenter=n.id==='warehouse';const r=isCenter?28:22;const pulse=Math.sin(ts*.0018+i*.9)*.5+.5;
+      ctx.beginPath();ctx.arc(n.x,n.y,r+4+pulse*6,0,Math.PI*2);ctx.strokeStyle=`rgba(56,189,248,${isCenter?.18+pulse*.14:.1+pulse*.1})`;ctx.lineWidth=1.5;ctx.stroke();
+      ctx.beginPath();ctx.arc(n.x,n.y,r,0,Math.PI*2);ctx.fillStyle=isCenter?'#0077C8':'rgba(0,30,64,0.9)';ctx.fill();ctx.strokeStyle=isCenter?'#38BDF8':'rgba(0,119,200,0.7)';ctx.lineWidth=1.5;ctx.stroke();
       drawIcon(n.id,n.x,n.y,r*.75,1);
-      ctx.fillStyle='rgba(255,255,255,0.85)';
-      ctx.font=`600 11px DM Sans,sans-serif`;ctx.textAlign='center';
-      ctx.fillText(n.label,n.x,n.y+r+14);
+      ctx.fillStyle='rgba(255,255,255,0.85)';ctx.font='600 11px DM Sans,sans-serif';ctx.textAlign='center';ctx.fillText(n.label,n.x,n.y+r+14);
     });
     requestAnimationFrame(draw);
   }
@@ -817,8 +706,7 @@ window.addEventListener('scroll',()=>{
     edges.forEach(([a,b])=>{ctx.beginPath();ctx.moveTo(ns[a].x,ns[a].y);ctx.lineTo(ns[b].x,ns[b].y);ctx.strokeStyle='rgba(0,119,200,.18)';ctx.lineWidth=1;ctx.stroke();});
     packets.forEach(p=>{
       p.t+=p.speed*p.dir;if(p.t>1)p.t=0;if(p.t<0)p.t=1;
-      const na=ns[p.a],nb=ns[p.b];
-      const px=na.x+(nb.x-na.x)*p.t,py=na.y+(nb.y-na.y)*p.t;
+      const na=ns[p.a],nb=ns[p.b];const px=na.x+(nb.x-na.x)*p.t,py=na.y+(nb.y-na.y)*p.t;
       const g=safeGrad(ctx,px,py,0,9);if(!g)return;
       g.addColorStop(0,'rgba(56,189,248,.8)');g.addColorStop(1,'rgba(56,189,248,0)');
       ctx.beginPath();ctx.arc(px,py,9,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
@@ -826,14 +714,8 @@ window.addEventListener('scroll',()=>{
     });
     ns.forEach((n,i)=>{
       const pulse=Math.sin(ts*.0018+i*.9)*.5+.5;
-      if(n.hub){
-        ctx.beginPath();ctx.arc(n.x,n.y,16+pulse*4,0,Math.PI*2);ctx.strokeStyle=`rgba(56,189,248,${.12+pulse*.14})`;ctx.lineWidth=1.5;ctx.stroke();
-        ctx.beginPath();ctx.arc(n.x,n.y,10,0,Math.PI*2);ctx.fillStyle='#0077C8';ctx.fill();
-        ctx.beginPath();ctx.arc(n.x,n.y,6,0,Math.PI*2);ctx.fillStyle='#38BDF8';ctx.fill();
-      }else{
-        ctx.beginPath();ctx.arc(n.x,n.y,5+pulse*2,0,Math.PI*2);ctx.fillStyle=`rgba(0,119,200,${.3+pulse*.4})`;ctx.fill();
-        ctx.beginPath();ctx.arc(n.x,n.y,3,0,Math.PI*2);ctx.fillStyle=`rgba(56,189,248,${.5+pulse*.5})`;ctx.fill();
-      }
+      if(n.hub){ctx.beginPath();ctx.arc(n.x,n.y,16+pulse*4,0,Math.PI*2);ctx.strokeStyle=`rgba(56,189,248,${.12+pulse*.14})`;ctx.lineWidth=1.5;ctx.stroke();ctx.beginPath();ctx.arc(n.x,n.y,10,0,Math.PI*2);ctx.fillStyle='#0077C8';ctx.fill();ctx.beginPath();ctx.arc(n.x,n.y,6,0,Math.PI*2);ctx.fillStyle='#38BDF8';ctx.fill();}
+      else{ctx.beginPath();ctx.arc(n.x,n.y,5+pulse*2,0,Math.PI*2);ctx.fillStyle=`rgba(0,119,200,${.3+pulse*.4})`;ctx.fill();ctx.beginPath();ctx.arc(n.x,n.y,3,0,Math.PI*2);ctx.fillStyle=`rgba(56,189,248,${.5+pulse*.5})`;ctx.fill();}
     });
     requestAnimationFrame(draw);
   }
