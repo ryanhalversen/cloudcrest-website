@@ -31,6 +31,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;background:var(--navy);borde
 .nav-dropdown a:hover{color:#fff;padding-left:30px;background:rgba(255,255,255,0.04);}
 .nav-cta{background:var(--blue);color:#fff;padding:10px 22px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:background .2s;white-space:nowrap;}
 .nav-cta:hover{background:var(--blue2);}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;}
+.nav-hamburger span{display:block;width:24px;height:2px;background:#fff;transition:all .3s;}
+.nav-mobile{display:none;flex-direction:column;background:var(--navy);border-top:1px solid rgba(255,255,255,0.08);padding:16px 0 24px;}
+.nav-mobile.open{display:flex;}
+.nav-mobile a{padding:13px 24px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:14px;font-weight:500;border-bottom:1px solid rgba(255,255,255,0.05);transition:color .2s,background .2s;}
+.nav-mobile a:hover{color:#fff;background:rgba(255,255,255,0.04);}
+.nav-mobile .nav-mobile-cta{margin:16px 24px 0;background:var(--blue);color:#fff!important;text-align:center;font-weight:600!important;letter-spacing:0.06em;text-transform:uppercase;font-size:12px!important;padding:14px 24px!important;border-bottom:none!important;}
 
 .page-hero{background:var(--navy);padding:160px 80px 80px;position:relative;overflow:hidden;}
 .page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(0,119,200,0.12) 0%,transparent 70%);}
@@ -40,7 +47,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;background:var(--navy);borde
 .page-hero h1 em{font-style:italic;color:var(--sky);}
 .page-hero p{font-size:18px;font-weight:300;line-height:1.7;color:rgba(255,255,255,0.6);max-width:560px;}
 
-/* CULTURE */
 .culture-section{padding:110px 80px;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center;}
 .culture-label{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;}
 .culture-title{font-family:'DM Serif Display',serif;font-size:clamp(28px,3.5vw,44px);font-weight:400;line-height:1.1;letter-spacing:-0.02em;color:var(--navy);margin-bottom:24px;}
@@ -62,7 +68,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;background:var(--navy);borde
 .culture-fact strong{display:block;font-size:13px;font-weight:600;color:#fff;margin-bottom:3px;}
 .culture-fact p{font-size:12px;color:rgba(255,255,255,0.45);line-height:1.6;font-weight:300;}
 
-/* OPENINGS */
 .openings-section{background:var(--gray-100);padding:110px 80px;}
 .section-header{text-align:center;max-width:680px;margin:0 auto 56px;}
 .section-label{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;}
@@ -73,9 +78,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;background:var(--navy);borde
 .openings-list{display:flex;flex-direction:column;gap:2px;background:var(--gray-200);}
 .opening-card{background:#fff;padding:36px 44px;display:flex;justify-content:space-between;align-items:center;gap:40px;transition:background .2s;}
 .opening-card:hover{background:#EFF6FF;}
-.opening-left{}
 .opening-title{font-family:'DM Serif Display',serif;font-size:20px;font-weight:400;color:var(--navy);margin-bottom:8px;}
-.opening-meta{display:flex;gap:16px;align-items:center;}
+.opening-meta{display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
 .opening-tag{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);background:rgba(0,119,200,0.08);padding:4px 10px;}
 .opening-location{font-size:12px;color:var(--gray-500);font-weight:400;}
 .opening-desc{font-size:14px;line-height:1.7;color:var(--gray-500);font-weight:300;margin-top:10px;max-width:560px;}
@@ -100,6 +104,37 @@ footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:spa
 .reveal.visible{opacity:1;transform:none;}
 .reveal-delay-1{transition-delay:.12s;}
 .reveal-delay-2{transition-delay:.24s;}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  .nav-tabs{display:none;}
+  .nav-cta{display:none;}
+  .nav-top{padding:0 20px;}
+  .nav-hamburger{display:flex;}
+
+  .page-hero{padding:110px 24px 56px;}
+  .page-hero h1{font-size:clamp(30px,8vw,48px);}
+  .page-hero p{font-size:15px;}
+
+  .culture-section{grid-template-columns:1fr;padding:72px 24px;gap:48px;}
+  .culture-visual{padding:36px 28px;}
+
+  .openings-section{padding:72px 24px;}
+  .section-header{margin-bottom:40px;}
+
+  .opening-card{flex-direction:column;align-items:flex-start;padding:28px 24px;gap:20px;}
+  .btn-outline{width:100%;text-align:center;}
+
+  .open-cta{grid-template-columns:1fr;gap:24px;padding:36px 24px;border-left:none;border-top:4px solid var(--blue);}
+  .open-cta .btn-primary{width:100%;text-align:center;}
+
+  footer{flex-direction:column;gap:24px;padding:40px 24px;text-align:center;}
+  .footer-links{flex-wrap:wrap;justify-content:center;gap:16px;}
+}
+@media(max-width:480px){
+  .page-hero h1{font-size:28px;}
+  .culture-title{font-size:26px;}
+}
 </style>
 </head>
 <body>
@@ -111,6 +146,9 @@ footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:spa
       <span class="nav-logo-text">CloudCrest</span>
     </a>
     <a href="index.html#contact" class="nav-cta">Get In Touch</a>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
   <ul class="nav-tabs">
     <li class="nav-tab"><a href="services.html">What We Do<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
@@ -126,6 +164,18 @@ footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:spa
       <div class="nav-dropdown"><a href="careers.html#openings">Open Positions</a><a href="careers.html#culture">Life at CloudCrest</a></div>
     </li>
   </ul>
+  <nav class="nav-mobile" id="nav-mobile">
+    <a href="services.html">What We Do</a>
+    <a href="services.html#implementation">— Implementation</a>
+    <a href="services.html#managed-services">— Managed Services</a>
+    <a href="services.html#integrations">— Integrations</a>
+    <a href="think.html">What We Think</a>
+    <a href="about.html">Who We Are</a>
+    <a href="about.html#testimonials">— Client Testimonials</a>
+    <a href="careers.html">Careers</a>
+    <a href="careers.html#openings">— Open Positions</a>
+    <a href="index.html#contact" class="nav-mobile-cta">Get In Touch</a>
+  </nav>
 </nav>
 
 <div class="page-hero">
@@ -134,7 +184,6 @@ footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:spa
   <p>CloudCrest is a small, focused team that punches above its weight. If you're passionate about Salesforce, transportation, and building real things for real clients — we should talk.</p>
 </div>
 
-<!-- CULTURE -->
 <div class="culture-section" id="culture">
   <div class="culture-body reveal">
     <div class="culture-label">Life at CloudCrest</div>
@@ -171,7 +220,6 @@ footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:spa
   </div>
 </div>
 
-<!-- OPENINGS -->
 <div class="openings-section" id="openings">
   <div class="section-header reveal">
     <div class="section-label">Open Positions</div>
@@ -204,7 +252,7 @@ footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:spa
     </div>
     <div class="opening-card reveal">
       <div class="opening-left">
-        <div class="opening-title">Integration Specialist — EDI & APIs</div>
+        <div class="opening-title">Integration Specialist — EDI &amp; APIs</div>
         <div class="opening-meta">
           <span class="opening-tag">Full-Time</span>
           <span class="opening-location">Remote (U.S.) · Occasional Travel</span>
@@ -231,12 +279,15 @@ footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:spa
   </div>
   <ul class="footer-links">
     <li><a href="services.html">What We Do</a></li><li><a href="think.html">What We Think</a></li>
-    <li><a href="about.html">Who We Are</a></li><li><a href="careers.html">Careers</a></li><li><a href="contact.html">Contact</a></li>
+    <li><a href="about.html">Who We Are</a></li><li><a href="careers.html">Careers</a></li><li><a href="index.html#contact">Contact</a></li>
   </ul>
   <span class="footer-copy">© 2026 CloudCrest, LLC. All Rights Reserved.</span>
 </footer>
 
 <script>
+document.getElementById('nav-hamburger').addEventListener('click',()=>{
+  document.getElementById('nav-mobile').classList.toggle('open');
+});
 const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});},{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 </script>
