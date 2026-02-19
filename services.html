@@ -31,6 +31,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;background:var(--navy);borde
 .nav-dropdown a:hover{color:#fff;padding-left:30px;background:rgba(255,255,255,0.04);}
 .nav-cta{background:var(--blue);color:#fff;padding:10px 22px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:background .2s;white-space:nowrap;}
 .nav-cta:hover{background:var(--blue2);}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;}
+.nav-hamburger span{display:block;width:24px;height:2px;background:#fff;transition:all .3s;}
+.nav-mobile{display:none;flex-direction:column;background:var(--navy);border-top:1px solid rgba(255,255,255,0.08);padding:16px 0 24px;}
+.nav-mobile.open{display:flex;}
+.nav-mobile a{padding:13px 24px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:14px;font-weight:500;border-bottom:1px solid rgba(255,255,255,0.05);transition:color .2s,background .2s;}
+.nav-mobile a:hover{color:#fff;background:rgba(255,255,255,0.04);}
+.nav-mobile .nav-mobile-cta{margin:16px 24px 0;background:var(--blue);color:#fff!important;text-align:center;font-weight:600!important;letter-spacing:0.06em;text-transform:uppercase;font-size:12px!important;padding:14px 24px!important;border-bottom:none!important;}
 
 .page-hero{background:var(--navy);padding:160px 80px 80px;position:relative;overflow:hidden;}
 .page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(0,119,200,0.12) 0%,transparent 70%);}
@@ -40,7 +47,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;background:var(--navy);borde
 .page-hero h1 em{font-style:italic;color:var(--sky);}
 .page-hero p{font-size:18px;font-weight:300;line-height:1.7;color:rgba(255,255,255,0.6);max-width:560px;}
 
-.service-nav{background:var(--gray-800);border-bottom:1px solid rgba(255,255,255,0.06);position:sticky;top:104px;z-index:200;}
+.service-nav{background:var(--gray-800);border-bottom:1px solid rgba(255,255,255,0.06);position:sticky;top:104px;z-index:200;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.service-nav::-webkit-scrollbar{display:none;}
 .service-nav-inner{display:flex;justify-content:center;padding:0 80px;}
 .service-nav-item{display:flex;align-items:center;gap:8px;padding:0 20px;height:48px;color:rgba(255,255,255,0.45);font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;cursor:pointer;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;flex-shrink:0;}
 .service-nav-item:hover{color:rgba(255,255,255,0.8);}
@@ -92,6 +100,38 @@ footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:spa
 .footer-links a{color:rgba(255,255,255,0.3);text-decoration:none;font-size:11px;letter-spacing:0.07em;text-transform:uppercase;transition:color .2s;}
 .footer-links a:hover{color:#fff;}
 .footer-copy{color:rgba(255,255,255,0.2);font-size:11px;}
+
+/* ── MOBILE ── */
+@media(max-width:900px){
+  .service-inner{grid-template-columns:1fr;gap:40px;}
+  .service-inner.flip{direction:ltr;}
+}
+@media(max-width:768px){
+  .nav-tabs{display:none;}
+  .nav-cta{display:none;}
+  .nav-top{padding:0 20px;}
+  .nav-hamburger{display:flex;}
+
+  .page-hero{padding:110px 24px 56px;}
+  .page-hero h1{font-size:clamp(28px,8vw,48px);}
+  .page-hero p{font-size:15px;}
+
+  .service-nav{top:64px;}
+  .service-nav-inner{justify-content:flex-start;padding:0 16px;}
+
+  .services-wrap{padding:0 24px 80px;}
+  .service-section{padding:56px 0 48px;}
+  .service-visual{padding:32px 24px;}
+  .service-lead{font-size:15px;}
+  .service-cta .btn-primary{width:100%;text-align:center;display:block;}
+
+  footer{flex-direction:column;gap:24px;padding:40px 24px;text-align:center;}
+  .footer-links{flex-wrap:wrap;justify-content:center;gap:16px;}
+}
+@media(max-width:480px){
+  .page-hero h1{font-size:26px;}
+  .service-title{font-size:26px;}
+}
 </style>
 </head>
 <body>
@@ -103,6 +143,9 @@ footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:spa
       <span class="nav-logo-text">CloudCrest</span>
     </a>
     <a href="index.html#contact" class="nav-cta">Get In Touch</a>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
   <ul class="nav-tabs">
     <li class="nav-tab active"><a href="services.html">What We Do<svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
@@ -125,6 +168,19 @@ footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:spa
       <div class="nav-dropdown"><a href="careers.html#openings">Open Positions</a><a href="careers.html#culture">Life at CloudCrest</a></div>
     </li>
   </ul>
+  <nav class="nav-mobile" id="nav-mobile">
+    <a href="services.html">What We Do</a>
+    <a href="#implementation" onclick="scrollToSection('implementation');document.getElementById('nav-mobile').classList.remove('open');return false;">— Implementation</a>
+    <a href="#managed-services" onclick="scrollToSection('managed-services');document.getElementById('nav-mobile').classList.remove('open');return false;">— Managed Services</a>
+    <a href="#integrations" onclick="scrollToSection('integrations');document.getElementById('nav-mobile').classList.remove('open');return false;">— Integrations</a>
+    <a href="#custom-development" onclick="scrollToSection('custom-development');document.getElementById('nav-mobile').classList.remove('open');return false;">— Custom Development</a>
+    <a href="#training" onclick="scrollToSection('training');document.getElementById('nav-mobile').classList.remove('open');return false;">— Training</a>
+    <a href="#on-site-visits" onclick="scrollToSection('on-site-visits');document.getElementById('nav-mobile').classList.remove('open');return false;">— On-Site Visits</a>
+    <a href="think.html">What We Think</a>
+    <a href="about.html">Who We Are</a>
+    <a href="careers.html">Careers</a>
+    <a href="index.html#contact" class="nav-mobile-cta">Get In Touch</a>
+  </nav>
 </nav>
 
 <div class="page-hero">
@@ -138,7 +194,7 @@ footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:spa
     <div class="service-nav-item active" onclick="scrollToSection('implementation')"><span class="service-nav-num">01</span>Implementation</div>
     <div class="service-nav-item" onclick="scrollToSection('managed-services')"><span class="service-nav-num">02</span>Managed Services</div>
     <div class="service-nav-item" onclick="scrollToSection('integrations')"><span class="service-nav-num">03</span>Integrations</div>
-    <div class="service-nav-item" onclick="scrollToSection('custom-development')"><span class="service-nav-num">04</span>Custom Development</div>
+    <div class="service-nav-item" onclick="scrollToSection('custom-development')"><span class="service-nav-num">04</span>Custom Dev</div>
     <div class="service-nav-item" onclick="scrollToSection('training')"><span class="service-nav-num">05</span>Training</div>
     <div class="service-nav-item" onclick="scrollToSection('on-site-visits')"><span class="service-nav-num">06</span>On-Site Visits</div>
   </div>
@@ -348,9 +404,8 @@ footer{background:var(--navy);padding:48px 80px;display:flex;justify-content:spa
 function scrollToSection(id){
   const el=document.getElementById(id);
   if(!el)return;
-  const offset=104+48;
-  const top=el.getBoundingClientRect().top+window.scrollY-offset;
-  window.scrollTo({top,behavior:'smooth'});
+  const offset=window.innerWidth<=768?112:152;
+  window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-offset,behavior:'smooth'});
 }
 const sections=['implementation','managed-services','integrations','custom-development','training','on-site-visits'];
 const navItems=document.querySelectorAll('.service-nav-item');
@@ -359,11 +414,14 @@ window.addEventListener('scroll',()=>{
   let current='';
   sections.forEach(id=>{
     const el=document.getElementById(id);
-    if(el&&el.getBoundingClientRect().top<offset) current=id;
+    if(el&&el.getBoundingClientRect().top<offset)current=id;
   });
   navItems.forEach((item,i)=>{
     item.classList.toggle('active',sections[i]===current||(current===''&&i===0));
   });
+});
+document.getElementById('nav-hamburger').addEventListener('click',()=>{
+  document.getElementById('nav-mobile').classList.toggle('open');
 });
 const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});},{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
